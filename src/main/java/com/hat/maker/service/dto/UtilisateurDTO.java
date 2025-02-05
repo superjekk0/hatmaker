@@ -1,7 +1,6 @@
 
 package com.hat.maker.service.dto;
 
-import com.hat.maker.model.Departement;
 import com.hat.maker.model.Responsable;
 import com.hat.maker.model.Utilisateur;
 import com.hat.maker.model.auth.Role;
@@ -18,7 +17,6 @@ public abstract class UtilisateurDTO {
     protected Long id;
     protected String nom;
     protected String courriel;
-    protected Departement departement;
     protected Role role;
 
     public static UtilisateurDTO toUtilisateurDTO(Utilisateur utilisateur) {

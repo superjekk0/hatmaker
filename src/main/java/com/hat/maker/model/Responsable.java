@@ -13,8 +13,8 @@ import lombok.*;
 @DiscriminatorValue("R")
 public class Responsable extends Utilisateur {
     @Builder
-    public Responsable(Long id, String nom, String courriel, Departement departement, String motDePasse){
-        super(id, nom, departement, Credentials.builder()
+    public Responsable(Long id, String nom, String courriel, String motDePasse){
+        super(id, nom, Credentials.builder()
                 .courriel(courriel)
                 .motDePasse(motDePasse)
                 .role(Role.RESPONSABLE).build());

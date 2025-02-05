@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ValidationService {
     private enum UtilisateurFields {
-        NOM, COURRIEL, MOT_DE_PASSE, DEPARTEMENT
+        NOM, COURRIEL, MOT_DE_PASSE
     }
 
     public static void validerResponsableFields(ResponsableCreeDTO responsableCreeDTO) {
@@ -28,9 +28,6 @@ public class ValidationService {
         if (responsableDTO.getCourriel() == null) {
             throwFieldValidationException(UtilisateurFields.COURRIEL);
         }
-        if (responsableDTO.getDepartement() == null) {
-            throwFieldValidationException(UtilisateurFields.DEPARTEMENT);
-        }
     }
 
     private static void throwFieldValidationException(UtilisateurFields field) {
@@ -41,8 +38,6 @@ public class ValidationService {
                 throw new IllegalArgumentException("beCourrielNull");
             case MOT_DE_PASSE:
                 throw new IllegalArgumentException("beMotDePasseNull");
-            case DEPARTEMENT:
-                throw new IllegalArgumentException("beDepartementNull");
             default:
                 throw new IllegalArgumentException("beChampNull");
         }

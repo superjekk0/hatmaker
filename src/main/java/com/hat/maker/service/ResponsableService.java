@@ -28,7 +28,6 @@ public class ResponsableService {
                 .nom(responsableCreeDTO.getNom())
                 .courriel(responsableCreeDTO.getCourriel())
                 .motDePasse(passwordEncoder.encode(responsableCreeDTO.getMotDePasse()))
-                .departement(responsableCreeDTO.getDepartement())
                 .build();
         Responsable responsableRetour = responsableRepository.save(responsable);
         return ResponsableDTO.toResponsableDTO(responsableRetour);

@@ -22,9 +22,6 @@ public abstract class Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected String nom;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "departement_id")
-    protected Departement departement;
     protected Credentials credentials;
 
     public String getCourriel(){
