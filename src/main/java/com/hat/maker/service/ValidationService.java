@@ -33,17 +33,17 @@ public class ValidationService {
     private static void throwFieldValidationException(UtilisateurFields field) {
         switch (field) {
             case NOM:
-                throw new IllegalArgumentException("beNomNull");
+                throw new IllegalArgumentException("Nom NULL");
             case COURRIEL:
-                throw new IllegalArgumentException("beCourrielNull");
+                throw new IllegalArgumentException("Courriel NULL");
             case MOT_DE_PASSE:
-                throw new IllegalArgumentException("beMotDePasseNull");
+                throw new IllegalArgumentException("Mot de pass NULL");
             default:
-                throw new IllegalArgumentException("beChampNull");
+                throw new IllegalArgumentException("Champ NULL");
         }
     }
 
     public static void throwCourrielDejaUtilise() {
-        throw new IllegalArgumentException("beCourrielUnique");
+        throw new IllegalArgumentException("Courriel déjà utilisé");
     }
 }

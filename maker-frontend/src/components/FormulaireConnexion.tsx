@@ -35,15 +35,15 @@ const FormulaireConnexion = () => {
         let hasError = false;
 
         if (infosConnexion.courriel.trim() === '') {
-            setErreurCourriel("courrielRequis");
+            setErreurCourriel("Courriel requis");
             hasError = true;
         } else if (!/\S+@\S+\.\S+/.test(infosConnexion.courriel)) {
-            setErreurCourriel("courrielInvalide2");
+            setErreurCourriel("Courriel invalide");
             hasError = true;
         }
 
         if (infosConnexion.motDePasse.trim() === '') {
-            setErreurMotDePasse("motDePasseRequis");
+            setErreurMotDePasse("Mot de passe requis");
             hasError = true;
         }
 
