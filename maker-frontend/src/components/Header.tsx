@@ -5,9 +5,10 @@ import {useContext, useState} from "react";
 import {AuthentificatedContext} from "../context/AuthentificationContext.tsx";
 
 const Header = () => {
+    const {setIsAuthentificated} = useContext(AuthentificatedContext)
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const {setIsAuthentificated} = useContext(AuthentificatedContext)
 
     const handleNavAccueil = () => {
         setIsOpen(false)
@@ -27,8 +28,6 @@ const Header = () => {
     }
 
     const isConnexionPage = location.pathname === RoutesFE.Connexion;
-
-    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
