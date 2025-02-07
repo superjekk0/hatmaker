@@ -2,6 +2,8 @@ package com.hat.maker.service;
 
 import com.hat.maker.service.dto.ResponsableCreeDTO;
 import com.hat.maker.service.dto.ResponsableDTO;
+import com.hat.maker.service.dto.SpecialisteCreeDTO;
+import com.hat.maker.service.dto.UtilisateurDTO;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -17,15 +19,26 @@ public class ValidationService {
         validerResponsable(responsableCreeDTO);
     }
 
+    public static void validerSpecialisteFields(SpecialisteCreeDTO specialisteCreeDTO) {
+        if (specialisteCreeDTO.getMotDePasse() == null) {
+            throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);
+        }
+        validerSpecialiste(specialisteCreeDTO);
+    }
+
     private static void validerResponsable(ResponsableDTO responsableDTO) {
         validerUtilisateurFields(responsableDTO);
     }
 
-    private static void validerUtilisateurFields(ResponsableDTO responsableDTO) {
-        if (responsableDTO.getNom() == null) {
+    private static void validerSpecialiste(SpecialisteCreeDTO specialisteCreeDTO) {
+        validerUtilisateurFields(specialisteCreeDTO);
+    }
+
+    private static void validerUtilisateurFields(UtilisateurDTO utilisateurDTO) {
+        if (utilisateurDTO.getNom() == null) {
             throwFieldValidationException(UtilisateurFields.NOM);
         }
-        if (responsableDTO.getCourriel() == null) {
+        if (utilisateurDTO.getCourriel() == null) {
             throwFieldValidationException(UtilisateurFields.COURRIEL);
         }
     }
