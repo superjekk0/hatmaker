@@ -1,11 +1,3 @@
-interface CreeResponsable extends Responsable {
-    motDePasse: string;
-}
-
-interface Responsable extends Utilisateur {
-    nomCompagnie: string;
-}
-
 interface Utilisateur {
     id?: number;
     nom: string;
@@ -20,8 +12,6 @@ interface InformationsConnexion {
 
 
 export type {
-    CreeResponsable,
-    Responsable,
     Utilisateur,
     InformationsConnexion,
 };

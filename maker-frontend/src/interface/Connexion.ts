@@ -61,6 +61,19 @@ export const isResponsable = (): boolean => {
     }
 };
 
+export const isSpecialiste = (): boolean => {
+    try {
+        const decodedToken: DecodedToken | null = getDecodedToken();
+        if (!decodedToken) {
+            return false;
+        }
+        return decodedToken.authorities[0].authority === 'SPECIALISTE';
+    } catch (error) {
+        console.error('Failed to decode token', error);
+        return false;
+    }
+};
+
 export const getId = (): number | null => {
     const token = getToken();
     if (!token) {

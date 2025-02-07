@@ -1,9 +1,10 @@
 import {Link} from "react-router-dom";
 import {RoutesFE} from "../interface/Routes.ts";
-import {isResponsable} from "../interface/Connexion.ts";
+import {isResponsable, isSpecialiste} from "../interface/Connexion.ts";
 import {useContext} from "react";
 import {AuthentificatedContext} from "../context/AuthentificationContext.tsx";
 import ResponsableAccueilContenu from "../components/responsable/ResponsableAccueilContenu.tsx";
+import SpecialisteAccueilContenu from "../components/specialiste/SpecialisteAccueilContenu.tsx";
 
 const PageAccueil = () => {
     const {isAuthentificated} = useContext(AuthentificatedContext)
@@ -26,7 +27,8 @@ const PageAccueil = () => {
             {isAuthentificated && (
                 <div>
                     <h2 className="h2">Dashboard</h2>
-                    {isResponsable() && (<ResponsableAccueilContenu></ResponsableAccueilContenu>)}
+                    {isResponsable() && (<ResponsableAccueilContenu/>)}
+                    {isSpecialiste() && (<SpecialisteAccueilContenu/>)}
                 </div>
             )}
         </div>
