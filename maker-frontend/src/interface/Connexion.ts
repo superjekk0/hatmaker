@@ -74,6 +74,19 @@ export const isSpecialiste = (): boolean => {
     }
 };
 
+export const isMoniteur = (): boolean => {
+    try {
+        const decodedToken: DecodedToken | null = getDecodedToken();
+        if (!decodedToken) {
+            return false;
+        }
+        return decodedToken.authorities[0].authority === 'MONITEUR';
+    } catch (error) {
+        console.error('Failed to decode token', error);
+        return false;
+    }
+};
+
 export const getId = (): number | null => {
     const token = getToken();
     if (!token) {

@@ -1,6 +1,7 @@
 
 package com.hat.maker.service.dto;
 
+import com.hat.maker.model.Moniteur;
 import com.hat.maker.model.Responsable;
 import com.hat.maker.model.Specialiste;
 import com.hat.maker.model.Utilisateur;
@@ -24,6 +25,7 @@ public abstract class UtilisateurDTO {
         return switch (utilisateur.getClass().getSimpleName()) {
             case "Responsable" -> ResponsableDTO.toResponsableDTO((Responsable) utilisateur);
             case "Specialiste" -> SpecialisteDTO.toSpecialisteDTO((Specialiste) utilisateur);
+            case "Moniteur" -> MoniteurDTO.toMoniteurDTO((Moniteur) utilisateur);
             default -> throw new IllegalArgumentException("Type d'utilisateur inconnu");
         };
     }

@@ -18,7 +18,7 @@ public class SpecialisteController {
     private final SpecialisteService specialisteService;
 
     @PostMapping("/inscription")
-    public ResponseEntity<SpecialisteDTO> createEmployeur(@RequestBody SpecialisteCreeDTO specialisteCreeDTO) {
+    public ResponseEntity<SpecialisteDTO> createSpecialiste(@RequestBody SpecialisteCreeDTO specialisteCreeDTO) {
         SpecialisteDTO specialisteSauvegarde;
         try {
             specialisteSauvegarde = specialisteService.createSpecialiste(specialisteCreeDTO);

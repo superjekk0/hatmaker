@@ -1,9 +1,6 @@
 package com.hat.maker.service;
 
-import com.hat.maker.service.dto.ResponsableCreeDTO;
-import com.hat.maker.service.dto.ResponsableDTO;
-import com.hat.maker.service.dto.SpecialisteCreeDTO;
-import com.hat.maker.service.dto.UtilisateurDTO;
+import com.hat.maker.service.dto.*;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -26,13 +23,27 @@ public class ValidationService {
         validerSpecialiste(specialisteCreeDTO);
     }
 
+
+    public static void validerMoniteurFields(MoniteurCreeDTO moniteurCreeDTO) {
+        if (moniteurCreeDTO.getMotDePasse() == null) {
+            throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);
+        }
+        validerMoniteur(moniteurCreeDTO);
+    }
+
     private static void validerResponsable(ResponsableDTO responsableDTO) {
         validerUtilisateurFields(responsableDTO);
     }
 
-    private static void validerSpecialiste(SpecialisteCreeDTO specialisteCreeDTO) {
-        validerUtilisateurFields(specialisteCreeDTO);
+    private static void validerSpecialiste(SpecialisteDTO specialisteDTO) {
+        validerUtilisateurFields(specialisteDTO);
     }
+
+
+    private static void validerMoniteur(MoniteurDTO moniteurDTO) {
+        validerUtilisateurFields(moniteurDTO);
+    }
+
 
     private static void validerUtilisateurFields(UtilisateurDTO utilisateurDTO) {
         if (utilisateurDTO.getNom() == null) {

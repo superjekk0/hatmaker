@@ -18,7 +18,7 @@ public class ResponsableController {
     private final ResponsableService responsableService;
 
     @PostMapping("/inscription")
-    public ResponseEntity<ResponsableDTO> createEmployeur(@RequestBody ResponsableCreeDTO responsableCreeDTO) {
+    public ResponseEntity<ResponsableDTO> createResponsable(@RequestBody ResponsableCreeDTO responsableCreeDTO) {
         ResponsableDTO responsableSauvegarde;
         try {
             responsableSauvegarde = responsableService.createResponsable(responsableCreeDTO);

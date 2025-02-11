@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(POST, "/specialiste/inscription").hasAuthority("SPECIALISTE")
                                 .requestMatchers(POST, "/responsable/inscription").hasAuthority("RESPONSABLE")
+                                .requestMatchers(POST, "/moniteur/inscription").hasAuthority("MONITEUR")
                                 .requestMatchers(POST, "/connexion").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                                 .anyRequest().denyAll()
