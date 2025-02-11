@@ -38,9 +38,9 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(POST, "/specialiste/inscription").hasAuthority("SPECIALISTE")
+                                .requestMatchers(POST, "/specialiste/inscription").hasAnyAuthority("SPECIALISTE", "RESPONSABLE")
                                 .requestMatchers(POST, "/responsable/inscription").hasAuthority("RESPONSABLE")
-                                .requestMatchers(POST, "/moniteur/inscription").hasAuthority("MONITEUR")
+                                .requestMatchers(POST, "/moniteur/inscription").permitAll()
                                 .requestMatchers(POST, "/connexion").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                                 .anyRequest().denyAll()

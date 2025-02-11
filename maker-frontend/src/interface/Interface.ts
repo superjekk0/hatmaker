@@ -4,6 +4,12 @@ interface Utilisateur {
     courriel: string;
 }
 
+interface CreeMoniteur extends Moniteur {
+    motDePasse: string;
+}
+
+interface Moniteur extends Utilisateur {
+}
 
 interface InformationsConnexion {
     courriel: string;
@@ -14,4 +20,5 @@ interface InformationsConnexion {
 export type {
     Utilisateur,
     InformationsConnexion,
+    CreeMoniteur,
 };

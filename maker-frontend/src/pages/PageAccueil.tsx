@@ -11,7 +11,8 @@ const PageAccueil = () => {
     const {isAuthentificated} = useContext(AuthentificatedContext)
 
     const cards = [
-        {link: RoutesFE.Connexion, text: "connexion"},
+        {link: RoutesFE.Connexion, text: "Connexion"},
+        {link: RoutesFE.InscriptionMoniteur, text: "Inscription Moniteur"},
     ];
 
     return (
