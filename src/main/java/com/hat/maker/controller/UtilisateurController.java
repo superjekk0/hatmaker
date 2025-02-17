@@ -1,4 +1,4 @@
-package com.hat.maker.controler;
+package com.hat.maker.controller;
 
 import com.hat.maker.service.UtilisateurService;
 import com.hat.maker.service.dto.JWTAuthResponse;

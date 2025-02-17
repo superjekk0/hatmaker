@@ -9,6 +9,12 @@ public class ValidationService {
         NOM, COURRIEL, MOT_DE_PASSE
     }
 
+    public static void validerEtatFields(EtatDTO etatDTO) {
+        if (etatDTO.getNom() == null || etatDTO.getNom().isBlank()) {
+            throw new IllegalArgumentException("Le nom de l'état ne peut pas être vide");
+        }
+    }
+
     public static void validerResponsableFields(ResponsableCreeDTO responsableCreeDTO) {
         if (responsableCreeDTO.getMotDePasse() == null) {
             throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);
