@@ -1,5 +1,5 @@
-import {CreeMoniteur} from "./Interface.ts";
-import {RoutesBE} from "./Routes.ts";
+import {CreeMoniteur} from "../Interface.ts";
+import {RoutesBE} from "../Routes.ts";
 
 export const addEmployeur = async (moniteur: CreeMoniteur) => {
     const res = await fetch(RoutesBE.InscriptionMoniteur, {

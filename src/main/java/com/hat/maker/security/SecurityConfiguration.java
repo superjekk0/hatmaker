@@ -40,9 +40,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(POST, "/specialiste/inscription").hasAnyAuthority("SPECIALISTE", "RESPONSABLE")
                                 .requestMatchers(POST, "/responsable/inscription").hasAuthority("RESPONSABLE")
+                                .requestMatchers(POST, "/moniteur/inscription").permitAll()
                                 .requestMatchers(POST, "/etat").hasAuthority("RESPONSABLE")
                                 .requestMatchers(GET, "/etat").hasAuthority("RESPONSABLE")
-                                .requestMatchers(POST, "/moniteur/inscription").permitAll()
                                 .requestMatchers(POST, "/connexion").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                                 .anyRequest().denyAll()

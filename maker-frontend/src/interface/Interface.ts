@@ -16,9 +16,18 @@ interface InformationsConnexion {
     motDePasse: string;
 }
 
+interface Etat {
+    id: number;
+    nom: string;
+}
+
+export enum VueResponsable {
+    ETATS = 'ETATS',
+}
 
 export type {
     Utilisateur,
     InformationsConnexion,
     CreeMoniteur,
+    Etat
 };

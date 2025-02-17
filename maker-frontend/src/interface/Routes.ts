@@ -10,4 +10,5 @@ export enum RoutesFE {
 export enum RoutesBE {
     Connexion = `${baseBE}/connexion`,
     InscriptionMoniteur = `${baseBE}/moniteur/inscription`,
+    Etats = `${baseBE}/etat`,
 }

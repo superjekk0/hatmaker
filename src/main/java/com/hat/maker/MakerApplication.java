@@ -1,7 +1,9 @@
 package com.hat.maker;
 
+import com.hat.maker.service.EtatService;
 import com.hat.maker.service.ResponsableService;
 import com.hat.maker.service.SpecialisteService;
+import com.hat.maker.service.dto.EtatDTO;
 import com.hat.maker.service.dto.ResponsableCreeDTO;
 import com.hat.maker.service.dto.SpecialisteCreeDTO;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MakerApplication implements CommandLineRunner {
 	private final ResponsableService responsableService;
 	private final SpecialisteService specialisteService;
+	private final EtatService etatService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MakerApplication.class, args);
@@ -35,6 +38,17 @@ public class MakerApplication implements CommandLineRunner {
 				.motDePasse("1")
 				.build();
 		specialisteService.createSpecialiste(specialisteDTO);
+
+		EtatDTO etatDTO = EtatDTO.builder()
+				.id(1L)
+				.nom("ON")
+				.build();
+		EtatDTO etatDTO2 = EtatDTO.builder()
+				.id(2L)
+				.nom("OFF")
+				.build();
+		etatService.createEtat(etatDTO2);
+		etatService.createEtat(etatDTO);
 
 	}
 }
