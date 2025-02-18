@@ -45,4 +45,15 @@ public class EtatController {
         }
         return ResponseEntity.ok(etatModifie);
     }
+
+    @DeleteMapping
+    public ResponseEntity<EtatDTO> supprimerEtat(@RequestBody EtatDTO etatDTO) {
+        EtatDTO etatSupprime;
+        try {
+            etatSupprime = etatService.supprimerEtat(etatDTO);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return ResponseEntity.ok(etatSupprime);
+    }
 }

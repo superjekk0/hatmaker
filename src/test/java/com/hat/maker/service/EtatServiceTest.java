@@ -131,4 +131,46 @@ public class EtatServiceTest {
 
         assertThat(exception.getMessage()).isEqualTo("Le nom de l'état ne peut pas être vide");
     }
+
+    @Test
+    public void supprimerEtatAvecSuccess() {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        Etat etatExistant = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        Etat etatSupprime = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .deleted(true)
+                .build();
+
+        when(etatRepository.findById(1L)).thenReturn(Optional.of(etatExistant));
+        when(etatRepository.save(any(Etat.class))).thenReturn(etatSupprime);
+
+        EtatDTO e = etatService.supprimerEtat(etatDTO);
+        assertThat(e.getNom()).isEqualTo("ON");
+        assertThat(e.getId()).isEqualTo(1L);
+        assertThat(e.isDeleted()).isTrue();
+    }
+
+    @Test
+    public void supprimerEtatAvecIdInexistant_DevraisLancerIllegalArgumentException() {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        when(etatRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                etatService.supprimerEtat(etatDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("L'état n'existe pas");
+    }
 }

@@ -159,4 +159,41 @@ public class EtatControllerTest {
                         .content(om.writeValueAsString(etatDTO)))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void supprimerEtatAvecSucces() throws Exception {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        EtatDTO etatSupprimeDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .deleted(true)
+                .build();
+
+        when(etatService.supprimerEtat(any(EtatDTO.class))).thenReturn(etatSupprimeDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/etat")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(om.writeValueAsString(etatDTO)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(om.writeValueAsString(etatSupprimeDTO)));
+    }
+
+    @Test
+    void supprimerEtatAvecIdInexistant() throws Exception {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        when(etatService.supprimerEtat(any(EtatDTO.class))).thenThrow(new IllegalArgumentException("L'état n'existe pas"));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/etat")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(om.writeValueAsString(etatDTO)))
+                .andExpect(status().isBadRequest());
+    }
 }

@@ -35,6 +35,13 @@ public class EtatService {
         return EtatDTO.toEtatDTO(etatRespository.save(etat));
     }
 
+    public EtatDTO supprimerEtat(EtatDTO etatDTO) {
+        Etat etat = etatRespository.findById(etatDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("L'état n'existe pas"));
+        etat.setDeleted(true);
+        return EtatDTO.toEtatDTO(etatRespository.save(etat));
+    }
+
     public List<EtatDTO> getAllEtat() {
         return etatRespository.findAll().stream()
                 .map(EtatDTO::toEtatDTO)
