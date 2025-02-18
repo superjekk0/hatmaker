@@ -49,7 +49,7 @@ const Etats = () => {
                         <th scope="col" className="px-6 py-3">Nom</th>
                         <th scope="col" className="px-6 py-3 text-right">
                             <button
-                                className="w-10 h-10"
+                                className="w-10 h-10 bg-gray-100 rounded shadow-md"
                                 onClick={() => setIsAddModalOpen(true)}>
                                 <FontAwesomeIcon icon={faPlus} size="lg"/>
                             </button>

@@ -34,7 +34,7 @@ const AddEtatModal = ({isOpen, onClose, onSave}: AddEtatModalProps) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-4 rounded shadow-md w-1/3 relative">
+            <div className="bg-white p-4 rounded shadow-md lg:w-1/3 relative">
                 <button
                     className="absolute top-2 right-2 text-black"
                     onClick={onClose}
