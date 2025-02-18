@@ -30,6 +30,6 @@ public class MoniteurService {
                 .motDePasse(passwordEncoder.encode(moniteurCreeDTO.getMotDePasse()))
                 .build();
         Moniteur moniteurRetour = moniteurRepository.save(moniteur);
-        return MoniteurDTO.toMoniteurDTO(moniteurRetour);
+        return (MoniteurDTO) MoniteurDTO.toUtilisateurDTO(moniteurRetour);
     }
 }

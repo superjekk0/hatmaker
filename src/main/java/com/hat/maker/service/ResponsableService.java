@@ -30,6 +30,6 @@ public class ResponsableService {
                 .motDePasse(passwordEncoder.encode(responsableCreeDTO.getMotDePasse()))
                 .build();
         Responsable responsableRetour = responsableRepository.save(responsable);
-        return ResponsableDTO.toResponsableDTO(responsableRetour);
+        return (ResponsableDTO) ResponsableDTO.toUtilisateurDTO(responsableRetour);
     }
 }

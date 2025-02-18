@@ -20,6 +20,6 @@ public class Moniteur extends Utilisateur {
         super(id, nom, Credentials.builder()
                 .courriel(courriel)
                 .motDePasse(motDePasse)
-                .role(Role.MONITEUR).build());
+                .role(Role.MONITEUR).build(), false);
     }
 }

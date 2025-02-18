@@ -16,4 +16,5 @@ public class Etat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected String nom;
+    protected boolean deleted;
 }

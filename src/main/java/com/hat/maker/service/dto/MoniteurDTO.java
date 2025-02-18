@@ -19,6 +19,7 @@ public class MoniteurDTO extends UtilisateurDTO {
                 .nom(moniteur.getNom())
                 .courriel(moniteur.getCourriel())
                 .role(moniteur.getCredentials().getRole())
+                .deleted(moniteur.isDeleted())
                 .build();
     }
 }

@@ -19,6 +19,7 @@ public class ResponsableDTO extends UtilisateurDTO {
                 .nom(responsable.getNom())
                 .courriel(responsable.getCourriel())
                 .role(responsable.getCredentials().getRole())
+                .deleted(responsable.isDeleted())
                 .build();
     }
 }

@@ -16,6 +16,6 @@ public class Responsable extends Utilisateur {
         super(id, nom, Credentials.builder()
                 .courriel(courriel)
                 .motDePasse(motDePasse)
-                .role(Role.RESPONSABLE).build());
+                .role(Role.RESPONSABLE).build(), false);
     }
 }

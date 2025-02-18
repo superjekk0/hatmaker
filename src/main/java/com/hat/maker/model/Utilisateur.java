@@ -23,6 +23,7 @@ public abstract class Utilisateur {
     protected Long id;
     protected String nom;
     protected Credentials credentials;
+    protected boolean deleted;
 
     public String getCourriel(){
         return credentials.getUsername();

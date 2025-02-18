@@ -21,6 +21,7 @@ public class EtatService {
 
         Etat etat = Etat.builder()
                 .nom(etatDTO.getNom())
+                .deleted(false)
                 .build();
         Etat etatRetour = etatRespository.save(etat);
         return EtatDTO.toEtatDTO(etatRetour);

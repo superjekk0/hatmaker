@@ -20,6 +20,6 @@ public class Specialiste extends Utilisateur {
         super(id, nom, Credentials.builder()
                 .courriel(courriel)
                 .motDePasse(motDePasse)
-                .role(Role.SPECIALISTE).build());
+                .role(Role.SPECIALISTE).build(), false);
     }
 }

@@ -30,6 +30,6 @@ public class SpecialisteService {
                 .motDePasse(passwordEncoder.encode(specialisteCreeDTO.getMotDePasse()))
                 .build();
         Specialiste specialisteRetour = specialisteRepository.save(specialiste);
-        return SpecialisteDTO.toSpecialisteDTO(specialisteRetour);
+        return (SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(specialisteRetour);
     }
 }

@@ -13,11 +13,13 @@ import lombok.experimental.SuperBuilder;
 public class EtatDTO {
     private Long id;
     private String nom;
+    private boolean deleted;
 
     public static EtatDTO toEtatDTO(Etat etat) {
         return EtatDTO.builder()
             .id(etat.getId())
             .nom(etat.getNom())
+            .deleted(etat.isDeleted())
             .build();
     }
 }
