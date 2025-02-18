@@ -26,6 +26,14 @@ public class EtatService {
         return EtatDTO.toEtatDTO(etatRetour);
     }
 
+    public EtatDTO modifierEtat(EtatDTO etatDTO) {
+        ValidationService.validerEtatFields(etatDTO);
+        Etat etat = etatRespository.findById(etatDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("L'état n'existe pas"));
+        etat.setNom(etatDTO.getNom());
+        return EtatDTO.toEtatDTO(etatRespository.save(etat));
+    }
+
     public List<EtatDTO> getAllEtat() {
         return etatRespository.findAll().stream()
                 .map(EtatDTO::toEtatDTO)

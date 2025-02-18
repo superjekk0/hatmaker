@@ -34,4 +34,15 @@ public class EtatController {
     public ResponseEntity<List<EtatDTO>> getAllEtat() {
         return ResponseEntity.ok(etatService.getAllEtat());
     }
+
+    @PutMapping
+    public ResponseEntity<EtatDTO> modifierEtat(@RequestBody EtatDTO etatDTO) {
+        EtatDTO etatModifie;
+        try {
+            etatModifie = etatService.modifierEtat(etatDTO);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return ResponseEntity.ok(etatModifie);
+    }
 }

@@ -108,4 +108,55 @@ public class EtatControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{'id':1,'nom':'ON'},{'id':2,'nom':'OFF'}]"));
     }
+
+    @Test
+    void modifierEtatAvecSucces() throws Exception {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("OFF")
+                .build();
+
+        EtatDTO etatModifieDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        when(etatService.modifierEtat(any(EtatDTO.class))).thenReturn(etatModifieDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/etat")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(om.writeValueAsString(etatDTO)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(om.writeValueAsString(etatModifieDTO)));
+    }
+
+    @Test
+    void modifierEtatAvecIdInexistant() throws Exception {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("OFF")
+                .build();
+
+        when(etatService.modifierEtat(any(EtatDTO.class))).thenThrow(new IllegalArgumentException("L'état n'existe pas"));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/etat")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(om.writeValueAsString(etatDTO)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void modifierEtatAvecNomNull() throws Exception {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom(null)
+                .build();
+
+        when(etatService.modifierEtat(any(EtatDTO.class))).thenThrow(new IllegalArgumentException("Le nom de l'état ne peut pas être vide"));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/etat")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(om.writeValueAsString(etatDTO)))
+                .andExpect(status().isBadRequest());
+    }
 }
