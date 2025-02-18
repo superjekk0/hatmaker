@@ -14,7 +14,7 @@ const Etats = () => {
 
     useEffect(() => {
         getEtats().then(
-            data => setEtats(data)
+            data => setEtats(data.filter(etat => etat.deleted !== true))
         ).catch(
             error => console.error('Error fetching etats:', error)
         );

@@ -19,6 +19,7 @@ interface InformationsConnexion {
 interface Etat {
     id: number;
     nom: string;
+    deleted?: boolean;
 }
 
 export enum VueResponsable {

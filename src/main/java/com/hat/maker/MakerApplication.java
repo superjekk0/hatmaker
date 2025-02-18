@@ -49,6 +49,5 @@ public class MakerApplication implements CommandLineRunner {
 				.build();
 		etatService.createEtat(etatDTO2);
 		etatService.createEtat(etatDTO);
-
 	}
 }
