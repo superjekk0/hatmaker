@@ -1,15 +1,16 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {Etat} from "../../interface/Interface.ts";
 import {getEtats} from "../../interface/gestion/GestionEtats.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import AddEtatModal from "./AddEtatModal";
+import ModifierEtatModal from "./ModifierEtatModal";
 
 const Etats = () => {
     const [etats, setEtats] = useState<Etat[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isModifierModalOpen, setIsModifierModalOpen] = useState(false);
+    const [selectedEtat, setSelectedEtat] = useState<Etat | null>(null);
 
     useEffect(() => {
         getEtats().then(
@@ -23,6 +24,19 @@ const Etats = () => {
         setEtats([...etats, newEtat]);
     };
 
+    const handleModifierSave = (updatedEtat: Etat) => {
+        setEtats(etats.map(etat => etat.id === updatedEtat.id ? updatedEtat : etat));
+    };
+
+    const handleDelete = (deletedEtat: Etat) => {
+        setEtats(etats.filter(etat => etat.id !== deletedEtat.id));
+    };
+
+    const handleOnCloseModalModifier = () => {
+        setIsModifierModalOpen(false);
+        setSelectedEtat(null);
+    }
+
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
@@ -35,9 +49,8 @@ const Etats = () => {
                         <th scope="col" className="px-6 py-3">Nom</th>
                         <th scope="col" className="px-6 py-3 text-right">
                             <button
-                                className="w-12 h-12 bg-green-500 text-white shadow-md rounded hover:bg-green-600"
-                                onClick={() => setIsModalOpen(true)}
-                            >
+                                className="w-10 h-10"
+                                onClick={() => setIsAddModalOpen(true)}>
                                 <FontAwesomeIcon icon={faPlus} size="lg"/>
                             </button>
                         </th>
@@ -49,9 +62,11 @@ const Etats = () => {
                             <td className="px-6 py-4">{etat.nom}</td>
                             <td className="px-6 py-4 text-right">
                                 <button
-                                    className="w-12 h-12 bg-blue-500 text-white shadow-md rounded hover:bg-blue-600"
-                                    onClick={() => navigate(`/etat/${etat.id}`)}
-                                >
+                                    className="w-10 h-10"
+                                    onClick={() => {
+                                        setSelectedEtat(etat);
+                                        setIsModifierModalOpen(true);
+                                    }}>
                                     <FontAwesomeIcon icon={faChevronRight}/>
                                 </button>
                             </td>
@@ -60,7 +75,16 @@ const Etats = () => {
                     </tbody>
                 </table>
             </div>
-            <AddEtatModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleSave} />
+            <AddEtatModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleSave}/>
+            {selectedEtat && (
+                <ModifierEtatModal
+                    isOpen={isModifierModalOpen}
+                    onClose={handleOnCloseModalModifier}
+                    etat={selectedEtat}
+                    onSave={handleModifierSave}
+                    onDelete={handleDelete}
+                />
+            )}
         </div>
     );
 };

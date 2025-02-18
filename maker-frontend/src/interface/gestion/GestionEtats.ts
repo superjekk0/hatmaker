@@ -25,3 +25,29 @@ export const addEtat = async (nom: string): Promise<Etat> => {
 
     return await response.json();
 }
+
+export const modifierEtat = async (etat: Etat): Promise<Etat> => {
+    const response = await fetch(RoutesBE.Etats, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(etat),
+    });
+
+    return await response.json();
+}
+
+export const supprimerEtat = async (etat: Etat): Promise<Etat> => {
+    const response = await fetch(RoutesBE.Etats, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(etat),
+    });
+
+    return await response.json();
+}
