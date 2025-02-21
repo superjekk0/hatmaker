@@ -48,12 +48,12 @@ public class EtatServiceTest {
     }
 
     @Test
-    public void creeEtatAvecNomExistant_DevraisLancerIllegalArgumentException() {
+    public void creeEtatAvecNomExistantNonSupprime_DevraisLancerIllegalArgumentException() {
         EtatDTO etatDTO = EtatDTO.builder()
                 .nom("ON")
                 .build();
 
-        when(etatRepository.existsByNomIgnoreCase(any(String.class))).thenReturn(true);
+        when(etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 etatService.createEtat(etatDTO));
@@ -62,15 +62,23 @@ public class EtatServiceTest {
     }
 
     @Test
-    public void creerEtatAvecNomNull_DevraisLancerIllegalArgumentException() {
+    public void creeEtatAvecNomExistantSupprime_DevraisReussir() {
         EtatDTO etatDTO = EtatDTO.builder()
-                .nom(null)
+                .nom("ON")
                 .build();
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-            etatService.createEtat(etatDTO));
+        Etat etatRetour = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .deleted(false)
+                .build();
 
-        assertThat(exception.getMessage()).isEqualTo("Le nom de l'état ne peut pas être vide");
+        when(etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
+        when(etatRepository.save(any(Etat.class))).thenReturn(etatRetour);
+
+        EtatDTO e = etatService.createEtat(etatDTO);
+        assertThat(e.getNom()).isEqualTo("ON");
+        assertThat(e.getId()).isEqualTo(1L);
     }
 
     @Test
@@ -131,6 +139,74 @@ public class EtatServiceTest {
                 etatService.modifierEtat(etatDTO));
 
         assertThat(exception.getMessage()).isEqualTo("Le nom de l'état ne peut pas être vide");
+    }
+
+    @Test
+    public void modifierEtatAvecNomExistantNonSupprime_DevraisLancerIllegalArgumentException() {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("OFF")
+                .build();
+
+        Etat etatExistant = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        when(etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
+        when(etatRepository.findById(1L)).thenReturn(Optional.of(etatExistant));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                etatService.modifierEtat(etatDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("Un état avec ce nom existe déjà");
+    }
+
+    @Test
+    public void modifierEtatAvecNomExistantSupprime_DevraisReussir() {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("OFF")
+                .build();
+
+        Etat etatExistant = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        Etat etatModifie = Etat.builder()
+                .id(1L)
+                .nom("OFF")
+                .build();
+
+        when(etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
+        when(etatRepository.findById(1L)).thenReturn(Optional.of(etatExistant));
+        when(etatRepository.save(any(Etat.class))).thenReturn(etatModifie);
+
+        EtatDTO e = etatService.modifierEtat(etatDTO);
+        assertThat(e.getNom()).isEqualTo("OFF");
+        assertThat(e.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void modifierEtatAvecMemeNom_DevraisReussir() {
+        EtatDTO etatDTO = EtatDTO.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        Etat etatExistant = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        when(etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
+        when(etatRepository.findById(1L)).thenReturn(Optional.of(etatExistant));
+        when(etatRepository.save(any(Etat.class))).thenReturn(etatExistant);
+
+        EtatDTO e = etatService.modifierEtat(etatDTO);
+        assertThat(e.getNom()).isEqualTo("ON");
+        assertThat(e.getId()).isEqualTo(1L);
     }
 
     @Test
@@ -198,4 +274,6 @@ public class EtatServiceTest {
 
         assertThat(etatService.getAllEtat().size()).isEqualTo(0);
     }
+
+
 }

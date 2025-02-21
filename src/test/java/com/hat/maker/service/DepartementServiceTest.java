@@ -4,8 +4,10 @@ import com.hat.maker.model.Departement;
 import com.hat.maker.repository.DepartementRespository;
 import com.hat.maker.service.dto.DepartementDTO;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
@@ -17,11 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class DepartementServiceTest {
 
     @Mock
-    private DepartementRespository departementRespository;
+    private DepartementRespository departementRepository;
 
     @InjectMocks
     private DepartementService departementService;
@@ -29,28 +32,28 @@ public class DepartementServiceTest {
     @Test
     public void creeDepartementAvecSucces() {
         DepartementDTO departementDTO = DepartementDTO.builder()
-                .nom("Programmation")
+                .nom("Prog")
                 .build();
 
         Departement departementRetour = Departement.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Prog")
                 .build();
 
-        when(departementRespository.save(any(Departement.class))).thenReturn(departementRetour);
+        when(departementRepository.save(any(Departement.class))).thenReturn(departementRetour);
 
         DepartementDTO d = departementService.createDepartement(departementDTO);
-        assertThat(d.getNom()).isEqualTo("Programmation");
+        assertThat(d.getNom()).isEqualTo("Prog");
         assertThat(d.getId()).isEqualTo(1L);
     }
 
     @Test
-    public void creeDepartementAvecNomExistant_DevraisLancerIllegalArgumentException() {
+    public void creeDepartementAvecNomExistantNonSupprime_DevraisLancerIllegalArgumentException() {
         DepartementDTO departementDTO = DepartementDTO.builder()
-                .nom("Programmation")
+                .nom("Prog")
                 .build();
 
-        when(departementRespository.existsByNomIgnoreCase(any(String.class))).thenReturn(true);
+        when(departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 departementService.createDepartement(departementDTO));
@@ -59,22 +62,30 @@ public class DepartementServiceTest {
     }
 
     @Test
-    public void creerDepartementAvecNomNull_DevraisLancerIllegalArgumentException() {
+    public void creeDepartementAvecNomExistantSupprime_DevraisReussir() {
         DepartementDTO departementDTO = DepartementDTO.builder()
-                .nom(null)
+                .nom("Prog")
                 .build();
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                departementService.createDepartement(departementDTO));
+        Departement departementRetour = Departement.builder()
+                .id(1L)
+                .nom("Prog")
+                .deleted(false)
+                .build();
 
-        assertThat(exception.getMessage()).isEqualTo("Le nom du département ne peut pas être vide");
+        when(departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
+        when(departementRepository.save(any(Departement.class))).thenReturn(departementRetour);
+
+        DepartementDTO d = departementService.createDepartement(departementDTO);
+        assertThat(d.getNom()).isEqualTo("Prog");
+        assertThat(d.getId()).isEqualTo(1L);
     }
 
     @Test
     public void modifierDepartementAvecSucces() {
         DepartementDTO departementDTO = DepartementDTO.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Vie de camp")
                 .build();
 
         Departement departementExistant = Departement.builder()
@@ -84,14 +95,14 @@ public class DepartementServiceTest {
 
         Departement departementModifie = Departement.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Vie de camp")
                 .build();
 
-        when(departementRespository.findById(1L)).thenReturn(Optional.of(departementExistant));
-        when(departementRespository.save(any(Departement.class))).thenReturn(departementModifie);
+        when(departementRepository.findById(1L)).thenReturn(Optional.of(departementExistant));
+        when(departementRepository.save(any(Departement.class))).thenReturn(departementModifie);
 
         DepartementDTO d = departementService.modifierDepartement(departementDTO);
-        assertThat(d.getNom()).isEqualTo("Programmation");
+        assertThat(d.getNom()).isEqualTo("Vie de camp");
         assertThat(d.getId()).isEqualTo(1L);
     }
 
@@ -99,10 +110,10 @@ public class DepartementServiceTest {
     public void modifierDepartementAvecIdInexistant_DevraisLancerIllegalArgumentException() {
         DepartementDTO departementDTO = DepartementDTO.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Vie de camp")
                 .build();
 
-        when(departementRespository.findById(1L)).thenReturn(Optional.empty());
+        when(departementRepository.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 departementService.modifierDepartement(departementDTO));
@@ -119,10 +130,10 @@ public class DepartementServiceTest {
 
         Departement departementExistant = Departement.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Prog")
                 .build();
 
-        when(departementRespository.findById(1L)).thenReturn(Optional.of(departementExistant));
+        when(departementRepository.findById(1L)).thenReturn(Optional.of(departementExistant));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 departementService.modifierDepartement(departementDTO));
@@ -131,28 +142,96 @@ public class DepartementServiceTest {
     }
 
     @Test
-    public void supprimerDepartementAvecSuccess() {
+    public void modifierDepartementAvecNomExistantNonSupprime_DevraisLancerIllegalArgumentException() {
         DepartementDTO departementDTO = DepartementDTO.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Vie de camp")
                 .build();
 
         Departement departementExistant = Departement.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Prog")
+                .build();
+
+        when(departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
+        when(departementRepository.findById(1L)).thenReturn(Optional.of(departementExistant));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                departementService.modifierDepartement(departementDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("Un département avec ce nom existe déjà");
+    }
+
+    @Test
+    public void modifierDepartementAvecNomExistantSupprime_DevraisReussir() {
+        DepartementDTO departementDTO = DepartementDTO.builder()
+                .id(1L)
+                .nom("Vie de camp")
+                .build();
+
+        Departement departementExistant = Departement.builder()
+                .id(1L)
+                .nom("Prog")
+                .build();
+
+        Departement departementModifie = Departement.builder()
+                .id(1L)
+                .nom("Vie de camp")
+                .build();
+
+        when(departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
+        when(departementRepository.findById(1L)).thenReturn(Optional.of(departementExistant));
+        when(departementRepository.save(any(Departement.class))).thenReturn(departementModifie);
+
+        DepartementDTO d = departementService.modifierDepartement(departementDTO);
+        assertThat(d.getNom()).isEqualTo("Vie de camp");
+        assertThat(d.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void modifierDepartementAvecMemeNom_DevraisReussir() {
+        DepartementDTO departementDTO = DepartementDTO.builder()
+                .id(1L)
+                .nom("Prog")
+                .build();
+
+        Departement departementExistant = Departement.builder()
+                .id(1L)
+                .nom("Prog")
+                .build();
+
+        when(departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
+        when(departementRepository.findById(1L)).thenReturn(Optional.of(departementExistant));
+        when(departementRepository.save(any(Departement.class))).thenReturn(departementExistant);
+
+        DepartementDTO d = departementService.modifierDepartement(departementDTO);
+        assertThat(d.getNom()).isEqualTo("Prog");
+        assertThat(d.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void supprimerDepartementAvecSuccess() {
+        DepartementDTO departementDTO = DepartementDTO.builder()
+                .id(1L)
+                .nom("Prog")
+                .build();
+
+        Departement departementExistant = Departement.builder()
+                .id(1L)
+                .nom("Prog")
                 .build();
 
         Departement departementSupprime = Departement.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Prog")
                 .deleted(true)
                 .build();
 
-        when(departementRespository.findById(1L)).thenReturn(Optional.of(departementExistant));
-        when(departementRespository.save(any(Departement.class))).thenReturn(departementSupprime);
+        when(departementRepository.findById(1L)).thenReturn(Optional.of(departementExistant));
+        when(departementRepository.save(any(Departement.class))).thenReturn(departementSupprime);
 
         DepartementDTO d = departementService.supprimerDepartement(departementDTO);
-        assertThat(d.getNom()).isEqualTo("Programmation");
+        assertThat(d.getNom()).isEqualTo("ON");
         assertThat(d.getId()).isEqualTo(1L);
         assertThat(d.isDeleted()).isTrue();
     }
@@ -161,10 +240,10 @@ public class DepartementServiceTest {
     public void supprimerDepartementAvecIdInexistant_DevraisLancerIllegalArgumentException() {
         DepartementDTO departementDTO = DepartementDTO.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Prog")
                 .build();
 
-        when(departementRespository.findById(1L)).thenReturn(Optional.empty());
+        when(departementRepository.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 departementService.supprimerDepartement(departementDTO));
@@ -176,7 +255,7 @@ public class DepartementServiceTest {
     public void getAllDepartementAvecSuccess() {
         Departement departement1 = Departement.builder()
                 .id(1L)
-                .nom("Programmation")
+                .nom("Prog")
                 .build();
 
         Departement departement2 = Departement.builder()
@@ -184,14 +263,14 @@ public class DepartementServiceTest {
                 .nom("Vie de camp")
                 .build();
 
-        when(departementRespository.findAll()).thenReturn(List.of(departement1, departement2));
+        when(departementRepository.findAll()).thenReturn(List.of(departement1, departement2));
 
         assertThat(departementService.getAllDepartement().size()).isEqualTo(2);
     }
 
     @Test
     public void getAllDepartementAvecAucunDepartement_DevraisRetournerListeVide() {
-        when(departementRespository.findAll()).thenReturn(List.of());
+        when(departementRepository.findAll()).thenReturn(List.of());
 
         assertThat(departementService.getAllDepartement().size()).isEqualTo(0);
     }
