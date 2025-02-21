@@ -1,25 +1,25 @@
 import { useState } from 'react';
-import { Etat } from '../../interface/Interface.ts';
+import {Departement} from '../../interface/Interface.ts';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {modifierEtat, supprimerEtat} from "../../interface/gestion/GestionEtats.ts";
+import {modifierDepartement, supprimerDepartement} from "../../interface/gestion/GestionDepartements.ts";
 
-interface ModifierEtatModalProps {
+interface ModifierDepartementModalProps {
     isOpen: boolean;
     onClose: () => void;
-    etat: Etat;
-    onSave: (etat: Etat) => void;
-    onDelete: (etat: Etat) => void;
+    departement: Departement;
+    onSave: (departement: Departement) => void;
+    onDelete: (departement: Departement) => void;
 }
 
-const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : ModifierEtatModalProps) => {
-    const [nom, setNom] = useState(etat.nom);
+const ModifierDepartementModal= ({ isOpen, onClose, departement, onSave, onDelete } : ModifierDepartementModalProps) => {
+    const [nom, setNom] = useState(departement.nom);
     const [error, setError] = useState("");
 
     const handleSave = () => {
-        const updatedEtat = { ...etat, nom };
-        modifierEtat(updatedEtat).then(
-            () => onSave(updatedEtat)
+        const updatedDepartement = { ...departement, nom };
+        modifierDepartement(updatedDepartement).then(
+            () => onSave(updatedDepartement)
         ).catch(
             error => setError(error.message)
         );
@@ -27,8 +27,8 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
     };
 
     const handleDelete = () => {
-        supprimerEtat(etat).then(
-            () => onDelete(etat)
+        supprimerDepartement(departement).then(
+            () => onDelete(departement)
         ).catch(
             error => setError(error.message)
         );
@@ -46,7 +46,7 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
                 >
                     <FontAwesomeIcon icon={faTimes}/>
                 </button>
-                <h2 className="text-xl font-bold mb-4">Modifier un État</h2>
+                <h2 className="text-xl font-bold mb-4">Modifier un Département</h2>
                 <input
                     type="text"
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
@@ -68,4 +68,4 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
     );
 };
 
-export default ModifierEtatModal;
+export default ModifierDepartementModal;

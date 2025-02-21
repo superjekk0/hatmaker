@@ -22,13 +22,21 @@ interface Etat {
     deleted?: boolean;
 }
 
+interface Departement {
+    id: number;
+    nom: string;
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
+    DEPARTEMENTS = 'DEPARTEMENTS',
 }
 
 export type {
     Utilisateur,
     InformationsConnexion,
     CreeMoniteur,
-    Etat
+    Etat,
+    Departement
 };

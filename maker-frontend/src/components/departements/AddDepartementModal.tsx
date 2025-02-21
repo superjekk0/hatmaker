@@ -1,38 +1,33 @@
-import { useState } from 'react';
-import { Etat } from '../../interface/Interface.ts';
+import {useState} from "react";
+import {Etat} from "../../interface/Interface.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {modifierEtat, supprimerEtat} from "../../interface/gestion/GestionEtats.ts";
+import {addDepartement} from "../../interface/gestion/GestionDepartements.ts";
 
-interface ModifierEtatModalProps {
+interface AddDepartementModalProps {
     isOpen: boolean;
     onClose: () => void;
-    etat: Etat;
     onSave: (etat: Etat) => void;
-    onDelete: (etat: Etat) => void;
 }
 
-const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : ModifierEtatModalProps) => {
-    const [nom, setNom] = useState(etat.nom);
+const AddDepartementModal = ({isOpen, onClose, onSave}: AddDepartementModalProps) => {
+    const [nom, setNom] = useState("");
     const [error, setError] = useState("");
 
-    const handleSave = () => {
-        const updatedEtat = { ...etat, nom };
-        modifierEtat(updatedEtat).then(
-            () => onSave(updatedEtat)
-        ).catch(
-            error => setError(error.message)
-        );
-        onClose();
-    };
+    const handleSave = async () => {
+        if (!nom) {
+            setError("Le nom du département ne peut pas être vide");
+            return;
+        }
 
-    const handleDelete = () => {
-        supprimerEtat(etat).then(
-            () => onDelete(etat)
+        addDepartement(nom).then(
+            newEtat => {
+                onSave(newEtat);
+                onClose();
+            }
         ).catch(
             error => setError(error.message)
         );
-        onClose();
     };
 
     if (!isOpen) return null;
@@ -46,7 +41,7 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
                 >
                     <FontAwesomeIcon icon={faTimes}/>
                 </button>
-                <h2 className="text-xl font-bold mb-4">Modifier un État</h2>
+                <h2 className="text-xl font-bold mb-4">Ajouter un nouveau département</h2>
                 <input
                     type="text"
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
@@ -56,9 +51,6 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
                 />
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">
-                    <button className="p-2 bg-red-500 text-white rounded mr-2" onClick={handleDelete}>
-                        Supprimer
-                    </button>
                     <button className="p-2 bg-green-500 text-white rounded" onClick={handleSave}>
                         Sauvegarder
                     </button>
@@ -68,4 +60,4 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
     );
 };
 
-export default ModifierEtatModal;
+export default AddDepartementModal;
