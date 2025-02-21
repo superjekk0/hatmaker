@@ -21,6 +21,12 @@ public class ValidationService {
         }
     }
 
+    public static void validerActiviteFields(ActiviteDTO activiteDTO) {
+        if (activiteDTO.getNom() == null || activiteDTO.getNom().isBlank()) {
+            throw new IllegalArgumentException("Le nom de l'activité ne peut pas être vide");
+        }
+    }
+
     public static void validerResponsableFields(ResponsableCreeDTO responsableCreeDTO) {
         if (responsableCreeDTO.getMotDePasse() == null) {
             throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);
