@@ -23,12 +23,20 @@ const AddEtatModal = ({isOpen, onClose, onSave}: AddEtatModalProps) => {
         addEtat(nom).then(
             newEtat => {
                 onSave(newEtat);
+                setError("");
+                setNom("");
                 onClose();
             }
         ).catch(
             error => setError(error.message)
         );
     };
+
+    const handleClose = () => {
+        setError("");
+        setNom("");
+        onClose();
+    }
 
     if (!isOpen) return null;
 
@@ -37,7 +45,7 @@ const AddEtatModal = ({isOpen, onClose, onSave}: AddEtatModalProps) => {
             <div className="bg-white p-4 rounded shadow-md lg:w-1/3 relative">
                 <button
                     className="absolute top-2 right-2 text-black"
-                    onClick={onClose}
+                    onClick={handleClose}
                 >
                     <FontAwesomeIcon icon={faTimes}/>
                 </button>
@@ -47,7 +55,7 @@ const AddEtatModal = ({isOpen, onClose, onSave}: AddEtatModalProps) => {
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
                     placeholder="Nom de l'état"
                     value={nom}
-                    onChange={(e) => setNom(e.target.value)}
+                    onChange={(e) => setNom(e.target.value.trim())}
                 />
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">

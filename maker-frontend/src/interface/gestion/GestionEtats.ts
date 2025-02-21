@@ -23,6 +23,11 @@ export const addEtat = async (nom: string): Promise<Etat> => {
         body: JSON.stringify({nom}),
     });
 
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'État invalide');
+    }
+
     return await response.json();
 }
 
@@ -35,6 +40,12 @@ export const modifierEtat = async (etat: Etat): Promise<Etat> => {
         },
         body: JSON.stringify(etat),
     });
+
+    if (!response.ok) {
+        console.log("error");
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'État invalide');
+    }
 
     return await response.json();
 }

@@ -23,6 +23,11 @@ export const addDepartement = async (nom: string): Promise<Departement> => {
         body: JSON.stringify({nom}),
     });
 
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Departement invalide');
+    }
+
     return await response.json();
 }
 
@@ -35,6 +40,11 @@ export const modifierDepartement = async (departement: Departement): Promise<Dep
         },
         body: JSON.stringify(departement),
     });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Departement invalide');
+    }
 
     return await response.json();
 }

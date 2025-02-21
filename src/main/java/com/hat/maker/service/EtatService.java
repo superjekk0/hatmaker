@@ -3,6 +3,7 @@ package com.hat.maker.service;
 import com.hat.maker.model.Etat;
 import com.hat.maker.repository.EtatRespository;
 import com.hat.maker.service.dto.EtatDTO;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,9 @@ import java.util.List;
 public class EtatService {
     private final EtatRespository etatRespository;
 
+    @Transactional
     public EtatDTO createEtat(EtatDTO etatDTO) {
-        if (etatRespository.existsByNomIgnoreCase(etatDTO.getNom())) {
+        if (etatRespository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom())) {
             throw new IllegalArgumentException("Un état avec ce nom existe déjà");
         }
         ValidationService.validerEtatFields(etatDTO);
@@ -28,7 +30,12 @@ public class EtatService {
     }
 
     public EtatDTO modifierEtat(EtatDTO etatDTO) {
+        if (etatRespository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom()) &&
+            !etatDTO.getNom().equals(getEtatById(etatDTO.getId()).getNom())) {
+            throw new IllegalArgumentException("Un état avec ce nom existe déjà");
+        }
         ValidationService.validerEtatFields(etatDTO);
+
         Etat etat = getEtatById(etatDTO.getId());
         etat.setNom(etatDTO.getNom());
         return EtatDTO.toEtatDTO(etatRespository.save(etat));

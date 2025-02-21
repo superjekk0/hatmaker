@@ -42,6 +42,6 @@ public class AuthProvider implements AuthenticationProvider{
 
 	private void validateAuthentication(Authentication authentication, Utilisateur user){
 		if(!passwordEncoder.matches(authentication.getCredentials().toString(), user.getMotDePasse()))
-			throw new AuthenticationException(HttpStatus.FORBIDDEN, "Incorrect username or password");
+			throw new AuthenticationException(HttpStatus.FORBIDDEN, "Utilisateur ou mot de pass incorrect");
 	}
 }

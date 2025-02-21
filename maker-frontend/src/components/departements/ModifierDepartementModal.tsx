@@ -52,7 +52,7 @@ const ModifierDepartementModal= ({ isOpen, onClose, departement, onSave, onDelet
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
                     placeholder="Nom de l'état"
                     value={nom}
-                    onChange={(e) => setNom(e.target.value)}
+                    onChange={(e) => setNom(e.target.value.trim())}
                 />
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">

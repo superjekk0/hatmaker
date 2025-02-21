@@ -14,6 +14,7 @@ public interface EtatRespository extends JpaRepository<Etat, Long> {
             "ELSE FALSE " +
             "END " +
             "FROM Etat e " +
-            "WHERE LOWER(e.nom) = LOWER(:nom)")
-    boolean existsByNomIgnoreCase(@Param("nom") String nom);
+            "WHERE LOWER(e.nom) = LOWER(:nom)" +
+            "AND e.deleted = FALSE")
+    boolean existsByNomIgnoreCaseAndIsNotDeleted(@Param("nom") String nom);
 }

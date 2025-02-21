@@ -14,6 +14,7 @@ public interface DepartementRespository extends JpaRepository<Departement, Long>
             "ELSE FALSE " +
             "END " +
             "FROM Departement d " +
-            "WHERE LOWER(d.nom) = LOWER(:nom)")
-    boolean existsByNomIgnoreCase(@Param("nom") String nom);
+            "WHERE LOWER(d.nom) = LOWER(:nom)" +
+            "AND d.deleted = FALSE")
+    boolean existsByNomIgnoreCaseAndIsNotDeleted(@Param("nom") String nom);
 }

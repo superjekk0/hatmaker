@@ -3,6 +3,7 @@ package com.hat.maker.service;
 import com.hat.maker.model.Departement;
 import com.hat.maker.repository.DepartementRespository;
 import com.hat.maker.service.dto.DepartementDTO;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,9 @@ import java.util.List;
 public class DepartementService {
     private final DepartementRespository departementRespository;
 
+    @Transactional
     public DepartementDTO createDepartement(DepartementDTO departementDTO) {
-        if (departementRespository.existsByNomIgnoreCase(departementDTO.getNom())) {
+        if (departementRespository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom())) {
             throw new IllegalArgumentException("Un département avec ce nom existe déjà");
         }
         ValidationService.validerDepartementFields(departementDTO);
@@ -28,7 +30,12 @@ public class DepartementService {
     }
 
     public DepartementDTO modifierDepartement(DepartementDTO departementDTO) {
+        if (departementRespository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom()) &&
+            !departementDTO.getNom().equals(getDepartementById(departementDTO.getId()).getNom())) {
+            throw new IllegalArgumentException("Un département avec ce nom existe déjà");
+        }
         ValidationService.validerDepartementFields(departementDTO);
+
         Departement departement = getDepartementById(departementDTO.getId());
         departement.setNom(departementDTO.getNom());
         return DepartementDTO.toDepartementDTO(departementRespository.save(departement));

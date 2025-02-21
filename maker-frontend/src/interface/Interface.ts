@@ -28,9 +28,16 @@ interface Departement {
     deleted?: boolean;
 }
 
+interface Activite {
+    id: number;
+    nom: string;
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',
+    ACTIVITES = 'ACTIVITES',
 }
 
 export type {
@@ -38,5 +45,6 @@ export type {
     InformationsConnexion,
     CreeMoniteur,
     Etat,
-    Departement
+    Departement,
+    Activite
 };
