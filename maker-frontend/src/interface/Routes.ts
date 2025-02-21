@@ -12,4 +12,5 @@ export enum RoutesBE {
     InscriptionMoniteur = `${baseBE}/moniteur/inscription`,
     Etats = `${baseBE}/etat`,
     Departements = `${baseBE}/departement`,
+    Activites = `${baseBE}/activite`,
 }

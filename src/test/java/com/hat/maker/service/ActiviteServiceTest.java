@@ -47,12 +47,12 @@ public class ActiviteServiceTest {
     }
 
     @Test
-    public void creeActiviteAvecNomExistant_DevraisLancerIllegalArgumentException() {
+    public void creeActiviteAvecNomExistantNonSupprime_DevraisLancerIllegalArgumentException() {
         ActiviteDTO activiteDTO = ActiviteDTO.builder()
                 .nom("Tir")
                 .build();
 
-        when(activiteRepository.existsByNomIgnoreCase(any(String.class))).thenReturn(true);
+        when(activiteRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 activiteService.createActivite(activiteDTO));
@@ -61,15 +61,23 @@ public class ActiviteServiceTest {
     }
 
     @Test
-    public void creerActiviteAvecNomNull_DevraisLancerIllegalArgumentException() {
+    public void creeActiviteAvecNomExistantSupprime_DevraisReussir() {
         ActiviteDTO activiteDTO = ActiviteDTO.builder()
-                .nom(null)
+                .nom("Tir")
                 .build();
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                activiteService.createActivite(activiteDTO));
+        Activite activiteRetour = Activite.builder()
+                .id(1L)
+                .nom("Tir")
+                .deleted(false)
+                .build();
 
-        assertThat(exception.getMessage()).isEqualTo("Le nom de l'activité ne peut pas être vide");
+        when(activiteRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
+        when(activiteRepository.save(any(Activite.class))).thenReturn(activiteRetour);
+
+        ActiviteDTO a = activiteService.createActivite(activiteDTO);
+        assertThat(a.getNom()).isEqualTo("Tir");
+        assertThat(a.getId()).isEqualTo(1L);
     }
 
     @Test
@@ -130,6 +138,74 @@ public class ActiviteServiceTest {
                 activiteService.modifierActivite(activiteDTO));
 
         assertThat(exception.getMessage()).isEqualTo("Le nom de l'activité ne peut pas être vide");
+    }
+
+    @Test
+    public void modifierActiviteAvecNomExistantNonSupprime_DevraisLancerIllegalArgumentException() {
+        ActiviteDTO activiteDTO = ActiviteDTO.builder()
+                .id(1L)
+                .nom("Kayak")
+                .build();
+
+        Activite activiteExistant = Activite.builder()
+                .id(1L)
+                .nom("Tir")
+                .build();
+
+        when(activiteRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
+        when(activiteRepository.findById(1L)).thenReturn(Optional.of(activiteExistant));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                activiteService.modifierActivite(activiteDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("Une activité avec ce nom existe déjà");
+    }
+
+    @Test
+    public void modifierActiviteAvecNomExistantSupprime_DevraisReussir() {
+        ActiviteDTO activiteDTO = ActiviteDTO.builder()
+                .id(1L)
+                .nom("Kayak")
+                .build();
+
+        Activite activiteExistant = Activite.builder()
+                .id(1L)
+                .nom("Tir")
+                .build();
+
+        Activite activiteModifie = Activite.builder()
+                .id(1L)
+                .nom("Kayak")
+                .build();
+
+        when(activiteRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
+        when(activiteRepository.findById(1L)).thenReturn(Optional.of(activiteExistant));
+        when(activiteRepository.save(any(Activite.class))).thenReturn(activiteModifie);
+
+        ActiviteDTO a = activiteService.modifierActivite(activiteDTO);
+        assertThat(a.getNom()).isEqualTo("Kayak");
+        assertThat(a.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void modifierActiviteAvecMemeNom_DevraisReussir() {
+        ActiviteDTO activiteDTO = ActiviteDTO.builder()
+                .id(1L)
+                .nom("Tir")
+                .build();
+
+        Activite activiteExistant = Activite.builder()
+                .id(1L)
+                .nom("Tir")
+                .build();
+
+        when(activiteRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(true);
+        when(activiteRepository.findById(1L)).thenReturn(Optional.of(activiteExistant));
+        when(activiteRepository.save(any(Activite.class))).thenReturn(activiteExistant);
+
+        ActiviteDTO a = activiteService.modifierActivite(activiteDTO);
+        assertThat(a.getNom()).isEqualTo("Tir");
+        assertThat(a.getId()).isEqualTo(1L);
     }
 
     @Test

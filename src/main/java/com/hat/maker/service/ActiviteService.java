@@ -14,7 +14,7 @@ public class ActiviteService {
     private final ActiviteRespository activiteRespository;
 
     public ActiviteDTO createActivite(ActiviteDTO activiteDTO) {
-        if (activiteRespository.existsByNomIgnoreCase(activiteDTO.getNom())) {
+        if (activiteRespository.existsByNomIgnoreCaseAndIsNotDeleted(activiteDTO.getNom())) {
             throw new IllegalArgumentException("Une activité avec ce nom existe déjà");
         }
         ValidationService.validerActiviteFields(activiteDTO);
@@ -28,7 +28,12 @@ public class ActiviteService {
     }
 
     public ActiviteDTO modifierActivite(ActiviteDTO activiteDTO) {
+        if (activiteRespository.existsByNomIgnoreCaseAndIsNotDeleted(activiteDTO.getNom()) &&
+            !activiteDTO.getNom().equals(getActiviteById(activiteDTO.getId()).getNom())) {
+            throw new IllegalArgumentException("Une activité avec ce nom existe déjà");
+        }
         ValidationService.validerActiviteFields(activiteDTO);
+
         Activite activite = getActiviteById(activiteDTO.getId());
         activite.setNom(activiteDTO.getNom());
         return ActiviteDTO.toActiviteDTO(activiteRespository.save(activite));

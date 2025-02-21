@@ -14,6 +14,7 @@ public interface ActiviteRespository extends JpaRepository<Activite, Long> {
             "ELSE FALSE " +
             "END " +
             "FROM Activite a " +
-            "WHERE LOWER(a.nom) = LOWER(:nom)")
-    boolean existsByNomIgnoreCase(@Param("nom") String nom);
+            "WHERE LOWER(a.nom) = LOWER(:nom)" +
+            "AND a.deleted = FALSE")
+    boolean existsByNomIgnoreCaseAndIsNotDeleted(@Param("nom") String nom);
 }

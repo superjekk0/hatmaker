@@ -2,6 +2,7 @@ import {useState} from "react";
 import {VueResponsable} from "../../interface/Interface.ts";
 import Etats from "../etats/Etats.tsx";
 import Departements from "../departements/Departements.tsx";
+import Activites from "../activites/Activites.tsx";
 
 const ResponsableAccueilContenu = () => {
     const [vue, setVue] = useState(VueResponsable.ETATS);
@@ -22,6 +23,11 @@ const ResponsableAccueilContenu = () => {
                             onClick={() => setVue(VueResponsable.DEPARTEMENTS)}>
                             Départements
                         </button>
+                        <button
+                            className="btn-accueil"
+                            onClick={() => setVue(VueResponsable.ACTIVITES)}>
+                            Activités
+                        </button>
                     </div>
                 </div>
 
@@ -34,6 +40,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.DEPARTEMENTS && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <Departements/>
+                    </div>
+                )}
+                {vue === VueResponsable.ACTIVITES && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <Activites/>
                     </div>
                 )}
             </div>
