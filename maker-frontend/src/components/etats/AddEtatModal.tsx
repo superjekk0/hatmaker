@@ -20,7 +20,7 @@ const AddEtatModal = ({isOpen, onClose, onSave}: AddEtatModalProps) => {
             return;
         }
 
-        addEtat(nom).then(
+        addEtat(nom.trim()).then(
             newEtat => {
                 onSave(newEtat);
                 setError("");
@@ -55,7 +55,7 @@ const AddEtatModal = ({isOpen, onClose, onSave}: AddEtatModalProps) => {
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
                     placeholder="Nom de l'état"
                     value={nom}
-                    onChange={(e) => setNom(e.target.value.trim())}
+                    onChange={(e) => setNom(e.target.value)}
                 />
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">

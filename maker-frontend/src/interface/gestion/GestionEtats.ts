@@ -42,7 +42,6 @@ export const modifierEtat = async (etat: Etat): Promise<Etat> => {
     });
 
     if (!response.ok) {
-        console.log("error");
         const errorData = await response.json();
         throw new Error(errorData.message || 'État invalide');
     }

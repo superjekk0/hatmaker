@@ -17,7 +17,10 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
     const [error, setError] = useState("");
 
     const handleSave = () => {
-        const updatedEtat = { ...etat, nom };
+        const nomTrim = nom.trim();
+        setNom(nomTrim);
+        const updatedEtat = { ...etat, nom: nomTrim };
+
         modifierEtat(updatedEtat).then(
             () => {
                 onSave(updatedEtat)
@@ -25,10 +28,8 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
                 onClose();
             }
         ).catch(
-            error => {
-                console.log("error");
-                setError(error.message)
-            }
+            error => setError(error.message)
+
         );
     };
 
@@ -63,7 +64,7 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
                     placeholder="Nom de l'état"
                     value={nom}
-                    onChange={(e) => setNom(e.target.value.trim())}
+                    onChange={(e) => setNom(e.target.value)}
                 />
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">

@@ -17,13 +17,19 @@ const ModifierDepartementModal= ({ isOpen, onClose, departement, onSave, onDelet
     const [error, setError] = useState("");
 
     const handleSave = () => {
-        const updatedDepartement = { ...departement, nom };
+        const nomTrim = nom.trim();
+        setNom(nomTrim);
+        const updatedDepartement = { ...departement, nom : nomTrim };
+
         modifierDepartement(updatedDepartement).then(
-            () => onSave(updatedDepartement)
+            () => {
+                onSave(updatedDepartement);
+                setError("");
+                onClose();
+            }
         ).catch(
             error => setError(error.message)
         );
-        onClose();
     };
 
     const handleDelete = () => {
@@ -35,6 +41,11 @@ const ModifierDepartementModal= ({ isOpen, onClose, departement, onSave, onDelet
         onClose();
     };
 
+    const handleClose = () => {
+        setError("");
+        onClose();
+    }
+
     if (!isOpen) return null;
 
     return (
@@ -42,7 +53,7 @@ const ModifierDepartementModal= ({ isOpen, onClose, departement, onSave, onDelet
             <div className="bg-white p-4 rounded shadow-md lg:w-1/3 relative">
                 <button
                     className="absolute top-2 right-2 text-black"
-                    onClick={onClose}
+                    onClick={handleClose}
                 >
                     <FontAwesomeIcon icon={faTimes}/>
                 </button>
