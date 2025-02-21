@@ -15,6 +15,12 @@ public class ValidationService {
         }
     }
 
+    public static void validerDepartementFields(DepartementDTO departementDTO) {
+        if (departementDTO.getNom() == null || departementDTO.getNom().isBlank()) {
+            throw new IllegalArgumentException("Le nom du département ne peut pas être vide");
+        }
+    }
+
     public static void validerResponsableFields(ResponsableCreeDTO responsableCreeDTO) {
         if (responsableCreeDTO.getMotDePasse() == null) {
             throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);

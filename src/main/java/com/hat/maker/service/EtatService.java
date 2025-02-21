@@ -29,15 +29,13 @@ public class EtatService {
 
     public EtatDTO modifierEtat(EtatDTO etatDTO) {
         ValidationService.validerEtatFields(etatDTO);
-        Etat etat = etatRespository.findById(etatDTO.getId())
-                .orElseThrow(() -> new IllegalArgumentException("L'état n'existe pas"));
+        Etat etat = getEtatById(etatDTO.getId());
         etat.setNom(etatDTO.getNom());
         return EtatDTO.toEtatDTO(etatRespository.save(etat));
     }
 
     public EtatDTO supprimerEtat(EtatDTO etatDTO) {
-        Etat etat = etatRespository.findById(etatDTO.getId())
-                .orElseThrow(() -> new IllegalArgumentException("L'état n'existe pas"));
+        Etat etat = getEtatById(etatDTO.getId());
         etat.setDeleted(true);
         return EtatDTO.toEtatDTO(etatRespository.save(etat));
     }
@@ -46,5 +44,10 @@ public class EtatService {
         return etatRespository.findAll().stream()
                 .map(EtatDTO::toEtatDTO)
                 .toList();
+    }
+
+    private Etat getEtatById(Long id) {
+        return etatRespository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("L'état n'existe pas"));
     }
 }

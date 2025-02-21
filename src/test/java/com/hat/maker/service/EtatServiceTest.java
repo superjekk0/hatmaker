@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -172,5 +173,29 @@ public class EtatServiceTest {
                 etatService.supprimerEtat(etatDTO));
 
         assertThat(exception.getMessage()).isEqualTo("L'état n'existe pas");
+    }
+
+    @Test
+    public void getAllEtatAvecSuccess() {
+        Etat etat1 = Etat.builder()
+                .id(1L)
+                .nom("ON")
+                .build();
+
+        Etat etat2 = Etat.builder()
+                .id(2L)
+                .nom("OFF")
+                .build();
+
+        when(etatRepository.findAll()).thenReturn(List.of(etat1, etat2));
+
+        assertThat(etatService.getAllEtat().size()).isEqualTo(2);
+    }
+
+    @Test
+    public void getAllEtatAvecAucunEtat_DevraisRetournerListeVide() {
+        when(etatRepository.findAll()).thenReturn(List.of());
+
+        assertThat(etatService.getAllEtat().size()).isEqualTo(0);
     }
 }
