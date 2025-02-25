@@ -3,7 +3,6 @@ package com.hat.maker.service;
 import com.hat.maker.model.Departement;
 import com.hat.maker.repository.DepartementRespository;
 import com.hat.maker.service.dto.DepartementDTO;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +11,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DepartementService {
-    private final DepartementRespository departementRespository;
+    private final DepartementRespository departementRepository;
 
-    @Transactional
     public DepartementDTO createDepartement(DepartementDTO departementDTO) {
-        if (departementRespository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom())) {
+        if (departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom())) {
             throw new IllegalArgumentException("Un département avec ce nom existe déjà");
         }
         ValidationService.validerDepartementFields(departementDTO);
@@ -25,12 +23,12 @@ public class DepartementService {
                 .nom(departementDTO.getNom())
                 .deleted(false)
                 .build();
-        Departement departementRetour = departementRespository.save(departement);
+        Departement departementRetour = departementRepository.save(departement);
         return DepartementDTO.toDepartementDTO(departementRetour);
     }
 
     public DepartementDTO modifierDepartement(DepartementDTO departementDTO) {
-        if (departementRespository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom()) &&
+        if (departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom()) &&
             !departementDTO.getNom().equals(getDepartementById(departementDTO.getId()).getNom())) {
             throw new IllegalArgumentException("Un département avec ce nom existe déjà");
         }
@@ -38,23 +36,23 @@ public class DepartementService {
 
         Departement departement = getDepartementById(departementDTO.getId());
         departement.setNom(departementDTO.getNom());
-        return DepartementDTO.toDepartementDTO(departementRespository.save(departement));
+        return DepartementDTO.toDepartementDTO(departementRepository.save(departement));
     }
 
     public DepartementDTO supprimerDepartement(DepartementDTO departementDTO) {
         Departement departement = getDepartementById(departementDTO.getId());
         departement.setDeleted(true);
-        return DepartementDTO.toDepartementDTO(departementRespository.save(departement));
+        return DepartementDTO.toDepartementDTO(departementRepository.save(departement));
     }
 
     public List<DepartementDTO> getAllDepartement() {
-        return departementRespository.findAll().stream()
+        return departementRepository.findAll().stream()
                 .map(DepartementDTO::toDepartementDTO)
                 .toList();
     }
 
     private Departement getDepartementById(Long id) {
-        return departementRespository.findById(id)
+        return departementRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Le département n'existe pas"));
     }
 }

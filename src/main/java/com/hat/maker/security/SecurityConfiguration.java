@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/etat").hasAuthority("RESPONSABLE")
                                 .requestMatchers("/departement").hasAuthority("RESPONSABLE")
                                 .requestMatchers("/activite").hasAuthority("RESPONSABLE")
+                                .requestMatchers("/groupe").hasAuthority("RESPONSABLE")
                                 .requestMatchers(POST, "/connexion").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                                 .anyRequest().denyAll()

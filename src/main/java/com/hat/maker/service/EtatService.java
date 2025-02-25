@@ -3,7 +3,6 @@ package com.hat.maker.service;
 import com.hat.maker.model.Etat;
 import com.hat.maker.repository.EtatRespository;
 import com.hat.maker.service.dto.EtatDTO;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +11,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EtatService {
-    private final EtatRespository etatRespository;
+    private final EtatRespository etatRepository;
 
-    @Transactional
     public EtatDTO createEtat(EtatDTO etatDTO) {
-        if (etatRespository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom())) {
+        if (etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom())) {
             throw new IllegalArgumentException("Un état avec ce nom existe déjà");
         }
         ValidationService.validerEtatFields(etatDTO);
@@ -25,12 +23,12 @@ public class EtatService {
                 .nom(etatDTO.getNom())
                 .deleted(false)
                 .build();
-        Etat etatRetour = etatRespository.save(etat);
+        Etat etatRetour = etatRepository.save(etat);
         return EtatDTO.toEtatDTO(etatRetour);
     }
 
     public EtatDTO modifierEtat(EtatDTO etatDTO) {
-        if (etatRespository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom()) &&
+        if (etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom()) &&
             !etatDTO.getNom().equals(getEtatById(etatDTO.getId()).getNom())) {
             throw new IllegalArgumentException("Un état avec ce nom existe déjà");
         }
@@ -38,23 +36,23 @@ public class EtatService {
 
         Etat etat = getEtatById(etatDTO.getId());
         etat.setNom(etatDTO.getNom());
-        return EtatDTO.toEtatDTO(etatRespository.save(etat));
+        return EtatDTO.toEtatDTO(etatRepository.save(etat));
     }
 
     public EtatDTO supprimerEtat(EtatDTO etatDTO) {
         Etat etat = getEtatById(etatDTO.getId());
         etat.setDeleted(true);
-        return EtatDTO.toEtatDTO(etatRespository.save(etat));
+        return EtatDTO.toEtatDTO(etatRepository.save(etat));
     }
 
     public List<EtatDTO> getAllEtat() {
-        return etatRespository.findAll().stream()
+        return etatRepository.findAll().stream()
                 .map(EtatDTO::toEtatDTO)
                 .toList();
     }
 
     private Etat getEtatById(Long id) {
-        return etatRespository.findById(id)
+        return etatRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("L'état n'existe pas"));
     }
 }

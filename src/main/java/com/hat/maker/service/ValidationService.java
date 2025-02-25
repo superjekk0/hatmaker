@@ -9,6 +9,12 @@ public class ValidationService {
         NOM, COURRIEL, MOT_DE_PASSE
     }
 
+    public static void validerGroupeFields(GroupeDTO groupeDTO) {
+        if (groupeDTO.getNom() == null || groupeDTO.getNom().isBlank()) {
+            throw new IllegalArgumentException("Le nom du groupe ne peut pas être vide");
+        }
+    }
+
     public static void validerEtatFields(EtatDTO etatDTO) {
         if (etatDTO.getNom() == null || etatDTO.getNom().isBlank()) {
             throw new IllegalArgumentException("Le nom de l'état ne peut pas être vide");
