@@ -3,6 +3,7 @@ import {VueResponsable} from "../../interface/Interface.ts";
 import Etats from "../etats/Etats.tsx";
 import Departements from "../departements/Departements.tsx";
 import Activites from "../activites/Activites.tsx";
+import Groupes from "../groupes/Groupes.tsx";
 
 const ResponsableAccueilContenu = () => {
     const [vue, setVue] = useState(VueResponsable.ETATS);
@@ -28,6 +29,11 @@ const ResponsableAccueilContenu = () => {
                             onClick={() => setVue(VueResponsable.ACTIVITES)}>
                             Activités
                         </button>
+                        <button
+                            className="btn-accueil"
+                            onClick={() => setVue(VueResponsable.GROUPES)}>
+                            Groupe d'âges
+                        </button>
                     </div>
                 </div>
 
@@ -45,6 +51,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.ACTIVITES && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <Activites/>
+                    </div>
+                )}
+                {vue === VueResponsable.GROUPES && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <Groupes/>
                     </div>
                 )}
             </div>

@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroupeRepository extends JpaRepository<Groupe, Long> {
     @Query("SELECT " +
-            "CASE WHEN COUNT(e) > 0 " +
+            "CASE WHEN COUNT(g) > 0 " +
             "THEN TRUE " +
             "ELSE FALSE " +
             "END " +
-            "FROM Etat e " +
-            "WHERE LOWER(e.nom) = LOWER(:nom)" +
-            "AND e.deleted = FALSE")
+            "FROM Groupe g " +
+            "WHERE LOWER(g.nom) = LOWER(:nom)" +
+            "AND g.deleted = FALSE")
     boolean existsByNomIgnoreCaseAndIsNotDeleted(@Param("nom") String nom);
 }

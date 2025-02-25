@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { Etat } from '../../interface/Interface.ts';
+import {useState} from 'react';
+import {Groupe} from '../../interface/Interface.ts';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {modifierEtat, supprimerEtat} from "../../interface/gestion/GestionEtats.ts";
+import {modifierGroupe, supprimerGroupe} from "../../interface/gestion/GestionGroupes.ts";
 
-interface ModifierEtatModalProps {
+interface ModifierGroupeModalProps {
     isOpen: boolean;
     onClose: () => void;
-    etat: Etat;
-    onSave: (etat: Etat) => void;
-    onDelete: (etat: Etat) => void;
+    groupe: Groupe;
+    onSave: (groupe: Groupe) => void;
+    onDelete: (groupe: Groupe) => void;
 }
 
-const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : ModifierEtatModalProps) => {
-    const [nom, setNom] = useState(etat.nom);
+const ModifierGroupeModal = ({isOpen, onClose, groupe, onSave, onDelete}: ModifierGroupeModalProps) => {
+    const [nom, setNom] = useState(groupe.nom);
     const [error, setError] = useState("");
 
     const handleSave = () => {
         const nomTrim = nom.trim();
         setNom(nomTrim);
-        const updatedEtat = { ...etat, nom: nomTrim };
+        const updatedGroupe = {...groupe, nom: nomTrim};
 
-        modifierEtat(updatedEtat).then(
+        modifierGroupe(updatedGroupe).then(
             () => {
-                onSave(updatedEtat)
+                onSave(updatedGroupe)
                 setError("");
                 onClose();
             }
@@ -33,8 +33,8 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
     };
 
     const handleDelete = () => {
-        supprimerEtat(etat).then(
-            () => onDelete(etat)
+        supprimerGroupe(groupe).then(
+            () => onDelete(groupe)
         ).catch(
             error => setError(error.message)
         );
@@ -57,11 +57,11 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
                 >
                     <FontAwesomeIcon icon={faTimes}/>
                 </button>
-                <h2 className="text-xl font-bold mb-4">Modifier un État</h2>
+                <h2 className="text-xl font-bold mb-4">Modifier un Groupe d'âge</h2>
                 <input
                     type="text"
                     className={`w-full p-2 border ${error ? "border-red-500" : "border-gray-300"} rounded mb-2`}
-                    placeholder="Nom de l'état"
+                    placeholder="Nom du groupe"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
                 />
@@ -79,4 +79,4 @@ const ModifierEtatModal = ({ isOpen, onClose, etat, onSave, onDelete } : Modifie
     );
 };
 
-export default ModifierEtatModal;
+export default ModifierGroupeModal;

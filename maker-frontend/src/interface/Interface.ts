@@ -34,10 +34,17 @@ interface Activite {
     deleted?: boolean;
 }
 
+interface Groupe {
+    id: number;
+    nom: string;
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',
     ACTIVITES = 'ACTIVITES',
+    GROUPES = 'GROUPES'
 }
 
 export type {
@@ -46,5 +53,6 @@ export type {
     CreeMoniteur,
     Etat,
     Departement,
-    Activite
+    Activite,
+    Groupe,
 };
