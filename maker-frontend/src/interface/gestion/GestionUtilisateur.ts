@@ -1,7 +1,7 @@
 import {CreeMoniteur} from "../Interface.ts";
 import {RoutesBE} from "../Routes.ts";
 
-export const addEmployeur = async (moniteur: CreeMoniteur) => {
+export const addMoniteur = async (moniteur: CreeMoniteur) => {
     const res = await fetch(RoutesBE.InscriptionMoniteur, {
         method: 'POST',
         headers: {

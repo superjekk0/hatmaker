@@ -4,7 +4,7 @@ import ChargementCirculaire from "../ChargementCirculaire.tsx";
 import {trimField} from "../../interface/utils.ts";
 import {useNavigate} from "react-router-dom";
 import {RoutesFE} from "../../interface/Routes.ts";
-import {addEmployeur} from "../../interface/gestion/GestionUtilisateur.ts";
+import {addMoniteur} from "../../interface/gestion/GestionUtilisateur.ts";
 
 const FormulaireInscriptionEmployeur = () => {
     const navigate = useNavigate()
@@ -85,7 +85,7 @@ const FormulaireInscriptionEmployeur = () => {
             motDePasse: motDePasse,
         }
         setIsLoading(true)
-        addEmployeur(employeur).then(() => {
+        addMoniteur(employeur).then(() => {
             setNom('')
             setCourriel('')
             setMotDePasse('')
