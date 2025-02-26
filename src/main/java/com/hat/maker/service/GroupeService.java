@@ -51,7 +51,7 @@ public class GroupeService {
                 .toList();
     }
 
-    private Groupe getGroupeById(Long id) {
+    public Groupe getGroupeById(Long id) {
         return groupeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Le groupe n'existe pas"));
     }

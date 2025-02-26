@@ -33,6 +33,23 @@ public class ValidationService {
         }
     }
 
+    public static void validerCampeurFields(CampeurDTO campeurDTO) {
+        if (campeurDTO.getNom() == null || campeurDTO.getNom().isBlank()) {
+            throw new IllegalArgumentException("Le nom du campeur ne peut pas être vide");
+        }
+        if (campeurDTO.getPrenom() == null || campeurDTO.getPrenom().isBlank()) {
+            throw new IllegalArgumentException("Le prénom du campeur ne peut pas être vide");
+        }
+        if (campeurDTO.getGenre() == null || campeurDTO.getGenre().isBlank()) {
+            throw new IllegalArgumentException("Le genre du campeur ne peut pas être vide");
+        }
+        if (campeurDTO.getGroupe() == null) {
+            throw new IllegalArgumentException("Le groupe du campeur ne peut pas être vide");
+        }
+
+        validerGroupeFields(campeurDTO.getGroupe());
+    }
+
     public static void validerResponsableFields(ResponsableCreeDTO responsableCreeDTO) {
         if (responsableCreeDTO.getMotDePasse() == null) {
             throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);
