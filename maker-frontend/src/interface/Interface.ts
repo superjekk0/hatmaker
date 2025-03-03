@@ -40,11 +40,22 @@ interface Groupe {
     deleted?: boolean;
 }
 
+interface Campeur {
+    id: number;
+    nom: string;
+    prenom: string;
+    information: string;
+    genre: string;
+    groupe: Groupe;
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',
     ACTIVITES = 'ACTIVITES',
-    GROUPES = 'GROUPES'
+    GROUPES = 'GROUPES',
+    CAMPEURS = 'CAMPEURS',
 }
 
 export type {
@@ -55,4 +66,5 @@ export type {
     Departement,
     Activite,
     Groupe,
+    Campeur
 };

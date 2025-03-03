@@ -4,6 +4,7 @@ import Etats from "../etats/Etats.tsx";
 import Departements from "../departements/Departements.tsx";
 import Activites from "../activites/Activites.tsx";
 import Groupes from "../groupes/Groupes.tsx";
+import Campeurs from "../campeurs/Campeurs.tsx";
 
 const ResponsableAccueilContenu = () => {
     const [vue, setVue] = useState(VueResponsable.ETATS);
@@ -34,6 +35,11 @@ const ResponsableAccueilContenu = () => {
                             onClick={() => setVue(VueResponsable.GROUPES)}>
                             Groupe d'âges
                         </button>
+                        <button
+                            className="btn-accueil"
+                            onClick={() => setVue(VueResponsable.CAMPEURS)}>
+                            Campeurs
+                        </button>
                     </div>
                 </div>
 
@@ -56,6 +62,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.GROUPES && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <Groupes/>
+                    </div>
+                )}
+                {vue === VueResponsable.CAMPEURS && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <Campeurs/>
                     </div>
                 )}
             </div>
