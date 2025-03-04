@@ -20,6 +20,8 @@ public class MoniteurDTO extends UtilisateurDTO {
                 .courriel(moniteur.getCourriel())
                 .role(moniteur.getCredentials().getRole())
                 .deleted(moniteur.isDeleted())
+                .departement(moniteur.getDepartement() == null
+                        ? null : DepartementDTO.toDepartementDTO(moniteur.getDepartement()))
                 .build();
     }
 }

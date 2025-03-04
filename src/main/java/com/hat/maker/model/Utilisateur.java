@@ -13,8 +13,8 @@ import java.util.Collection;
 @Entity
 @Data
 @SuperBuilder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "utilisateur_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Utilisateur {
@@ -24,6 +24,9 @@ public abstract class Utilisateur {
     protected String nom;
     protected Credentials credentials;
     protected boolean deleted;
+
+    @ManyToOne
+    protected Departement departement;
 
     public String getCourriel(){
         return credentials.getUsername();

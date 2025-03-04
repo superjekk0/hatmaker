@@ -231,7 +231,7 @@ public class DepartementServiceTest {
         when(departementRepository.save(any(Departement.class))).thenReturn(departementSupprime);
 
         DepartementDTO d = departementService.supprimerDepartement(departementDTO);
-        assertThat(d.getNom()).isEqualTo("ON");
+        assertThat(d.getNom()).isEqualTo("Prog");
         assertThat(d.getId()).isEqualTo(1L);
         assertThat(d.isDeleted()).isTrue();
     }

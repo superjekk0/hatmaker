@@ -51,7 +51,7 @@ public class DepartementService {
                 .toList();
     }
 
-    private Departement getDepartementById(Long id) {
+    public Departement getDepartementById(Long id) {
         return departementRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Le département n'existe pas"));
     }

@@ -20,6 +20,7 @@ public abstract class UtilisateurDTO {
     protected String nom;
     protected String courriel;
     protected Role role;
+    protected DepartementDTO departement;
     protected boolean deleted;
 
     public static UtilisateurDTO toUtilisateurDTO(Utilisateur utilisateur) {

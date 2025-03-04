@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("S")
 public class Specialiste extends Utilisateur {
     @Builder
-    public Specialiste(Long id, String nom, String courriel, String motDePasse){
+    public Specialiste(Long id, String nom, String courriel, String motDePasse, Departement departement) {
         super(id, nom, Credentials.builder()
                 .courriel(courriel)
                 .motDePasse(motDePasse)
-                .role(Role.SPECIALISTE).build(), false);
+                .role(Role.SPECIALISTE).build(), false, departement);
     }
 }

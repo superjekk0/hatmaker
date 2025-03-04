@@ -20,6 +20,8 @@ public class SpecialisteDTO extends UtilisateurDTO {
                 .courriel(specialiste.getCourriel())
                 .role(specialiste.getCredentials().getRole())
                 .deleted(specialiste.isDeleted())
+                .departement(specialiste.getDepartement() == null
+                        ? null : DepartementDTO.toDepartementDTO(specialiste.getDepartement()))
                 .build();
     }
 }

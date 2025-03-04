@@ -1,7 +1,12 @@
 package com.hat.maker.service;
 
+import com.hat.maker.model.Departement;
+import com.hat.maker.model.Moniteur;
+import com.hat.maker.model.Specialiste;
+import com.hat.maker.model.auth.Role;
+import com.hat.maker.repository.UtilisateurRepository;
 import com.hat.maker.security.JwtTokenProvider;
-import com.hat.maker.service.dto.LoginDTO;
+import com.hat.maker.service.dto.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,9 +30,23 @@ public class UtilisateurServiceTest {
     @Mock
     private JwtTokenProvider jwtTokenProvider;
 
+    @Mock
+    private UtilisateurRepository utilisateurRepository;
+
+    @Mock
+    private DepartementService departementService;
+
+    @Mock
+    private MoniteurService moniteurService;
+
+    @Mock
+    private ResponsableService responsableService;
+
+    @Mock
+    private SpecialisteService specialistService;
+
     @InjectMocks
     private UtilisateurService utilisateurService;
-
 
     @Test
     public void authentificationReussi() {
@@ -59,5 +78,57 @@ public class UtilisateurServiceTest {
         assertThrows(RuntimeException.class, () -> {
             utilisateurService.connexionUtilisateur(loginDTO);
         });
+    }
+
+    @Test
+    public void modifierUtilisateurAvecSucces() {
+        SpecialisteDTO utilisateurDTO = SpecialisteDTO.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("prog")
+                        .build())
+                .role(Role.SPECIALISTE)
+                .build();
+
+        Moniteur utilisateurExistant = Moniteur.builder()
+                .id(1L)
+                .nom("Impact")
+                .courriel("oy")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(2L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        Specialiste utilisateurModifie = Specialiste.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("prog")
+                        .build())
+                .build();
+
+        when(utilisateurRepository.existsByCourriel(any(String.class))).thenReturn(false);
+        when(utilisateurRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(utilisateurExistant));
+        when(departementService.getDepartementById(any(Long.class))).thenReturn(Departement.builder()
+                .id(1L)
+                .nom("prog")
+                .build());
+        when(specialistService.createSpecialiste(any(SpecialisteCreeDTO.class))).thenReturn(SpecialisteDTO.toSpecialisteDTO(utilisateurModifie));
+
+        UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
+        assertEquals(u.getId(), 1L);
+        assertEquals(u.getNom(), "Le Impact");
+        assertEquals(u.getCourriel(), "yo");
+        assertEquals(u.getDepartement().getId(), 1L);
+        assertEquals(u.getDepartement().getNom(), "prog");
+        assertEquals(u.getRole(), Role.SPECIALISTE);
     }
 }

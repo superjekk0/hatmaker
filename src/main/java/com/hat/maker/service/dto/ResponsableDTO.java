@@ -20,6 +20,8 @@ public class ResponsableDTO extends UtilisateurDTO {
                 .courriel(responsable.getCourriel())
                 .role(responsable.getCredentials().getRole())
                 .deleted(responsable.isDeleted())
+                .departement(responsable.getDepartement() == null
+                        ? null : DepartementDTO.toDepartementDTO(responsable.getDepartement()))
                 .build();
     }
 }

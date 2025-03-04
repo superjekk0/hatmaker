@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("M")
 public class Moniteur extends Utilisateur {
     @Builder
-    public Moniteur(Long id, String nom, String courriel, String motDePasse){
+    public Moniteur(Long id, String nom, String courriel, String motDePasse, Departement departement) {
         super(id, nom, Credentials.builder()
                 .courriel(courriel)
                 .motDePasse(motDePasse)
-                .role(Role.MONITEUR).build(), false);
+                .role(Role.MONITEUR).build(), false, departement);
     }
 }

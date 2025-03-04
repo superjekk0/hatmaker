@@ -64,12 +64,20 @@ public class ValidationService {
         validerSpecialiste(specialisteCreeDTO);
     }
 
-
     public static void validerMoniteurFields(MoniteurCreeDTO moniteurCreeDTO) {
         if (moniteurCreeDTO.getMotDePasse() == null) {
             throwFieldValidationException(UtilisateurFields.MOT_DE_PASSE);
         }
         validerMoniteur(moniteurCreeDTO);
+    }
+
+    public static void validerUtilisateurFields(UtilisateurDTO utilisateurDTO) {
+        if (utilisateurDTO.getNom() == null) {
+            throwFieldValidationException(UtilisateurFields.NOM);
+        }
+        if (utilisateurDTO.getCourriel() == null) {
+            throwFieldValidationException(UtilisateurFields.COURRIEL);
+        }
     }
 
     private static void validerResponsable(ResponsableDTO responsableDTO) {
@@ -83,16 +91,6 @@ public class ValidationService {
 
     private static void validerMoniteur(MoniteurDTO moniteurDTO) {
         validerUtilisateurFields(moniteurDTO);
-    }
-
-
-    private static void validerUtilisateurFields(UtilisateurDTO utilisateurDTO) {
-        if (utilisateurDTO.getNom() == null) {
-            throwFieldValidationException(UtilisateurFields.NOM);
-        }
-        if (utilisateurDTO.getCourriel() == null) {
-            throwFieldValidationException(UtilisateurFields.COURRIEL);
-        }
     }
 
     private static void throwFieldValidationException(UtilisateurFields field) {

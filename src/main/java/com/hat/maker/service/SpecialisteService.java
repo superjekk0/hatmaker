@@ -1,6 +1,7 @@
 package com.hat.maker.service;
 
 
+import com.hat.maker.model.Departement;
 import com.hat.maker.model.Specialiste;
 import com.hat.maker.repository.SpecialisteRepository;
 import com.hat.maker.repository.UtilisateurRepository;
@@ -28,6 +29,10 @@ public class SpecialisteService {
                 .nom(specialisteCreeDTO.getNom())
                 .courriel(specialisteCreeDTO.getCourriel())
                 .motDePasse(passwordEncoder.encode(specialisteCreeDTO.getMotDePasse()))
+                .departement(Departement.builder()
+                        .id(specialisteCreeDTO.getDepartement().getId())
+                        .nom(specialisteCreeDTO.getDepartement().getNom())
+                        .build())
                 .build();
         Specialiste specialisteRetour = specialisteRepository.save(specialiste);
         return (SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(specialisteRetour);
