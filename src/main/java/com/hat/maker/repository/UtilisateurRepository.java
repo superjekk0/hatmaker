@@ -10,9 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
-    @Query("""
-        select u from Utilisateur u where trim(lower(u.credentials.courriel)) = :courriel
-    """)
+    @Query("select u from Utilisateur u where trim(lower(u.credentials.courriel)) = :courriel and not u.deleted")
     Optional<Utilisateur> findUtilisateurByCourriel(@Param("courriel") String courriel);
 
     @Query("select count(u) > 0 from Utilisateur u where trim(lower(u.credentials.courriel)) = :courriel and not u.deleted")

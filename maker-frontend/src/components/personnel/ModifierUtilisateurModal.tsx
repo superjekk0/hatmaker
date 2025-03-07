@@ -15,6 +15,7 @@ interface ModifierUtilisateurModalProps {
 
 const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelete}: ModifierUtilisateurModalProps) => {
     const [nom, setNom] = useState(utilisateur.nom);
+    const [courriel, setCourriel] = useState(utilisateur.courriel);
     const [departement, setDepartement] = useState<Departement | undefined>(utilisateur.departement);
     const [departements, setDepartements] = useState<Departement[]>([]);
     const [error, setError] = useState("");
@@ -36,6 +37,7 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
         const updatedUtilisateur = {
             ...utilisateur,
             nom: nom.trim(),
+            courriel: courriel.trim(),
             departement
         };
 
@@ -46,7 +48,7 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
                 onClose();
             }
         ).catch(
-            error => setError(error.message)
+            error => setError(error)
         );
     };
 
@@ -54,7 +56,7 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
         supprimerUtilisateur(utilisateur).then(
             () => onDelete(utilisateur)
         ).catch(
-            error => setError(error.message)
+            error => setError(error)
         );
         onClose();
     };
@@ -78,10 +80,17 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
                 <h2 className="text-xl font-bold mb-4">Modifier un membre du Personnel</h2>
                 <input
                     type="text"
-                    className={`w-[49%] p-2 border border-gray-300 rounded mb-2`}
+                    className={`w-full p-2 border border-gray-300 rounded mb-2`}
                     placeholder="Nom"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
+                />
+                <input
+                    type="text"
+                    className={`w-full p-2 border border-gray-300 rounded mb-2`}
+                    placeholder="Courriel"
+                    value={courriel}
+                    onChange={(e) => setCourriel(e.target.value)}
                 />
                 <select
                     className={`w-full p-2 border border-gray-300 rounded mb-2`}
