@@ -37,7 +37,7 @@ public class UtilisateurService {
         Utilisateur utilisateur = getUtilisateurById(utilisateurDTO.getId());
 
         if (utilisateurRepository.existsByCourriel(utilisateurDTO.getCourriel()) &&
-            !utilisateurDTO.getCourriel().equals(utilisateur.getCredentials().getCourriel())) {
+            utilisateurDTO.getId() != utilisateur.getId()) {
             ValidationService.throwCourrielDejaUtilise();
         }
 

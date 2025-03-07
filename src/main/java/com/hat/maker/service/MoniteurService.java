@@ -1,6 +1,7 @@
 package com.hat.maker.service;
 
 
+import com.hat.maker.model.Departement;
 import com.hat.maker.model.Moniteur;
 import com.hat.maker.repository.MoniteurRepository;
 import com.hat.maker.repository.UtilisateurRepository;
@@ -28,6 +29,12 @@ public class MoniteurService {
                 .nom(moniteurCreeDTO.getNom())
                 .courriel(moniteurCreeDTO.getCourriel())
                 .motDePasse(passwordEncoder.encode(moniteurCreeDTO.getMotDePasse()))
+                .departement(moniteurCreeDTO.getDepartement() != null ?
+                        Departement.builder()
+                                .id(moniteurCreeDTO.getDepartement().getId())
+                                .nom(moniteurCreeDTO.getDepartement().getNom())
+                                .build()
+                        : null)
                 .build();
         Moniteur moniteurRetour = moniteurRepository.save(moniteur);
         return (MoniteurDTO) MoniteurDTO.toUtilisateurDTO(moniteurRetour);

@@ -1,6 +1,7 @@
 package com.hat.maker.service;
 
 
+import com.hat.maker.model.Departement;
 import com.hat.maker.model.Responsable;
 import com.hat.maker.repository.ResponsableRepository;
 import com.hat.maker.repository.UtilisateurRepository;
@@ -28,6 +29,10 @@ public class ResponsableService {
                 .nom(responsableCreeDTO.getNom())
                 .courriel(responsableCreeDTO.getCourriel())
                 .motDePasse(passwordEncoder.encode(responsableCreeDTO.getMotDePasse()))
+                .departement(Departement.builder()
+                        .id(responsableCreeDTO.getDepartement().getId())
+                        .nom(responsableCreeDTO.getDepartement().getNom())
+                        .build())
                 .build();
         Responsable responsableRetour = responsableRepository.save(responsable);
         return (ResponsableDTO) ResponsableDTO.toUtilisateurDTO(responsableRetour);
