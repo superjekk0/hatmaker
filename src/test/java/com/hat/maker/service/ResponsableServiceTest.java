@@ -1,8 +1,10 @@
 package com.hat.maker.service;
 
+import com.hat.maker.model.Departement;
 import com.hat.maker.model.Responsable;
 import com.hat.maker.repository.ResponsableRepository;
 import com.hat.maker.repository.UtilisateurRepository;
+import com.hat.maker.service.dto.DepartementDTO;
 import com.hat.maker.service.dto.ResponsableCreeDTO;
 import com.hat.maker.service.dto.ResponsableDTO;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,10 @@ public class ResponsableServiceTest {
                 .nom("Le Impact")
                 .courriel("leimpact@cc.com")
                 .motDePasse("1")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
                 .build();
 
         Responsable responsableRetour = Responsable.builder()
@@ -43,6 +49,10 @@ public class ResponsableServiceTest {
                 .nom("Le Impact")
                 .courriel("leimpact@cc.com")
                 .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
                 .build();
 
         when(responsableRepository.save(any(Responsable.class))).thenReturn(responsableRetour);

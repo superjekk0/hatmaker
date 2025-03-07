@@ -1,8 +1,10 @@
 package com.hat.maker.service;
 
+import com.hat.maker.model.Departement;
 import com.hat.maker.model.Specialiste;
 import com.hat.maker.repository.SpecialisteRepository;
 import com.hat.maker.repository.UtilisateurRepository;
+import com.hat.maker.service.dto.DepartementDTO;
 import com.hat.maker.service.dto.SpecialisteCreeDTO;
 import com.hat.maker.service.dto.SpecialisteDTO;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,10 @@ public class SpecialisteServiceTest {
                 .nom("Le Impact")
                 .courriel("leimpact@cc.com")
                 .motDePasse("1")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("Prog")
+                        .build())
                 .build();
 
         Specialiste specialisteRetour = Specialiste.builder()
@@ -43,6 +49,10 @@ public class SpecialisteServiceTest {
                 .nom("Le Impact")
                 .courriel("leimpact@cc.com")
                 .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Prog")
+                        .build())
                 .build();
 
         when(specialisteRepository.save(any(Specialiste.class))).thenReturn(specialisteRetour);

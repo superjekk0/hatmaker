@@ -1,6 +1,7 @@
 
 package com.hat.maker.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.hat.maker.model.Moniteur;
 import com.hat.maker.model.Responsable;
 import com.hat.maker.model.Specialiste;
@@ -15,6 +16,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MoniteurDTO.class, name = "moniteur"),
+        @JsonSubTypes.Type(value = SpecialisteDTO.class, name = "specialiste"),
+        @JsonSubTypes.Type(value = ResponsableDTO.class, name = "responsable")
+})
 public abstract class UtilisateurDTO {
     protected Long id;
     protected String nom;

@@ -1,8 +1,10 @@
 package com.hat.maker.service;
 
+import com.hat.maker.model.Departement;
 import com.hat.maker.model.Moniteur;
 import com.hat.maker.repository.MoniteurRepository;
 import com.hat.maker.repository.UtilisateurRepository;
+import com.hat.maker.service.dto.DepartementDTO;
 import com.hat.maker.service.dto.MoniteurCreeDTO;
 import com.hat.maker.service.dto.MoniteurDTO;
 import org.junit.jupiter.api.Test;
@@ -43,6 +45,38 @@ public class MoniteurServiceTest {
                 .nom("Le Impact")
                 .courriel("leimpact@cc.com")
                 .motDePasse("1")
+                .build();
+
+        when(moniteurRepository.save(any(Moniteur.class))).thenReturn(moniteurRetour);
+        when(utilisateurRepository.existsByCourriel(any(String.class))).thenReturn(false);
+
+        MoniteurDTO m = moniteurService.createMoniteur(moniteurCreeDTO);
+        assertThat(m.getNom()).isEqualTo("Le Impact");
+        assertThat(m.getId()).isEqualTo(1L);
+        assertThat(m.getCourriel()).isEqualTo("leimpact@cc.com");
+    }
+
+    @Test
+    public void creeMoniteurAvecDepartementAvecSucces() {
+        MoniteurCreeDTO moniteurCreeDTO = MoniteurCreeDTO.builder()
+                .nom("Le Impact")
+                .courriel("leimpact@cc.com")
+                .motDePasse("1")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        Moniteur moniteurRetour = Moniteur.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("leimpact@cc.com")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
                 .build();
 
         when(moniteurRepository.save(any(Moniteur.class))).thenReturn(moniteurRetour);

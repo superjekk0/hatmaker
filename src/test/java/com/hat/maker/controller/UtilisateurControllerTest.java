@@ -2,8 +2,7 @@ package com.hat.maker.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hat.maker.service.UtilisateurService;
-import com.hat.maker.service.dto.JWTAuthResponse;
-import com.hat.maker.service.dto.LoginDTO;
+import com.hat.maker.service.dto.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
