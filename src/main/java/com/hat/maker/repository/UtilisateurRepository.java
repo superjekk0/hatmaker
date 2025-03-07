@@ -15,7 +15,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     """)
     Optional<Utilisateur> findUtilisateurByCourriel(@Param("courriel") String courriel);
 
-    @Query("select count(u) > 0 from Utilisateur u where trim(lower(u.credentials.courriel)) = :courriel")
+    @Query("select count(u) > 0 from Utilisateur u where trim(lower(u.credentials.courriel)) = :courriel and not u.deleted")
     Boolean existsByCourriel(String courriel);
 
 }

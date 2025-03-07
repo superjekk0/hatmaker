@@ -114,7 +114,7 @@ export const connexion = async (infosConnexion: InformationsConnexion) => {
         if (res.status >= 500) {
             throw "eServeur";
         }
-        throw "eConnexion";
+        throw "Connexion refusé";
     } else {
         const data = await res.json()
         setToken(data.accessToken)

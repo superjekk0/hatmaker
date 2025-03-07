@@ -36,8 +36,11 @@ public class AuthProvider implements AuthenticationProvider{
 	}
 
 	private Utilisateur loadUserByEmail(String email) throws UsernameNotFoundException{
-		return utilisateurRepository.findUtilisateurByCourriel(email)
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByCourriel(email)
 			.orElseThrow(UserNotFoundException::new);
+		if (utilisateur.isDeleted())
+			throw new UsernameNotFoundException("Utilisateur non trouvé");
+		return utilisateur;
 	}
 
 	private void validateAuthentication(Authentication authentication, Utilisateur user){

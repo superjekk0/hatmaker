@@ -38,17 +38,20 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(POST, "/specialiste/inscription").hasAnyAuthority("SPECIALISTE", "RESPONSABLE")
-                                .requestMatchers(POST, "/responsable/inscription").hasAuthority("RESPONSABLE")
-                                .requestMatchers(POST, "/moniteur/inscription").permitAll()
-                                .requestMatchers("/etat").hasAuthority("RESPONSABLE")
-                                .requestMatchers("/departement").hasAuthority("RESPONSABLE")
-                                .requestMatchers("/activite").hasAuthority("RESPONSABLE")
-                                .requestMatchers("/groupe").hasAuthority("RESPONSABLE")
-                                .requestMatchers("/campeur").hasAuthority("RESPONSABLE")
-                                .requestMatchers("/connexion").permitAll()
-                                .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                                .anyRequest().denyAll()
+                        .requestMatchers(POST, "/modifier-utilisateur").hasAuthority("RESPONSABLE")
+                        .requestMatchers(DELETE, "/supprimer-utilisateur").hasAuthority("RESPONSABLE")
+                        .requestMatchers(GET, "/utilisateurs").hasAuthority("RESPONSABLE")
+                        .requestMatchers(POST, "/specialiste/inscription").hasAnyAuthority("SPECIALISTE", "RESPONSABLE")
+                        .requestMatchers(POST, "/responsable/inscription").hasAuthority("RESPONSABLE")
+                        .requestMatchers(POST, "/moniteur/inscription").permitAll()
+                        .requestMatchers("/etat").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/departement").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/activite").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/groupe").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/campeur").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/connexion").permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .anyRequest().denyAll()
                 )
                 .sessionManagement((secuManagement) -> {
                     secuManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -61,7 +64,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public CorsFilter corsFilter(){
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
@@ -80,12 +83,12 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception{
+    ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

@@ -23,7 +23,6 @@ import java.util.Collections;
 @AllArgsConstructor
 @ToString
 public class Credentials implements UserDetails {
-    @Column(unique = true)
     protected String courriel;
     protected String motDePasse;
     @Enumerated(EnumType.STRING)

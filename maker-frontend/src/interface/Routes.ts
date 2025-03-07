@@ -15,4 +15,7 @@ export enum RoutesBE {
     Activites = `${baseBE}/activite`,
     Groupes = `${baseBE}/groupe`,
     Campeurs = `${baseBE}/campeur`,
+    ModifierUtilisateur = `${baseBE}/modifier-utilisateur`,
+    Utilisateurs = `${baseBE}/utilisateurs`,
+    SupprimerUtilisateur = `${baseBE}/supprimer-utilisateur`,
 }

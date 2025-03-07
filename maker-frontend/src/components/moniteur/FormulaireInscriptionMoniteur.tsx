@@ -82,7 +82,7 @@ const FormulaireInscriptionEmployeur = () => {
         const employeur: CreeMoniteur = {
             nom: nom,
             courriel: courriel,
-            motDePasse: motDePasse,
+            motDePasse: motDePasse
         }
         setIsLoading(true)
         addMoniteur(employeur).then(() => {
