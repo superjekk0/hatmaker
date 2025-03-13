@@ -37,4 +37,17 @@ public class SpecialisteService {
         Specialiste specialisteRetour = specialisteRepository.save(specialiste);
         return (SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(specialisteRetour);
     }
+
+    public SpecialisteDTO updateSpecialiste(SpecialisteCreeDTO specialisteCreeDTO) {
+        Specialiste specialiste = Specialiste.builder()
+                .nom(specialisteCreeDTO.getNom())
+                .courriel(specialisteCreeDTO.getCourriel())
+                .motDePasse(specialisteCreeDTO.getMotDePasse())
+                .departement(Departement.builder()
+                        .id(specialisteCreeDTO.getDepartement().getId())
+                        .nom(specialisteCreeDTO.getDepartement().getNom())
+                        .build())
+                .build();
+        return (SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(specialisteRepository.save(specialiste));
+    }
 }

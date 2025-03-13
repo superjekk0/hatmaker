@@ -39,4 +39,19 @@ public class MoniteurService {
         Moniteur moniteurRetour = moniteurRepository.save(moniteur);
         return (MoniteurDTO) MoniteurDTO.toUtilisateurDTO(moniteurRetour);
     }
+
+    public MoniteurDTO updateMoniteur(MoniteurCreeDTO moniteurCreeDTO) {
+        Moniteur moniteur = Moniteur.builder()
+                .nom(moniteurCreeDTO.getNom())
+                .courriel(moniteurCreeDTO.getCourriel())
+                .motDePasse(moniteurCreeDTO.getMotDePasse())
+                .departement(moniteurCreeDTO.getDepartement() != null ?
+                        Departement.builder()
+                                .id(moniteurCreeDTO.getDepartement().getId())
+                                .nom(moniteurCreeDTO.getDepartement().getNom())
+                                .build()
+                        : null)
+                .build();
+        return (MoniteurDTO) MoniteurDTO.toUtilisateurDTO(moniteurRepository.save(moniteur));
+    }
 }

@@ -126,4 +126,36 @@ public class SpecialisteServiceTest {
 
         assertThat(exception.getMessage()).isEqualTo("Mot de pass NULL");
     }
+
+    @Test
+    public void updateSpecialisteAvecSucces() {
+        SpecialisteCreeDTO specialisteCreeDTO = SpecialisteCreeDTO.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("Prog")
+                        .build())
+                .build();
+
+        Specialiste specialisteRetour = Specialiste.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Prog")
+                        .build())
+                .build();
+
+        when(specialisteRepository.save(any(Specialiste.class))).thenReturn(specialisteRetour);
+
+        SpecialisteDTO s = specialisteService.updateSpecialiste(specialisteCreeDTO);
+        assertThat(s.getNom()).isEqualTo("Le Impact");
+        assertThat(s.getId()).isEqualTo(1L);
+        assertThat(s.getCourriel()).isEqualTo("yo");
+    }
 }

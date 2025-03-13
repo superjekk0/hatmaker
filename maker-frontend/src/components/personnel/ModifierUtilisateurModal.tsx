@@ -1,4 +1,4 @@
-import {Departement, Utilisateur} from "../../interface/Interface.ts";
+import {Departement, Utilisateur, Role} from "../../interface/Interface.ts";
 import {useEffect, useState} from "react";
 import {getDepartements} from "../../interface/gestion/GestionDepartements.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -16,6 +16,7 @@ interface ModifierUtilisateurModalProps {
 const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelete}: ModifierUtilisateurModalProps) => {
     const [nom, setNom] = useState(utilisateur.nom);
     const [courriel, setCourriel] = useState(utilisateur.courriel);
+    const [role, setRole] = useState(utilisateur.role);
     const [departement, setDepartement] = useState<Departement | undefined>(utilisateur.departement);
     const [departements, setDepartements] = useState<Departement[]>([]);
     const [error, setError] = useState("");
@@ -38,7 +39,8 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
             ...utilisateur,
             nom: nom.trim(),
             courriel: courriel.trim(),
-            departement
+            departement,
+            role
         };
 
         modifierUtilisateur(updatedUtilisateur).then(
@@ -99,6 +101,15 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
                     <option value="" disabled>Sélectionner un departement</option>
                     {departements.map(departement => (
                         <option key={departement.id} value={departement.id}>{departement.nom}</option>
+                    ))}
+                </select>
+                <select
+                    className={`w-full p-2 border border-gray-300 rounded mb-2`}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value as Role)}>
+                    <option value="" disabled>Sélectionner un rôle</option>
+                    {Object.values(Role).map(role => (
+                        <option key={role} value={role}>{role}</option>
                     ))}
                 </select>
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}

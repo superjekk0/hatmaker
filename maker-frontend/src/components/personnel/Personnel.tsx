@@ -53,6 +53,8 @@ const Personnel = () => {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-300">
                     <tr>
                         <th scope="col" className="px-6 py-3">Nom</th>
+                        <th scope="col" className="px-6 py-3">Courriel</th>
+                        <th scope="col" className="px-6 py-3">Role</th>
                         <th scope="col" className="px-6 py-3">
                             <div className="h-10"></div>
                         </th>
@@ -62,6 +64,8 @@ const Personnel = () => {
                     {filteredUtilisateurs.map((utilisateur) => (
                         <tr key={utilisateur.id} className="bg-white hover:bg-gray-50 border-b">
                             <td className="px-6 py-4">{utilisateur.nom}</td>
+                            <td className="px-6 py-4">{utilisateur.courriel}</td>
+                            <td className="px-6 py-4">{utilisateur.role}</td>
                             <td className="px-6 py-4 text-right">
                                 <button
                                     className="w-10 h-10"

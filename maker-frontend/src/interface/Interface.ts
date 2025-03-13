@@ -4,6 +4,7 @@ interface Utilisateur {
     courriel: string;
     departement?: Departement;
     deleted?: boolean;
+    role?: Role;
 }
 
 interface CreeMoniteur extends Moniteur {
@@ -59,6 +60,12 @@ export enum VueResponsable {
     GROUPES = 'GROUPES',
     CAMPEURS = 'CAMPEURS',
     PERSONNEL = 'PERSONNEL'
+}
+
+export enum Role {
+    MONITEUR = 'MONITEUR',
+    RESPONSABLE = 'RESPONSABLE',
+    SPECIALISTE = 'SPECIALISTE'
 }
 
 export type {

@@ -80,7 +80,7 @@ public class UtilisateurService {
                         .motDePasse(utilisateur.getCredentials().getMotDePasse())
                         .departement(DepartementDTO.toDepartementDTO(utilisateur.getDepartement()))
                         .build();
-                return moniteurService.createMoniteur(moniteurCreeDTO);
+                return moniteurService.updateMoniteur(moniteurCreeDTO);
             }
             case RESPONSABLE -> {
                 ResponsableCreeDTO responsableCreeDTO = ResponsableCreeDTO.builder()
@@ -89,7 +89,7 @@ public class UtilisateurService {
                         .motDePasse(utilisateur.getCredentials().getMotDePasse())
                         .departement(DepartementDTO.toDepartementDTO(utilisateur.getDepartement()))
                         .build();
-                return responsableService.createResponsable(responsableCreeDTO);
+                return responsableService.updateResponsable(responsableCreeDTO);
             }
             case SPECIALISTE -> {
                 SpecialisteCreeDTO specialisteCreeDTO = SpecialisteCreeDTO.builder()
@@ -98,7 +98,7 @@ public class UtilisateurService {
                         .motDePasse(utilisateur.getCredentials().getMotDePasse())
                         .departement(DepartementDTO.toDepartementDTO(utilisateur.getDepartement()))
                         .build();
-                return specialistService.createSpecialiste(specialisteCreeDTO);
+                return specialistService.updateSpecialiste(specialisteCreeDTO);
             }
         }
 

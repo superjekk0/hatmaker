@@ -150,4 +150,35 @@ public class MoniteurServiceTest {
 
         assertThat(exception.getMessage()).isEqualTo("Mot de pass NULL");
     }
+
+    @Test
+    public void updateMoniteurAvecSucces() {
+        MoniteurCreeDTO moniteurCreeDTO = MoniteurCreeDTO.builder()
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        Moniteur moniteurRetour = Moniteur.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        when(moniteurRepository.save(any(Moniteur.class))).thenReturn(moniteurRetour);
+
+        MoniteurDTO m = moniteurService.updateMoniteur(moniteurCreeDTO);
+        assertThat(m.getNom()).isEqualTo("Le Impact");
+        assertThat(m.getId()).isEqualTo(1L);
+        assertThat(m.getCourriel()).isEqualTo("yo");
+    }
 }

@@ -126,4 +126,35 @@ public class ResponsableServiceTest {
 
         assertThat(exception.getMessage()).isEqualTo("Mot de pass NULL");
     }
+
+    @Test
+    public void updateResponsableAvecSucces() {
+        ResponsableCreeDTO responsableCreeDTO = ResponsableCreeDTO.builder()
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(DepartementDTO.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        Responsable responsableRetour = Responsable.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        when(responsableRepository.save(any(Responsable.class))).thenReturn(responsableRetour);
+
+        ResponsableDTO r = responsableService.updateResponsable(responsableCreeDTO);
+        assertThat(r.getNom()).isEqualTo("Le Impact");
+        assertThat(r.getId()).isEqualTo(1L);
+        assertThat(r.getCourriel()).isEqualTo("yo");
+    }
 }

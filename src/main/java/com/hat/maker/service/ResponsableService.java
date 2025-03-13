@@ -37,4 +37,17 @@ public class ResponsableService {
         Responsable responsableRetour = responsableRepository.save(responsable);
         return (ResponsableDTO) ResponsableDTO.toUtilisateurDTO(responsableRetour);
     }
+
+    public ResponsableDTO updateResponsable(ResponsableCreeDTO responsableCreeDTO) {
+        Responsable responsable = Responsable.builder()
+                .nom(responsableCreeDTO.getNom())
+                .courriel(responsableCreeDTO.getCourriel())
+                .motDePasse(responsableCreeDTO.getMotDePasse())
+                .departement(Departement.builder()
+                        .id(responsableCreeDTO.getDepartement().getId())
+                        .nom(responsableCreeDTO.getDepartement().getNom())
+                        .build())
+                .build();
+        return (ResponsableDTO) ResponsableDTO.toUtilisateurDTO(responsableRepository.save(responsable));
+    }
 }

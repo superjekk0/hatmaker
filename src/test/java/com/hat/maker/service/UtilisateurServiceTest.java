@@ -118,7 +118,7 @@ public class UtilisateurServiceTest {
                 .id(1L)
                 .nom("prog")
                 .build());
-        when(specialistService.createSpecialiste(any(SpecialisteCreeDTO.class))).thenReturn((SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(utilisateurModifie));
+        when(specialistService.updateSpecialiste(any(SpecialisteCreeDTO.class))).thenReturn((SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(utilisateurModifie));
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
         assertEquals(u.getId(), 1L);
@@ -170,7 +170,7 @@ public class UtilisateurServiceTest {
                 .id(1L)
                 .nom("Vie de camp")
                 .build());
-        when(moniteurService.createMoniteur(any(MoniteurCreeDTO.class))).thenReturn((MoniteurDTO) MoniteurDTO.toUtilisateurDTO(utilisateurModifie));
+        when(moniteurService.updateMoniteur(any(MoniteurCreeDTO.class))).thenReturn((MoniteurDTO) MoniteurDTO.toUtilisateurDTO(utilisateurModifie));
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
         assertEquals(u.getId(), 1L);
@@ -222,7 +222,7 @@ public class UtilisateurServiceTest {
                 .id(1L)
                 .nom("respo")
                 .build());
-        when(responsableService.createResponsable(any(ResponsableCreeDTO.class))).thenReturn((ResponsableDTO) ResponsableDTO.toUtilisateurDTO(utilisateurModifie));
+        when(responsableService.updateResponsable(any(ResponsableCreeDTO.class))).thenReturn((ResponsableDTO) ResponsableDTO.toUtilisateurDTO(utilisateurModifie));
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
         assertEquals(u.getId(), 1L);
@@ -321,7 +321,8 @@ public class UtilisateurServiceTest {
         });
     }
 
-    @Test void modifierUtilisateurAvecCourrielDejaUtilise() {
+    @Test
+    public void modifierUtilisateurAvecCourrielDejaUtilise() {
         MoniteurDTO utilisateurDTO = MoniteurDTO.builder()
                 .id(1L)
                 .nom("Le Impact")
@@ -334,9 +335,9 @@ public class UtilisateurServiceTest {
                 .build();
 
         Moniteur utilisateurExistant = Moniteur.builder()
-                .id(2L)
-                .nom("Azkaban")
-                .courriel("yo")
+                .id(1L)
+                .nom("Impact")
+                .courriel("oy")
                 .motDePasse("1")
                 .departement(Departement.builder()
                         .id(1L)
