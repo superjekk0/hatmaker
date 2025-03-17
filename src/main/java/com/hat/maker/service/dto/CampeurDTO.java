@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,5 +32,11 @@ public class CampeurDTO {
                 .deleted(campeur.isDeleted())
                 .groupe(GroupeDTO.toGroupeDTO(campeur.getGroupe()))
                 .build();
+    }
+
+    public static List<CampeurDTO> toCampeurDTO(List<Campeur> campeurs) {
+        return campeurs.stream()
+                .map(CampeurDTO::toCampeurDTO)
+                .toList();
     }
 }

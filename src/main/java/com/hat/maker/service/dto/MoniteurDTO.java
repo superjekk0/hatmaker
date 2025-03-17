@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @SuperBuilder
@@ -23,5 +25,11 @@ public class MoniteurDTO extends UtilisateurDTO {
                 .departement(moniteur.getDepartement() == null
                         ? null : DepartementDTO.toDepartementDTO(moniteur.getDepartement()))
                 .build();
+    }
+
+    public static List<MoniteurDTO> toMoniteurDTO(List<Moniteur> moniteurs) {
+        return moniteurs.stream()
+                .map(MoniteurDTO::toMoniteurDTO)
+                .toList();
     }
 }

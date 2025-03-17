@@ -21,6 +21,12 @@ public class ValidationService {
         }
     }
 
+    public static void validerTenteFields(TenteDTO tenteDTO) {
+        if (tenteDTO.getNomTente() == null || tenteDTO.getNomTente().isBlank()) {
+            throw new IllegalArgumentException("Le nom de la tente ne peut pas être vide");
+        }
+    }
+
     public static void validerDepartementFields(DepartementDTO departementDTO) {
         if (departementDTO.getNom() == null || departementDTO.getNom().isBlank()) {
             throw new IllegalArgumentException("Le nom du département ne peut pas être vide");

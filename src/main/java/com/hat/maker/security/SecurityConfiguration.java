@@ -49,6 +49,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/activite").hasAuthority("RESPONSABLE")
                         .requestMatchers("/groupe").hasAuthority("RESPONSABLE")
                         .requestMatchers("/campeur").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/tente").hasAuthority("RESPONSABLE")
                         .requestMatchers("/connexion").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
