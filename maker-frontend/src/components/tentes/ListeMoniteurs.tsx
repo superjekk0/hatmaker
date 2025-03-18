@@ -41,7 +41,7 @@ const ListeMoniteurs = ({addedMoniteurs, setAddedMoniteurs}: ListeMoniteursProps
     };
 
     return (
-        <div>
+        <div className="w-full ml-1">
             <h2 className="text-xl font-bold mb-4 mt-6">Moniteurs</h2>
             <input
                 type="text"
@@ -83,15 +83,15 @@ const ListeMoniteurs = ({addedMoniteurs, setAddedMoniteurs}: ListeMoniteursProps
         if (addedMoniteurs.length <= 0) {
             return "";
         } else {
-            return "mb-4 border rounded bg-gray-100";
+            return "mb-4 border rounded bg-gray-100 max-h-28 overflow-y-auto";
         }
     }
 
     function filteredMoniteursClass(filteredMoniteurs: Moniteur[]) {
         if (filteredMoniteurs.length == 0) {
-            return "";
+            return "h-28";
         } else {
-            return "mb-4 border rounded bg-gray-100";
+            return "mb-4 border rounded bg-gray-100 max-h-28 overflow-y-auto";
         }
     }
 };

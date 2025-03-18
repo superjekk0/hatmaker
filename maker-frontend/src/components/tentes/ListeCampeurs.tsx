@@ -34,7 +34,6 @@ const ListeCampeurs = ({addedCampeurs, setAddedCampeurs}: ListeCampeursProps) =>
 
     const handleAddCampeur = (campeur: Campeur) => {
         setAddedCampeurs([...addedCampeurs, campeur]);
-        setSearchTerm("");
     };
 
     const handleRemoveCampeur = (id: number) => {
@@ -42,7 +41,7 @@ const ListeCampeurs = ({addedCampeurs, setAddedCampeurs}: ListeCampeursProps) =>
     };
 
     return (
-        <div>
+        <div className="w-full mr-1">
             <h2 className="text-xl font-bold mb-4 mt-6">Campeurs</h2>
             <input
                 type="text"
@@ -84,7 +83,7 @@ const ListeCampeurs = ({addedCampeurs, setAddedCampeurs}: ListeCampeursProps) =>
         if (addedCampeurs.length <= 0) {
             return "";
         } else {
-            return "mb-4 border rounded bg-gray-100";
+            return "mb-4 border rounded bg-gray-100 max-h-60 overflow-y-auto";
         }
     }
 
@@ -92,7 +91,7 @@ const ListeCampeurs = ({addedCampeurs, setAddedCampeurs}: ListeCampeursProps) =>
         if (filteredCampeurs.length == 0) {
             return "";
         } else {
-            return "mb-4 border rounded bg-gray-100";
+            return "mb-4 border rounded bg-gray-100 max-h-28 overflow-y-auto";
         }
     }
 };

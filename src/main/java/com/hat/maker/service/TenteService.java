@@ -32,7 +32,7 @@ public class TenteService {
 
     public TenteDTO modifierTente(TenteDTO tenteDTO) {
         if (tenteRepository.existsByNomIgnoreCaseAndIsNotDeleted(tenteDTO.getNomTente()) &&
-            !tenteDTO.getNomTente().equals(getTenteById(tenteDTO.getId()).getNomTente())) {
+                !tenteDTO.getNomTente().equals(getTenteById(tenteDTO.getId()).getNomTente())) {
             throw new IllegalArgumentException("Une tente avec ce nom existe déjà");
         }
         ValidationService.validerTenteFields(tenteDTO);
@@ -73,18 +73,23 @@ public class TenteService {
                 .collect(Collectors.toList());
     }
 
-    private List<Moniteur> getMoniteurs(TenteDTO tenteDTO) {
-        return tenteDTO.getMoniteurs().stream()
-                .map(moniteurDTO -> Moniteur.builder()
-                        .id(moniteurDTO.getId())
-                        .nom(moniteurDTO.getNom())
-                        .courriel(moniteurDTO.getCourriel())
-                        .departement(Departement.builder()
-                                .id(moniteurDTO.getDepartement().getId())
-                                .nom(moniteurDTO.getDepartement().getNom())
-                                .build())
-                        .build())
-                .collect(Collectors.toList());
+    private List<Moniteur> getMoniteurs(TenteDTO tenteDTO) throws IllegalArgumentException {
+        try {
+            return tenteDTO.getMoniteurs().stream()
+                    .map(moniteurDTO -> Moniteur.builder()
+                            .id(moniteurDTO.getId())
+                            .nom(moniteurDTO.getNom())
+                            .courriel(moniteurDTO.getCourriel())
+                            .departement(Departement.builder()
+                                    .id(moniteurDTO.getDepartement().getId())
+                                    .nom(moniteurDTO.getDepartement().getNom())
+                                    .build())
+                            .build())
+                    .collect(Collectors.toList());
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException(
+                    "Les moniteurs doivent être associés à un département pour faire partie d'une tente");
+        }
     }
 
     private Tente getTenteById(Long id) {

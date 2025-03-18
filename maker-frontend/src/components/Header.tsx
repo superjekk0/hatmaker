@@ -31,7 +31,7 @@ const Header = () => {
 
     return (
         <>
-            <header className="header z-50">
+            <header className="header">
                 <h1 className="m-0 text-4xl text-blue-500 hover:cursor-pointer inline-block"
                     onClick={handleNavAccueil}>
                     Hat Maker

@@ -125,13 +125,23 @@ public class TenteServiceTest {
 
     @Test
     public void creeTenteAvecNomExistantSupprime_DevraisReussir() {
-        // deleted tente
         when(tenteRepository.existsByNomIgnoreCaseAndIsNotDeleted(any(String.class))).thenReturn(false);
         when(tenteRepository.save(any(Tente.class))).thenReturn(tente);
 
         TenteDTO e = tenteService.createTente(tenteDTO);
         assertThat(e.getNomTente()).isEqualTo("1");
         assertThat(e.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void creeTenteAvecMoniteurSansDepartement() throws IllegalArgumentException {
+        MoniteurDTO moniteurDTO = tenteDTO.getMoniteurs().getFirst();
+        moniteurDTO.setDepartement(null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                tenteService.createTente(tenteDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("Les moniteurs doivent être associés à un département pour faire partie d'une tente");
     }
 
     @Test
@@ -208,6 +218,19 @@ public class TenteServiceTest {
         TenteDTO e = tenteService.modifierTente(tenteDTO);
         assertThat(e.getNomTente()).isEqualTo("1");
         assertThat(e.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void modifierTenteAvecMoniteurSansDepartement() throws IllegalArgumentException {
+        MoniteurDTO moniteurDTO = tenteDTO.getMoniteurs().getFirst();
+        moniteurDTO.setDepartement(null);
+
+        when(tenteRepository.findById(1L)).thenReturn(Optional.of(tente));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                tenteService.modifierTente(tenteDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("Les moniteurs doivent être associés à un département pour faire partie d'une tente");
     }
 
     @Test

@@ -75,9 +75,12 @@ const AddTenteModal = ({isOpen, onClose, onSave}: AddTenteModalProps) => {
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
                 />
-                <ListeCampeurs addedCampeurs={campeurs} setAddedCampeurs={setCampeurs}/>
-                <ListeMoniteurs addedMoniteurs={moniteurs} setAddedMoniteurs={setMoniteurs}/>
-                
+
+                <div className="flex justify-items-center items-start mb-4">
+                    <ListeCampeurs addedCampeurs={campeurs} setAddedCampeurs={setCampeurs}/>
+                    <ListeMoniteurs addedMoniteurs={moniteurs} setAddedMoniteurs={setMoniteurs}/>
+                </div>
+
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">
                     <button className="p-2 bg-green-500 text-white rounded" onClick={handleSave}>
