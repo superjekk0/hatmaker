@@ -20,9 +20,9 @@ public class Tente {
     protected String nomTente;
     protected boolean deleted;
 
-    @OneToMany(mappedBy = "tente")
+    @OneToMany
     protected List<Campeur> campeurs;
-    @OneToMany(mappedBy = "tente")
+    @OneToMany
     protected List<Moniteur> moniteurs;
 
 }
