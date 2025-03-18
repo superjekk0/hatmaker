@@ -3,6 +3,7 @@ package com.hat.maker.controller;
 import com.hat.maker.service.UtilisateurService;
 import com.hat.maker.service.dto.JWTAuthResponse;
 import com.hat.maker.service.dto.LoginDTO;
+import com.hat.maker.service.dto.MoniteurDTO;
 import com.hat.maker.service.dto.UtilisateurDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,6 +57,15 @@ public class UtilisateurController {
     public ResponseEntity<List<UtilisateurDTO>> getAllUtilisateurs() {
         try {
             return ResponseEntity.ok(utilisateurService.getAllUtilisateurs());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @GetMapping("/moniteurs")
+    public ResponseEntity<List<MoniteurDTO>> getAllMoniteurs() {
+        try {
+            return ResponseEntity.ok(utilisateurService.getMoniteurs());
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

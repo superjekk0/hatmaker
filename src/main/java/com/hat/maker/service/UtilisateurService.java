@@ -64,6 +64,12 @@ public class UtilisateurService {
                 .toList();
     }
 
+    public List<MoniteurDTO> getMoniteurs() {
+        return utilisateurRepository.findAllByCredentialsMoniteur().stream()
+                .map(MoniteurDTO::toMoniteurDTO)
+                .toList();
+    }
+
     private Utilisateur getUtilisateurById(Long id) {
         return utilisateurRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("L'utilisateur n'existe pas"));

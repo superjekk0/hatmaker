@@ -424,4 +424,45 @@ public class UtilisateurServiceTest {
 
         assertEquals(utilisateurService.getAllUtilisateurs().size(), 3);
     }
+
+    @Test
+    public void getAllMoniteurs() {
+        Moniteur moniteur1 = Moniteur.builder()
+                .id(1L)
+                .nom("Impact")
+                .courriel("oy")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(2L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        Moniteur moniteur2 = Moniteur.builder()
+                .id(2L)
+                .nom("Impact")
+                .courriel("oy")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(2L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        Moniteur moniteur3 = Moniteur.builder()
+                .id(3L)
+                .nom("Impact")
+                .courriel("oy")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(2L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+
+        when(utilisateurRepository.findAll()).thenReturn(java.util.List.of(moniteur1, moniteur2, moniteur3));
+
+        assertEquals(utilisateurService.getAllUtilisateurs().size(), 3);
+    }
 }
