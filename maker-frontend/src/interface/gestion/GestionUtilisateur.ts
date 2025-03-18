@@ -1,4 +1,4 @@
-import {CreeMoniteur, Utilisateur} from "../Interface.ts";
+import {CreeMoniteur, Moniteur, Utilisateur} from "../Interface.ts";
 import {RoutesBE} from "../Routes.ts";
 import {getToken} from "../Connexion.ts";
 
@@ -56,4 +56,15 @@ export const supprimerUtilisateur = async (utilisateur: Utilisateur) => {
         const reponse = await res.json();
         throw reponse.message;
     }
+}
+
+export const getMoniteurs = async (): Promise<Moniteur[]> => {
+    const res = await fetch(RoutesBE.Moniteurs, {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`
+        },
+    });
+
+    return await res.json();
 }

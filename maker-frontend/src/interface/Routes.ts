@@ -18,4 +18,6 @@ export enum RoutesBE {
     ModifierUtilisateur = `${baseBE}/modifier-utilisateur`,
     Utilisateurs = `${baseBE}/utilisateurs`,
     SupprimerUtilisateur = `${baseBE}/supprimer-utilisateur`,
+    Tentes = `${baseBE}/tente`,
+    Moniteurs = `${baseBE}/moniteurs`,
 }

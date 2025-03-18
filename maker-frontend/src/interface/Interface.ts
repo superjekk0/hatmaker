@@ -53,13 +53,22 @@ interface Campeur {
     deleted?: boolean;
 }
 
+interface Tente {
+    id?: number;
+    nomTente: string;
+    campeurs: Campeur[];
+    moniteurs: Moniteur[];
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',
     ACTIVITES = 'ACTIVITES',
     GROUPES = 'GROUPES',
     CAMPEURS = 'CAMPEURS',
-    PERSONNEL = 'PERSONNEL'
+    PERSONNEL = 'PERSONNEL',
+    TENTES = 'TENTES'
 }
 
 export enum Role {
@@ -76,5 +85,7 @@ export type {
     Departement,
     Activite,
     Groupe,
-    Campeur
+    Campeur,
+    Tente,
+    Moniteur
 };
