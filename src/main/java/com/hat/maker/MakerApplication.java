@@ -1,11 +1,7 @@
 package com.hat.maker;
 
-import com.hat.maker.service.DepartementService;
-import com.hat.maker.service.ResponsableService;
-import com.hat.maker.service.SpecialisteService;
-import com.hat.maker.service.dto.DepartementDTO;
-import com.hat.maker.service.dto.ResponsableCreeDTO;
-import com.hat.maker.service.dto.SpecialisteCreeDTO;
+import com.hat.maker.service.*;
+import com.hat.maker.service.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +13,9 @@ public class MakerApplication implements CommandLineRunner {
 	private final ResponsableService responsableService;
 	private final SpecialisteService specialisteService;
 	private final DepartementService departementService;
+	private final MoniteurService moniteurService;
+	private final CampeurService campeurService;
+	private final GroupeService groupeService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MakerApplication.class, args);
@@ -31,6 +30,28 @@ public class MakerApplication implements CommandLineRunner {
 				.build();
 		DepartementDTO departementRetour = departementService.createDepartement(departementDTO);
 		DepartementDTO departementRetour2 = departementService.createDepartement(departementDTO2);
+
+		GroupeDTO groupeDTO = GroupeDTO.builder()
+				.nom("Junior")
+				.build();
+		GroupeDTO groupeRetour = groupeService.createGroupe(groupeDTO);
+
+		CampeurDTO campeurDTO = CampeurDTO.builder()
+				.nom("Guimond")
+				.prenom("Antoine")
+				.genre("Lune")
+				.groupe(groupeRetour)
+				.information("Trouble d'opposition")
+				.build();
+		campeurService.createCampeur(campeurDTO);
+
+		MoniteurCreeDTO moniteurDTO = MoniteurCreeDTO.builder()
+				.nom("Indigo")
+				.courriel("indigo@cc.com")
+				.motDePasse("1")
+				.departement(departementRetour2)
+				.build();
+		moniteurService.createMoniteur(moniteurDTO);
 
 		ResponsableCreeDTO responsableDTO = ResponsableCreeDTO.builder()
 				.nom("Le Impact")
