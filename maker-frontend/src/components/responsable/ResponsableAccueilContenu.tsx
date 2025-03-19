@@ -9,7 +9,7 @@ import Personnel from "../personnel/Personnel.tsx";
 import Tentes from "../tentes/Tentes.tsx";
 
 const ResponsableAccueilContenu = () => {
-    const [vue, setVue] = useState(VueResponsable.ETATS);
+    const [vue, setVue] = useState(VueResponsable.PERSONNEL);
 
     return (
         <div className="linkModalEvalMS container mx-auto p-4 border-2 border-gray-300 rounded-lg">
@@ -17,41 +17,51 @@ const ResponsableAccueilContenu = () => {
                 {/* Colonne Gauche */}
                 <div className="w-full md:w-1/3 pr-4 md:border-r border-gray-300">
                     <div className="space-y-4">
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.ETATS)}>
-                            États
-                        </button>
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.DEPARTEMENTS)}>
-                            Départements
-                        </button>
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.ACTIVITES)}>
-                            Activités
-                        </button>
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.GROUPES)}>
-                            Groupe d'âges
-                        </button>
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.CAMPEURS)}>
-                            Campeurs
-                        </button>
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.PERSONNEL)}>
-                            Personnel
-                        </button>
-                        <button
-                            className="btn-accueil"
-                            onClick={() => setVue(VueResponsable.TENTES)}>
-                            Tentes
-                        </button>
+                        <div className="p-2">
+                            <h1 className="text-center text-xl font-bold mb-3">Gestion du personnel</h1>
+                            <button
+                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.DEPARTEMENTS)}>
+                                Départements
+                            </button>
+                            <button
+                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.PERSONNEL)}>
+                                Personnel
+                            </button>
+                        </div>
+                        <div className="p-2">
+                            <h1 className="text-center text-xl font-bold mb-3">Gestion des campeurs</h1>
+                            <button
+                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.GROUPES)}>
+                                Groupe d'âges
+                            </button>
+                            <button
+                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.CAMPEURS)}>
+                                Campeurs
+                            </button>
+                        </div>
+
+                        <div className="p-2">
+                            <h1 className="text-center text-xl font-bold mb-3">Organistation</h1>
+                            <button
+                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.TENTES)}>
+                                Tentes
+                            </button>
+                            <button
+                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.ACTIVITES)}>
+                                Activités
+                            </button>
+                            <button
+                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.ETATS)}>
+                                États
+                            </button>
+                        </div>
                     </div>
                 </div>
 
