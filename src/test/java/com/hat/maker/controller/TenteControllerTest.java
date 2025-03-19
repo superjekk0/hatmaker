@@ -220,4 +220,33 @@ public class TenteControllerTest {
                         .content(om.writeValueAsString(tenteDTO)))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void getTenteByMoniteurIdSucces() throws Exception {
+        when(tenteService.getTenteByMoniteurId(1L)).thenReturn(tenteDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/tente/moniteur/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(om.writeValueAsString(tenteDTO)));
+    }
+
+    @Test
+    void getTenteByMoniteurIdAvecIdInexistant() throws Exception {
+        when(tenteService.getTenteByMoniteurId(3L)).thenThrow(new IllegalArgumentException("Le moniteur n'existe pas"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/tente/moniteur/3")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getTenteByMoniteurIdAvecTenteInexistante() throws Exception {
+        when(tenteService.getTenteByMoniteurId(1L)).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/tente/moniteur/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
 }

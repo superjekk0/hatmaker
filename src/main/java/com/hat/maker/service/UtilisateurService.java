@@ -70,7 +70,7 @@ public class UtilisateurService {
                 .toList();
     }
 
-    private Utilisateur getUtilisateurById(Long id) {
+    public Utilisateur getUtilisateurById(Long id) {
         return utilisateurRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("L'utilisateur n'existe pas"));
     }

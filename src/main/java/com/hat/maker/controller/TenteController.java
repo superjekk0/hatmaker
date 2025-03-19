@@ -56,4 +56,15 @@ public class TenteController {
         }
         return ResponseEntity.ok(tenteSupprime);
     }
+
+    @GetMapping("/moniteur/{id}")
+    public ResponseEntity<TenteDTO> getTenteByMoniteurId(@PathVariable Long id) {
+        TenteDTO tenteDTO;
+        try {
+            tenteDTO = tenteService.getTenteByMoniteurId(id);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return ResponseEntity.ok(tenteDTO);
+    }
 }

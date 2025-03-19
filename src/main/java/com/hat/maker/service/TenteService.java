@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TenteService {
     private final TenteRepository tenteRepository;
+    private final UtilisateurService utilisateurService;
 
     public TenteDTO createTente(TenteDTO tenteDTO) {
         if (tenteRepository.existsByNomIgnoreCaseAndIsNotDeleted(tenteDTO.getNomTente())) {
@@ -65,6 +66,17 @@ public class TenteService {
         return tenteRepository.findAll().stream()
                 .map(TenteDTO::toTenteDTO)
                 .toList();
+    }
+
+    public TenteDTO getTenteByMoniteurId(Long id) {
+        Moniteur moniteur = (Moniteur) utilisateurService.getUtilisateurById(id);
+
+        List<TenteDTO> tentes = tenteRepository.findAll().stream()
+                .filter(tente -> tente.getMoniteurs().contains(moniteur))
+                .map(TenteDTO::toTenteDTO)
+                .toList();
+
+        return tentes.isEmpty() ? null : tentes.getFirst();
     }
 
     private List<Campeur> getCampeurs(TenteDTO tenteDTO) {

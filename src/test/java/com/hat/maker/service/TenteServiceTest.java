@@ -28,6 +28,8 @@ public class TenteServiceTest {
 
     @Mock
     private TenteRepository tenteRepository;
+    @Mock
+    private UtilisateurService utilisateurService;
 
     @InjectMocks
     private TenteService tenteService;
@@ -276,5 +278,41 @@ public class TenteServiceTest {
         when(tenteRepository.findAll()).thenReturn(List.of());
 
         assertThat(tenteService.getAllTente().size()).isEqualTo(0);
+    }
+
+    @Test
+    public void getTenteByMoniteurIdAvecSuccess() {
+        Moniteur moniteur = Moniteur.builder()
+                .id(1L)
+                .nom("Moniteur1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Departement1")
+                        .build())
+                .build();
+        when(utilisateurService.getUtilisateurById(1L)).thenReturn(moniteur);
+        when(tenteRepository.findAll()).thenReturn(List.of(tente));
+
+        TenteDTO t = tenteService.getTenteByMoniteurId(1L);
+        assertThat(t.getNomTente()).isEqualTo("1");
+        assertThat(t.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void getTenteByMoniteurIdNull() {
+        Moniteur moniteur = Moniteur.builder()
+                .id(1L)
+                .nom("Moniteur1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Departement1")
+                        .build())
+                .build();
+        tente.setMoniteurs(List.of());
+        when(utilisateurService.getUtilisateurById(1L)).thenReturn(moniteur);
+        when(tenteRepository.findAll()).thenReturn(List.of(tente));
+
+        TenteDTO t = tenteService.getTenteByMoniteurId(1L);
+        assertThat(t).isNull();
     }
 }
