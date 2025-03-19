@@ -2,6 +2,17 @@ import {Tente} from "../Interface.ts";
 import {getToken} from "../Connexion.ts";
 import {RoutesBE} from "../Routes.ts";
 
+export const getTenteByMoniteurId = async (moniteurId: number | null): Promise<Tente> => {
+    const response = await fetch(RoutesBE.Tentes + `/moniteur/${moniteurId}`, {
+        headers: {
+            method: 'GET',
+            'Authorization': `Bearer ${getToken()}`
+        }
+    });
+
+    return await response.json();
+}
+
 export const getTentes = async (): Promise<Tente[]> => {
     const response = await fetch(RoutesBE.Tentes, {
         headers: {

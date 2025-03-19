@@ -71,6 +71,10 @@ export enum VueResponsable {
     TENTES = 'TENTES'
 }
 
+export enum VueMoniteur {
+    TENTE = 'TENTE'
+}
+
 export enum Role {
     MONITEUR = 'MONITEUR',
     RESPONSABLE = 'RESPONSABLE',
