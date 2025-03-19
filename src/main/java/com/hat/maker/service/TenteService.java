@@ -5,6 +5,7 @@ import com.hat.maker.repository.TenteRepository;
 import com.hat.maker.service.dto.TenteDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,14 +21,18 @@ public class TenteService {
         }
         ValidationService.validerTenteFields(tenteDTO);
 
-        Tente etat = Tente.builder()
+        Tente tente = Tente.builder()
                 .nomTente(tenteDTO.getNomTente())
                 .campeurs(getCampeurs(tenteDTO))
                 .moniteurs(getMoniteurs(tenteDTO))
-                .deleted(false)
+                .deleted(tenteDTO.isDeleted())
                 .build();
-        Tente tenteRetour = tenteRepository.save(etat);
-        return TenteDTO.toTenteDTO(tenteRetour);
+
+        try {
+            return TenteDTO.toTenteDTO(tenteRepository.save(tente));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Le moniteur ou le campeur est déjà associé à une tente");
+        }
     }
 
     public TenteDTO modifierTente(TenteDTO tenteDTO) {
@@ -45,10 +50,15 @@ public class TenteService {
         return TenteDTO.toTenteDTO(tenteRetour);
     }
 
+    @Transactional
     public TenteDTO supprimerTente(TenteDTO tenteDTO) {
         Tente tente = getTenteById(tenteDTO.getId());
         tente.setDeleted(true);
-        return TenteDTO.toTenteDTO(tenteRepository.save(tente));
+        tente.setCampeurs(List.of());
+        tente.setMoniteurs(List.of());
+        tenteRepository.delete(tente);
+
+        return createTente(TenteDTO.toTenteDTO(tente));
     }
 
     public List<TenteDTO> getAllTente() {

@@ -83,13 +83,13 @@ const ListeMoniteurs = ({addedMoniteurs, setAddedMoniteurs}: ListeMoniteursProps
         if (addedMoniteurs.length <= 0) {
             return "";
         } else {
-            return "mb-4 border rounded bg-gray-100 max-h-28 overflow-y-auto";
+            return "mb-4 border rounded bg-gray-100 max-h-60 overflow-y-auto";
         }
     }
 
     function filteredMoniteursClass(filteredMoniteurs: Moniteur[]) {
         if (filteredMoniteurs.length == 0) {
-            return "h-28";
+            return "";
         } else {
             return "mb-4 border rounded bg-gray-100 max-h-28 overflow-y-auto";
         }

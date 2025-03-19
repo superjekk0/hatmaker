@@ -14,7 +14,9 @@ const Tentes = () => {
 
     useEffect(() => {
         getTentes().then(
-            data => setTentes(data.filter(tente => tente.deleted !== true))
+            data => {
+                setTentes(data.filter(tente => tente.deleted !== true))
+            }
         ).catch(
             error => console.error('Error fetching tentes:', error)
         );

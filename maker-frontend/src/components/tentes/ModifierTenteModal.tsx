@@ -1,52 +1,36 @@
-import {useState} from "react";
-import {Tente, Campeur, Moniteur} from "../../interface/Interface.ts";
-import {addTente} from "../../interface/gestion/GestionTentes.ts";
+import { useState } from 'react';
+import {Campeur, Moniteur, Tente} from '../../interface/Interface.ts';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {modifierTente, supprimerTente} from "../../interface/gestion/GestionTentes.ts";
 import ListeCampeurs from "./ListeCampeurs.tsx";
 import ListeMoniteurs from "./ListeMoniteurs.tsx";
 
-interface AddTenteModalProps {
+interface ModifierTenteModalProps {
     isOpen: boolean;
     onClose: () => void;
+    tente: Tente;
     onSave: (tente: Tente) => void;
+    onDelete: (tente: Tente) => void;
 }
 
-const AddTenteModal = ({isOpen, onClose, onSave}: AddTenteModalProps) => {
-    const [nom, setNom] = useState("");
-    const [campeurs, setCampeurs] = useState<Campeur[]>([]);
-    const [moniteurs, setMoniteurs] = useState<Moniteur[]>([]);
+const ModifierTenteModal = ({ isOpen, onClose, tente, onSave, onDelete } : ModifierTenteModalProps) => {
+    const [nom, setNom] = useState(tente.nomTente);
+    const [campeurs, setCampeurs] = useState<Campeur[]>(tente.campeurs);
+    const [moniteurs, setMoniteurs] = useState<Moniteur[]>(tente.moniteurs);
     const [error, setError] = useState("");
 
-    const handleSave = async () => {
-        if (!nom) {
-            setError("Le nom de la tente ne peut pas être vide");
-            return;
-        }
+    const handleSave = () => {
+        const nomTrim = nom.trim();
+        setNom(nomTrim);
+        setCampeurs([...campeurs]);
+        setMoniteurs([...moniteurs]);
+        const updatedTente = { ...tente, nomTente: nomTrim, campeurs: campeurs, moniteurs: moniteurs };
 
-        if (campeurs.length === 0) {
-            setError("La tente doit avoir des campeurs");
-            return;
-        }
-
-        if (moniteurs.length === 0) {
-            setError("La tente doit avoir au moins un moniteur");
-            return;
-        }
-
-        let tente: Tente = {
-            nomTente: nom,
-            campeurs: campeurs,
-            moniteurs: moniteurs
-        };
-
-        addTente(tente).then(
-            newTente => {
-                onSave(newTente);
+        modifierTente(updatedTente).then(
+            () => {
+                onSave(updatedTente)
                 setError("");
-                setNom("");
-                setCampeurs([]);
-                setMoniteurs([]);
                 onClose();
             }
         ).catch(
@@ -54,11 +38,17 @@ const AddTenteModal = ({isOpen, onClose, onSave}: AddTenteModalProps) => {
         );
     };
 
+    const handleDelete = () => {
+        supprimerTente(tente).then(
+            () => onDelete(tente)
+        ).catch(
+            error => setError(error.message)
+        );
+        onClose();
+    };
+
     const handleClose = () => {
         setError("");
-        setNom("");
-        setCampeurs([]);
-        setMoniteurs([]);
         onClose();
     }
 
@@ -67,26 +57,29 @@ const AddTenteModal = ({isOpen, onClose, onSave}: AddTenteModalProps) => {
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded shadow-md lg:w-1/2 relative">
-                <button className="absolute top-2 right-2 text-black"
-                        onClick={handleClose}>
+                <button
+                    className="absolute top-2 right-2 text-black"
+                    onClick={handleClose}
+                >
                     <FontAwesomeIcon icon={faTimes}/>
                 </button>
-                <h2 className="text-xl font-bold mb-4">Ajouter une nouvelle Tente</h2>
+                <h2 className="text-xl font-bold mb-4">Modifier un État</h2>
                 <input
                     type="text"
                     className={`w-full p-2 border rounded mb-2`}
-                    placeholder="Nom de la tente"
+                    placeholder="Nom de l'état"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
                 />
-
                 <div className="flex justify-items-center items-start mb-4">
                     <ListeCampeurs addedCampeurs={campeurs} setAddedCampeurs={setCampeurs}/>
                     <ListeMoniteurs addedMoniteurs={moniteurs} setAddedMoniteurs={setMoniteurs}/>
                 </div>
-
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <div className="flex justify-end">
+                    <button className="p-2 bg-red-500 text-white rounded mr-2" onClick={handleDelete}>
+                        Supprimer
+                    </button>
                     <button className="p-2 bg-green-500 text-white rounded" onClick={handleSave}>
                         Sauvegarder
                     </button>
@@ -96,4 +89,4 @@ const AddTenteModal = ({isOpen, onClose, onSave}: AddTenteModalProps) => {
     );
 };
 
-export default AddTenteModal;
+export default ModifierTenteModal;

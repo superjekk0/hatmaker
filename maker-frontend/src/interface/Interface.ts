@@ -56,9 +56,9 @@ interface Campeur {
 interface Tente {
     id?: number;
     nomTente: string;
+    deleted?: boolean;
     campeurs: Campeur[];
     moniteurs: Moniteur[];
-    deleted?: boolean;
 }
 
 export enum VueResponsable {
