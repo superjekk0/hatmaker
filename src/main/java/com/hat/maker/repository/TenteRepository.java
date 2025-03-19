@@ -17,5 +17,4 @@ public interface TenteRepository extends JpaRepository<Tente, Long> {
             "WHERE LOWER(t.nomTente) = LOWER(:nom)" +
             "AND t.deleted = FALSE")
     boolean existsByNomIgnoreCaseAndIsNotDeleted(@Param("nom") String nom);
-
 }
