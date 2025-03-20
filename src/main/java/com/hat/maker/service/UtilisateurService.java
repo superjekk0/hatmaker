@@ -1,6 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Utilisateur;
+import com.hat.maker.model.auth.Role;
 import com.hat.maker.repository.UtilisateurRepository;
 import com.hat.maker.security.JwtTokenProvider;
 import com.hat.maker.service.dto.*;
@@ -24,6 +25,7 @@ public class UtilisateurService {
     private final MoniteurService moniteurService;
     private final ResponsableService responsableService;
     private final SpecialisteService specialistService;
+    private final TenteService tenteService;
 
     public String connexionUtilisateur(LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
@@ -45,6 +47,10 @@ public class UtilisateurService {
         utilisateur.getCredentials().setCourriel(utilisateurDTO.getCourriel());
         utilisateur.setDepartement(departementService.getDepartementById(utilisateurDTO.getDepartement().getId()));
         if (utilisateurDTO.getRole() != utilisateur.getCredentials().getRole()) {
+            if (utilisateur.getCredentials().getRole() == Role.MONITEUR &&
+                tenteService.getTenteByMoniteurId(utilisateur.getId()) != null) {
+                throw new IllegalArgumentException("Le rôle du moniteur ne peut pas être modifié car il est associé à une tente");
+            }
             utilisateur.getCredentials().setRole(utilisateurDTO.getRole());
             return changerRole(utilisateur);
         }

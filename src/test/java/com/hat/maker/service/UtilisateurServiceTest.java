@@ -32,15 +32,14 @@ public class UtilisateurServiceTest {
 
     @Mock
     private DepartementService departementService;
-
     @Mock
     private MoniteurService moniteurService;
-
     @Mock
     private ResponsableService responsableService;
-
     @Mock
     private SpecialisteService specialistService;
+    @Mock
+    private TenteService tenteService;
 
     @InjectMocks
     private UtilisateurService utilisateurService;
@@ -72,9 +71,7 @@ public class UtilisateurServiceTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new RuntimeException("Incorrect username or password"));
 
-        assertThrows(RuntimeException.class, () -> {
-            utilisateurService.connexionUtilisateur(loginDTO);
-        });
+        assertThrows(RuntimeException.class, () -> utilisateurService.connexionUtilisateur(loginDTO));
     }
 
     @Test
@@ -121,12 +118,12 @@ public class UtilisateurServiceTest {
         when(specialistService.updateSpecialiste(any(SpecialisteCreeDTO.class))).thenReturn((SpecialisteDTO) SpecialisteDTO.toUtilisateurDTO(utilisateurModifie));
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
-        assertEquals(u.getId(), 1L);
-        assertEquals(u.getNom(), "Le Impact");
-        assertEquals(u.getCourriel(), "yo");
-        assertEquals(u.getDepartement().getId(), 1L);
-        assertEquals(u.getDepartement().getNom(), "prog");
-        assertEquals(u.getRole(), Role.SPECIALISTE);
+        assertEquals(1L, u.getId());
+        assertEquals("Le Impact", u.getNom());
+        assertEquals("yo", u.getCourriel());
+        assertEquals(1L, u.getDepartement().getId());
+        assertEquals("prog", u.getDepartement().getNom());
+        assertEquals(Role.SPECIALISTE, u.getRole());
     }
 
     @Test
@@ -173,12 +170,12 @@ public class UtilisateurServiceTest {
         when(moniteurService.updateMoniteur(any(MoniteurCreeDTO.class))).thenReturn((MoniteurDTO) MoniteurDTO.toUtilisateurDTO(utilisateurModifie));
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
-        assertEquals(u.getId(), 1L);
-        assertEquals(u.getNom(), "Le Impact");
-        assertEquals(u.getCourriel(), "yo");
-        assertEquals(u.getDepartement().getId(), 1L);
-        assertEquals(u.getDepartement().getNom(), "Vie de camp");
-        assertEquals(u.getRole(), Role.MONITEUR);
+        assertEquals(1L, u.getId());
+        assertEquals("Le Impact", u.getNom());
+        assertEquals("yo", u.getCourriel());
+        assertEquals(1L, u.getDepartement().getId());
+        assertEquals("Vie de camp", u.getDepartement().getNom());
+        assertEquals(Role.MONITEUR, u.getRole());
     }
 
     @Test
@@ -225,12 +222,12 @@ public class UtilisateurServiceTest {
         when(responsableService.updateResponsable(any(ResponsableCreeDTO.class))).thenReturn((ResponsableDTO) ResponsableDTO.toUtilisateurDTO(utilisateurModifie));
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
-        assertEquals(u.getId(), 1L);
-        assertEquals(u.getNom(), "Le Impact");
-        assertEquals(u.getCourriel(), "yo");
-        assertEquals(u.getDepartement().getId(), 1L);
-        assertEquals(u.getDepartement().getNom(), "respo");
-        assertEquals(u.getRole(), Role.RESPONSABLE);
+        assertEquals(1L, u.getId());
+        assertEquals("Le Impact", u.getNom());
+        assertEquals("yo", u.getCourriel());
+        assertEquals(1L, u.getDepartement().getId());
+        assertEquals("respo", u.getDepartement().getNom());
+        assertEquals(Role.RESPONSABLE, u.getRole());
     }
 
     @Test
@@ -277,12 +274,12 @@ public class UtilisateurServiceTest {
         when(utilisateurRepository.save(any(Utilisateur.class))).thenReturn(utilisateurModifie);
 
         UtilisateurDTO u = utilisateurService.modifierUtilisateur(utilisateurDTO);
-        assertEquals(u.getId(), 1L);
-        assertEquals(u.getNom(), "Le Impact");
-        assertEquals(u.getCourriel(), "yo");
-        assertEquals(u.getDepartement().getId(), 2L);
-        assertEquals(u.getDepartement().getNom(), "Moniteurs");
-        assertEquals(u.getRole(), Role.MONITEUR);
+        assertEquals(1L, u.getId());
+        assertEquals("Le Impact", u.getNom());
+        assertEquals("yo", u.getCourriel());
+        assertEquals(2L, u.getDepartement().getId());
+        assertEquals("Moniteurs", u.getDepartement().getNom());
+        assertEquals(Role.MONITEUR, u.getRole());
     }
 
     @Test
@@ -298,9 +295,7 @@ public class UtilisateurServiceTest {
                 .role(Role.MONITEUR)
                 .build();
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            utilisateurService.modifierUtilisateur(utilisateurDTO);
-        });
+        assertThrows(IllegalArgumentException.class, () -> utilisateurService.modifierUtilisateur(utilisateurDTO));
     }
 
     @Test
@@ -316,9 +311,7 @@ public class UtilisateurServiceTest {
                 .role(Role.MONITEUR)
                 .build();
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            utilisateurService.modifierUtilisateur(utilisateurDTO);
-        });
+        assertThrows(IllegalArgumentException.class, () -> utilisateurService.modifierUtilisateur(utilisateurDTO));
     }
 
     @Test
@@ -348,9 +341,7 @@ public class UtilisateurServiceTest {
         when(utilisateurRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(utilisateurExistant));
         when(utilisateurRepository.existsByCourriel(any(String.class))).thenReturn(true);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            utilisateurService.modifierUtilisateur(utilisateurDTO);
-        });
+        assertThrows(IllegalArgumentException.class, () -> utilisateurService.modifierUtilisateur(utilisateurDTO));
     }
 
     @Test
@@ -422,7 +413,7 @@ public class UtilisateurServiceTest {
 
         when(utilisateurRepository.findAll()).thenReturn(java.util.List.of(moniteur, specialiste, responsable));
 
-        assertEquals(utilisateurService.getAllUtilisateurs().size(), 3);
+        assertEquals(3, utilisateurService.getAllUtilisateurs().size());
     }
 
     @Test
@@ -463,6 +454,41 @@ public class UtilisateurServiceTest {
 
         when(utilisateurRepository.findAll()).thenReturn(java.util.List.of(moniteur1, moniteur2, moniteur3));
 
-        assertEquals(utilisateurService.getAllUtilisateurs().size(), 3);
+        assertEquals(3, utilisateurService.getAllUtilisateurs().size());
+    }
+
+    @Test
+    public void modifierUtilisateurRoleMoniteurAssocieTente() {
+        MoniteurDTO utilisateurDTO = MoniteurDTO.builder()
+                .id(1L)
+                .nom("Le Impact")
+                .courriel("yo")
+                .departement(DepartementDTO.builder()
+                        .id(2L)
+                        .nom("Moniteurs")
+                        .build())
+                .role(Role.RESPONSABLE)
+                .build();
+
+        Moniteur utilisateurExistant = Moniteur.builder()
+                .id(1L)
+                .nom("Impact")
+                .courriel("oy")
+                .motDePasse("1")
+                .departement(Departement.builder()
+                        .id(1L)
+                        .nom("Vie de camp")
+                        .build())
+                .build();
+
+        when(utilisateurRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(utilisateurExistant));
+        when(utilisateurRepository.existsByCourriel(any(String.class))).thenReturn(false);
+        when(departementService.getDepartementById(any(Long.class))).thenReturn(Departement.builder()
+                .id(2L)
+                .nom("Moniteurs")
+                .build());
+        when(tenteService.getTenteByMoniteurId(any(Long.class))).thenReturn(new TenteDTO());
+
+        assertThrows(IllegalArgumentException.class, () -> utilisateurService.modifierUtilisateur(utilisateurDTO));
     }
 }

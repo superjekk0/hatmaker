@@ -35,6 +35,11 @@ const ModifierUtilisateurModal = ({isOpen, onClose, utilisateur, onSave, onDelet
             return;
         }
 
+        if (!/\S+@\S+\.\S+/.test(courriel)) {
+            setError("Courriel invalide");
+            return;
+        }
+
         const updatedUtilisateur = {
             ...utilisateur,
             nom: nom.trim(),

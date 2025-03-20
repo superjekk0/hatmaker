@@ -2,6 +2,7 @@ package com.hat.maker.service;
 
 import com.hat.maker.model.*;
 import com.hat.maker.repository.TenteRepository;
+import com.hat.maker.repository.UtilisateurRepository;
 import com.hat.maker.service.dto.TenteDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TenteService {
     private final TenteRepository tenteRepository;
-    private final UtilisateurService utilisateurService;
+    private final UtilisateurRepository utilisateurRepository;
 
     public TenteDTO createTente(TenteDTO tenteDTO) {
         if (tenteRepository.existsByNomIgnoreCaseAndIsNotDeleted(tenteDTO.getNomTente())) {
@@ -69,7 +70,8 @@ public class TenteService {
     }
 
     public TenteDTO getTenteByMoniteurId(Long id) {
-        Moniteur moniteur = (Moniteur) utilisateurService.getUtilisateurById(id);
+        Moniteur moniteur = (Moniteur) utilisateurRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("L'utilisateur n'existe pas"));
 
         List<TenteDTO> tentes = tenteRepository.findAll().stream()
                 .filter(tente -> tente.getMoniteurs().contains(moniteur))
