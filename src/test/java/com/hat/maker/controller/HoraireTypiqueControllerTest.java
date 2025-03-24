@@ -43,6 +43,7 @@ public class HoraireTypiqueControllerTest {
         TimeSlotDTO timeSlotDTO = TimeSlotDTO.builder()
                 .startTime("08:00")
                 .endTime("10:00")
+                .periode("AM")
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
@@ -67,6 +68,7 @@ public class HoraireTypiqueControllerTest {
         TimeSlotDTO timeSlotDTO = TimeSlotDTO.builder()
                 .startTime("08:00")
                 .endTime("10:00")
+                .periode("AM")
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
@@ -92,6 +94,7 @@ public class HoraireTypiqueControllerTest {
         TimeSlotDTO timeSlotDTO = TimeSlotDTO.builder()
                 .startTime("08:00")
                 .endTime("10:00")
+                .periode("AM")
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
@@ -123,11 +126,13 @@ public class HoraireTypiqueControllerTest {
         TimeSlotDTO timeSlotDTO = TimeSlotDTO.builder()
                 .startTime("08:00")
                 .endTime("10:00")
+                .periode("AM")
                 .build();
 
         TimeSlotDTO timeSlotDTO2 = TimeSlotDTO.builder()
                 .startTime("12:00")
                 .endTime("14:00")
+                .periode("PM")
                 .build();
 
         List<HoraireTypiqueDTO> horaireTypiqueList = Arrays.asList(

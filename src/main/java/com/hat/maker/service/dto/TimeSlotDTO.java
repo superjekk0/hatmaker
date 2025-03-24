@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TimeSlotDTO {
     private String startTime;
     private String endTime;
-    private List<String> periode;
+    private String periode;
 
     public static TimeSlotDTO toTimeSlotDTO(TimeSlot timeSlot) {
         return TimeSlotDTO.builder()

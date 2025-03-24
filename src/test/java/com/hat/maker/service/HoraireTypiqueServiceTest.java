@@ -36,6 +36,7 @@ public class HoraireTypiqueServiceTest {
         TimeSlotDTO timeSlotDTO = TimeSlotDTO.builder()
                 .startTime("08:00")
                 .endTime("10:00")
+                .periode("AM")
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
@@ -45,6 +46,7 @@ public class HoraireTypiqueServiceTest {
         TimeSlot timeSlot = TimeSlot.builder()
                 .startTime("08:00")
                 .endTime("10:00")
+                .periode("AM")
                 .build();
 
         HoraireTypique horaireTypiqueRetour = HoraireTypique.builder()
