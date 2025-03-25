@@ -61,6 +61,13 @@ interface Tente {
     moniteurs: Moniteur[];
 }
 
+interface HoraireTypique {
+    periode: string;
+    startTime: string;
+    endTime: string;
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',
@@ -68,7 +75,7 @@ export enum VueResponsable {
     GROUPES = 'GROUPES',
     CAMPEURS = 'CAMPEURS',
     PERSONNEL = 'PERSONNEL',
-    TENTES = 'TENTES'
+    TENTES = 'TENTES',
 }
 
 export enum VueMoniteur {
@@ -91,5 +98,6 @@ export type {
     Groupe,
     Campeur,
     Tente,
-    Moniteur
+    Moniteur,
+    HoraireTypique
 };

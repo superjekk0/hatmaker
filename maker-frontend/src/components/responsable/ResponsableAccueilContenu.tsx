@@ -7,6 +7,8 @@ import Groupes from "../groupes/Groupes.tsx";
 import Campeurs from "../campeurs/Campeurs.tsx";
 import Personnel from "../personnel/Personnel.tsx";
 import Tentes from "../tentes/Tentes.tsx";
+import {RoutesFE} from "../../interface/Routes.ts";
+import {Link} from "react-router-dom";
 
 const ResponsableAccueilContenu = () => {
     const [vue, setVue] = useState(VueResponsable.PERSONNEL);
@@ -55,6 +57,13 @@ const ResponsableAccueilContenu = () => {
                                 className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ACTIVITES)}>
                                 Activités
+                            </button>
+                        </div>
+                        <div className="p-2">
+                            <h1 className="text-center text-xl font-bold mb-3">Horaire</h1>
+                            <button
+                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white">
+                                <Link to={RoutesFE.HoraireTypique}>Horaire Typique</Link>
                             </button>
                             <button
                                 className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
