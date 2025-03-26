@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -34,13 +34,20 @@ const HoraireTypique = () => {
         setTableData(values);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = () => {
         const values = [...periods];
 
         for (let index = 0; index < values.length; index++) {
             if (values[index].startTime && values[index].endTime && values[index].startTime >= values[index].endTime) {
                 setError('Le temps de début doit être plus tôt que le temps de fin');
+                return;
+            }
+            if (values[index].periode === '') {
+                setError('Les périodes ne peuvent pas être vides');
+                return;
+            }
+            if(values[index].startTime === '' || (values[index].startTime === '' && values[index].endTime !== '')) {
+                setError('Veuillez entrer un temps de début');
                 return;
             }
         }
@@ -77,72 +84,76 @@ const HoraireTypique = () => {
     };
 
     return (
-        <div className="flex">
-            <div className="w-1/2 p-4">
-                {error && <div className="bg-red-500 text-white p-2 mb-4 rounded">{error}</div>}
-                <form className="flex flex-col justify-between h-full border-2 border-white" onSubmit={handleSubmit}>
-                    <div>
-                        {periods.map((period, index) => (
-                            <div key={index}
-                                 className="mb-1 border p-2 rounded bg-gray-100 flex justify-between items-center">
-                                <input
-                                    type="text"
-                                    name="periode"
-                                    value={period.periode}
-                                    onChange={(event) => handleInputChange(index, event)}
-                                    className="border p-1 w-1/2 mr-2 rounded"
-                                    required
-                                />
-                                <input
-                                    type="time"
-                                    name="startTime"
-                                    value={period.startTime}
-                                    onChange={(event) => handleInputChange(index, event)}
-                                    className="border p-1 w-1/4 mr-2 rounded"
-                                    required
-                                />
-                                <input
-                                    type="time"
-                                    name="endTime"
-                                    value={period.endTime}
-                                    onChange={(event) => handleInputChange(index, event)}
-                                    className="border p-1 w-1/4 rounded mr-2"
-                                />
-                                <button onClick={() => handleRemoveForm(index)}>
-                                    <FontAwesomeIcon icon={faTimes} className="ml-2 mr-2"/>
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="flex justify-center mt-2 mb-2">
-                        <button type="button" onClick={handleAddForm}
-                                className="bg-gray-200 p-2 rounded-full w-10 h-10 flex items-center justify-center">
-                            <FontAwesomeIcon icon={faPlus} size="sm"/>
-                        </button>
-                    </div>
-                    <button type="submit" className="bg-green-500 text-white p-2 rounded mt-4">
-                        Enregistrer
-                    </button>
-                </form>
-            </div>
-            <div className="w-1/2 p-4">
-                <table className="w-full border-collapse border-2 border-gray-300">
-                    <tbody>
-                    {tableData.map((data, index) => (
-                        <tr key={index}>
-                            <td className={data.startTime || (data.endTime && data.startTime) ?
-                                "border-2 p-4 w-1/5" : "border-2 p-4 w-1/5 text-gray-400"}>
-                                {data.startTime || (data.endTime && data.startTime) ?
-                                    data.startTime : "00:00 - 00:00"}
-                                <span>
+        <div>
+            <div className="flex">
+                <div className="w-1/2 p-4">
+                    {error && <div className="bg-red-500 text-white p-2 rounded mb-4 ">{error}</div>}
+                    <form className="flex flex-col h-full border-2 border-white">
+                        <div>
+                            {periods.map((period, index) => (
+                                <div key={index}
+                                     className="mb-1 border p-2 rounded bg-gray-100 flex justify-between items-center">
+                                    <input
+                                        type="text"
+                                        name="periode"
+                                        value={period.periode}
+                                        onChange={(event) => handleInputChange(index, event)}
+                                        className="border p-1 w-1/2 mr-2 rounded"
+                                        required
+                                    />
+                                    <input
+                                        type="time"
+                                        name="startTime"
+                                        value={period.startTime}
+                                        onChange={(event) => handleInputChange(index, event)}
+                                        className="border p-1 w-1/4 mr-2 rounded"
+                                        required
+                                    />
+                                    <input
+                                        type="time"
+                                        name="endTime"
+                                        value={period.endTime}
+                                        onChange={(event) => handleInputChange(index, event)}
+                                        className="border p-1 w-1/4 rounded mr-2"
+                                    />
+                                    <button onClick={() => handleRemoveForm(index)}>
+                                        <FontAwesomeIcon icon={faTimes} className="ml-2 mr-2"/>
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex justify-center mt-2 mb-2">
+                            <button type="button" onClick={handleAddForm}
+                                    className="bg-gray-200 p-2 rounded-full w-10 h-10 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faPlus} size="sm"/>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div className="w-1/2 p-4">
+                    <table className="w-full border-collapse border-2 border-gray-300">
+                        <tbody>
+                        {tableData.map((data, index) => (
+                            <tr key={index}>
+                                <td className={data.startTime || (data.endTime && data.startTime) ?
+                                    "border-2 p-4 w-1/5" : "border-2 p-4 w-1/5 text-gray-400"}>
+                                    {data.startTime || (data.endTime && data.startTime) ?
+                                        data.startTime : "00:00 - 00:00"}
+                                    <span>
                                     {data.endTime && data.startTime ? " - " + data.endTime : ""}
                                 </span>
-                            </td>
-                            <td className={data.periode ? "border-2 p-4 text-center" : "border-2 p-4 text-center text-gray-400"}>{data.periode ? data.periode : "Période"}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                                </td>
+                                <td className={data.periode ? "border-2 p-4 text-center" : "border-2 p-4 text-center text-gray-400"}>{data.periode ? data.periode : "Période"}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div className="flex justify-center m-4">
+                <button type="submit" className="bg-green-500 text-white p-2 rounded w-1/4" onClick={handleSubmit}>
+                    Enregistrer
+                </button>
             </div>
         </div>
     );
