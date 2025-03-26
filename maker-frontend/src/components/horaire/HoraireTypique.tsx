@@ -1,6 +1,8 @@
 import {ChangeEvent, useState} from 'react';
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {addHoraireTypique} from "../../interface/gestion/GestionHoraireTypique.ts";
+import {HoraireTypique} from "../../interface/Interface.ts";
 
 interface Periode {
     periode: string;
@@ -8,7 +10,7 @@ interface Periode {
     endTime: string;
 }
 
-const HoraireTypique = () => {
+const HoraireTypiqueComponent = () => {
     const [periods, setPeriods] = useState<Periode[]>([{periode: '', startTime: '', endTime: ''}]);
     const [tableData, setTableData] = useState<Periode[]>([{periode: '', startTime: '', endTime: ''}]);
     const [error, setError] = useState<string | null>(null);
@@ -54,9 +56,22 @@ const HoraireTypique = () => {
 
         if (checkForOverlap(tableData)) {
             setError('Certains temps se chevauchent, veuillez les corriger');
-        } else {
-            setError("");
+            return;
         }
+
+        let horaireTypique: HoraireTypique = {
+            timeSlots: values
+        };
+
+        addHoraireTypique(horaireTypique).then(
+            () => {
+                setError("");
+                setPeriods([{periode: '', startTime: '', endTime: ''}]);
+                setTableData([{periode: '', startTime: '', endTime: ''}]);
+            }
+        ).catch(
+            error => setError(error.message)
+        );
     };
 
     const checkForOverlap = (data: Periode[]) => {
@@ -161,4 +176,4 @@ const HoraireTypique = () => {
     );
 };
 
-export default HoraireTypique;
+export default HoraireTypiqueComponent;

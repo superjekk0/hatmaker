@@ -21,4 +21,5 @@ export enum RoutesBE {
     SupprimerUtilisateur = `${baseBE}/supprimer-utilisateur`,
     Tentes = `${baseBE}/tente`,
     Moniteurs = `${baseBE}/moniteurs`,
+    HoraireTypique = `${baseBE}/horaire-typique`,
 }

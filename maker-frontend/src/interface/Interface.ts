@@ -62,10 +62,15 @@ interface Tente {
 }
 
 interface HoraireTypique {
+    id?: number;
+    timeSlots: TimeSlot[];
+    deleted?: boolean;
+}
+
+interface TimeSlot {
     periode: string;
     startTime: string;
     endTime: string;
-    deleted?: boolean;
 }
 
 export enum VueResponsable {
