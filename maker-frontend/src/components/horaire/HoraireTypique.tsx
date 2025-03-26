@@ -143,7 +143,9 @@ const HoraireTypique = () => {
                                     {data.endTime && data.startTime ? " - " + data.endTime : ""}
                                 </span>
                                 </td>
-                                <td className={data.periode ? "border-2 p-4 text-center" : "border-2 p-4 text-center text-gray-400"}>{data.periode ? data.periode : "Période"}</td>
+                                <td className={data.periode ? "border-2 p-4 text-center" : "border-2 p-4 text-center text-gray-400"}>
+                                    {data.periode ? data.periode : "Période"}
+                                </td>
                             </tr>
                         ))}
                         </tbody>
