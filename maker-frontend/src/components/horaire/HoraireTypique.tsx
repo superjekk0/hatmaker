@@ -11,6 +11,7 @@ interface Periode {
 }
 
 const HoraireTypiqueComponent = () => {
+    const [nom, setNom] = useState("");
     const [periods, setPeriods] = useState<Periode[]>([{periode: '', startTime: '', endTime: ''}]);
     const [tableData, setTableData] = useState<Periode[]>([{periode: '', startTime: '', endTime: ''}]);
     const [error, setError] = useState<string | null>(null);
@@ -37,6 +38,11 @@ const HoraireTypiqueComponent = () => {
     };
 
     const handleSubmit = () => {
+        if (!nom) {
+            setError("Le nom de l'horaire typique ne peut pas être vide");
+            return;
+        }
+
         const values = [...periods];
 
         for (let index = 0; index < values.length; index++) {
@@ -48,7 +54,7 @@ const HoraireTypiqueComponent = () => {
                 setError('Les périodes ne peuvent pas être vides');
                 return;
             }
-            if(values[index].startTime === '' || (values[index].startTime === '' && values[index].endTime !== '')) {
+            if (values[index].startTime === '' || (values[index].startTime === '' && values[index].endTime !== '')) {
                 setError('Veuillez entrer un temps de début');
                 return;
             }
@@ -60,6 +66,7 @@ const HoraireTypiqueComponent = () => {
         }
 
         let horaireTypique: HoraireTypique = {
+            nom: nom.trim(),
             timeSlots: values
         };
 
@@ -102,7 +109,6 @@ const HoraireTypiqueComponent = () => {
         <div>
             <div className="flex">
                 <div className="w-1/2 p-4">
-                    {error && <div className="bg-red-500 text-white p-2 rounded mb-4 ">{error}</div>}
                     <form className="flex flex-col h-full border-2 border-white">
                         <div>
                             {periods.map((period, index) => (
@@ -167,8 +173,21 @@ const HoraireTypiqueComponent = () => {
                     </table>
                 </div>
             </div>
-            <div className="flex justify-center m-4">
-                <button type="submit" className="bg-green-500 text-white p-2 rounded w-1/4" onClick={handleSubmit}>
+            {error && <div className="flex bg-red-500 text-white p-2 font-bold rounded m-4 w-1/3 ml-auto mr-auto justify-between">
+                {error}
+                <button onClick={() => setError("")}>
+                    <FontAwesomeIcon icon={faTimes} className="mr-2 ml-2"/>
+                </button>
+            </div>}
+            <div className="flex justify-center">
+                <input
+                    type="text"
+                    className={`w-1/4 p-2 border border-gray-300 rounded mr-2`}
+                    placeholder="Nom de l'horaire typique"
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
+                />
+                <button type="submit" className="bg-green-500 text-white pr-4 pl-4 rounded" onClick={handleSubmit}>
                     Enregistrer
                 </button>
             </div>

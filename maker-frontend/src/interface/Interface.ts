@@ -63,6 +63,7 @@ interface Tente {
 
 interface HoraireTypique {
     id?: number;
+    nom: string;
     timeSlots: TimeSlot[];
     deleted?: boolean;
 }
