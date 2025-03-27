@@ -25,3 +25,16 @@ export const getHorairesTypiques = async (): Promise<HoraireTypique[]> => {
 
     return await response.json();
 }
+
+export const supprimerHoraireTypique = async (horaireTypique: HoraireTypique): Promise<void> => {
+    const response = await fetch(RoutesBE.HoraireTypique, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(horaireTypique),
+    });
+
+    return await response.json();
+}

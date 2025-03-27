@@ -20,6 +20,11 @@ const AddHoraireTypique = () => {
     const {setVue} = useViewResponsable();
     const navigate = useNavigate();
 
+    const handleBack = () => {
+        setVue(VueResponsable.HORAIRE_TYPIQUE);
+        navigate("/accueil");
+    }
+
     const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
         const values = [...periods];
         values[index][event.target.name as keyof Periode] = event.target.value;
@@ -114,7 +119,11 @@ const AddHoraireTypique = () => {
 
     return (
         <div>
-            <div className="flex">
+            <button onClick={handleBack}
+                    className="absolute border top-24 right-2 rounded pl-4 pr-4 p-2 bg-gray-200 text-black">
+                Retour
+            </button>
+            <div className="flex mt-12">
                 <div className="w-1/2 p-4">
                     <form className="flex flex-col h-full border-2 border-white">
                         <div>
@@ -168,8 +177,8 @@ const AddHoraireTypique = () => {
                                     {data.startTime || (data.endTime && data.startTime) ?
                                         data.startTime : "00:00 - 00:00"}
                                     <span>
-                                    {data.endTime && data.startTime ? " - " + data.endTime : ""}
-                                </span>
+                                        {data.endTime && data.startTime ? " - " + data.endTime : ""}
+                                    </span>
                                 </td>
                                 <td className={data.periode ? "border-2 p-4 text-center" : "border-2 p-4 text-center text-gray-400"}>
                                     {data.periode ? data.periode : "Période"}
@@ -181,7 +190,8 @@ const AddHoraireTypique = () => {
                 </div>
             </div>
             {error &&
-                <div className="flex bg-red-500 text-white p-2 font-bold rounded m-4 w-1/3 ml-auto mr-auto justify-between">
+                <div
+                    className="flex bg-red-500 text-white p-2 font-bold rounded m-4 w-1/3 ml-auto mr-auto justify-between">
                     {error}
                     <button onClick={() => setError("")}>
                         <FontAwesomeIcon icon={faTimes} className="mr-2 ml-2"/>
