@@ -17,8 +17,10 @@ import java.util.List;
 public class HoraireTypique {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    protected boolean deleted;
+    private Long id;
+    private boolean deleted;
+
+    private String nom;
 
     @ElementCollection
     List<TimeSlot> timeSlots = new ArrayList<>();

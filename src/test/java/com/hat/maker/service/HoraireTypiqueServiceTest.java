@@ -40,6 +40,7 @@ public class HoraireTypiqueServiceTest {
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlotDTO))
                 .build();
 
@@ -51,6 +52,7 @@ public class HoraireTypiqueServiceTest {
 
         HoraireTypique horaireTypiqueRetour = HoraireTypique.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlot))
                 .build();
 
@@ -59,17 +61,39 @@ public class HoraireTypiqueServiceTest {
         HoraireTypiqueDTO h = horaireTypiqueService.createHoraireTypique(horaireTypiqueDTO);
         assertThat(h.getId()).isEqualTo(1L);
         assertThat(h.getTimeSlots().getFirst().getStartTime()).isEqualTo("08:00");
+        assertThat(h.getNom()).isEqualTo("Horaire 1");
+    }
+
+    @Test
+    public void createHoraireTypiqueSansNom_DevraisLancerIllegalArgumentException() {
+        TimeSlotDTO timeSlotDTO = TimeSlotDTO.builder()
+                .startTime("08:00")
+                .endTime("10:00")
+                .periode("AM")
+                .build();
+
+        HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
+                .nom(null)
+                .timeSlots(List.of(timeSlotDTO))
+                .build();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                horaireTypiqueService.createHoraireTypique(horaireTypiqueDTO));
+
+        assertThat(exception.getMessage()).isEqualTo("Le nom de l'horaire typique ne peut pas être vide");
     }
 
     @Test
     public void supprimerHoraireTypiqueWithSuccess() {
         HoraireTypique horaireTypique = HoraireTypique.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of())
                 .build();
 
         HoraireTypique horaireTypiqueSupprime = HoraireTypique.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of())
                 .deleted(true)
                 .build();
@@ -100,11 +124,13 @@ public class HoraireTypiqueServiceTest {
     public void getAllHoraireTypiqueWithSuccess() {
         HoraireTypique horaireTypique1 = HoraireTypique.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of())
                 .build();
 
         HoraireTypique horaireTypique2 = HoraireTypique.builder()
                 .id(2L)
+                .nom("Horaire 1")
                 .timeSlots(List.of())
                 .build();
 

@@ -14,13 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 public class HoraireTypiqueDTO {
-    protected Long id;
-    protected boolean deleted;
+    private Long id;
+    private String nom;
+    private boolean deleted;
     List<TimeSlotDTO> timeSlots = new ArrayList<>();
 
     public static HoraireTypiqueDTO toHoraireTypiqueDTO(HoraireTypique horaireTypique) {
         return HoraireTypiqueDTO.builder()
             .id(horaireTypique.getId())
+            .nom(horaireTypique.getNom())
             .deleted(horaireTypique.isDeleted())
             .timeSlots(TimeSlotDTO.toTimeSlotDTO(horaireTypique.getTimeSlots()))
             .build();

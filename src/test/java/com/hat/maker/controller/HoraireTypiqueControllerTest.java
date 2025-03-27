@@ -47,11 +47,13 @@ public class HoraireTypiqueControllerTest {
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlotDTO))
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueRetour = HoraireTypiqueDTO.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlotDTO))
                 .build();
 
@@ -72,11 +74,13 @@ public class HoraireTypiqueControllerTest {
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlotDTO))
                 .build();
 
         HoraireTypiqueDTO horaireTypiqueRetour = HoraireTypiqueDTO.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlotDTO))
                 .deleted(true)
                 .build();
@@ -99,6 +103,7 @@ public class HoraireTypiqueControllerTest {
 
         HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
                 .id(1L)
+                .nom("Horaire 1")
                 .timeSlots(List.of(timeSlotDTO))
                 .deleted(true)
                 .build();
@@ -136,8 +141,8 @@ public class HoraireTypiqueControllerTest {
                 .build();
 
         List<HoraireTypiqueDTO> horaireTypiqueList = Arrays.asList(
-                HoraireTypiqueDTO.builder().id(1L).timeSlots(List.of(timeSlotDTO)).build(),
-                HoraireTypiqueDTO.builder().id(2L).timeSlots(List.of(timeSlotDTO2)).build()
+                HoraireTypiqueDTO.builder().id(1L).nom("Horaire 1").timeSlots(List.of(timeSlotDTO)).build(),
+                HoraireTypiqueDTO.builder().id(2L).nom("Horaire 1").timeSlots(List.of(timeSlotDTO2)).build()
 
         );
 

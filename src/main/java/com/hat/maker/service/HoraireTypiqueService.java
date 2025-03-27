@@ -16,7 +16,9 @@ public class HoraireTypiqueService {
     private final HoraireTypiqueRepository horaireTypiqueRepository;
 
     public HoraireTypiqueDTO createHoraireTypique(HoraireTypiqueDTO horaireTypiqueDTO) {
+        ValidationService.validerHoraireTypiqueFields(horaireTypiqueDTO);
         HoraireTypique horaireTypique = HoraireTypique.builder()
+                .nom(horaireTypiqueDTO.getNom())
                 .timeSlots(getTimeSlots(horaireTypiqueDTO))
                 .build();
         HoraireTypique horaireTypiqueRetour = horaireTypiqueRepository.save(horaireTypique);
