@@ -100,7 +100,7 @@ const AddHoraireTypique = () => {
                     if (data[i].startTime === data[j].startTime) {
                         return true;
                     }
-                    if (data[i].endTime && data[j].startTime >= data[i].startTime && data[j].startTime <= data[i].endTime) {
+                    if (data[i].endTime && data[j].startTime > data[i].startTime && data[j].startTime < data[i].endTime) {
                         return true;
                     }
                     if (data[i].endTime && data[j].endTime) {
@@ -198,7 +198,7 @@ const AddHoraireTypique = () => {
                     </button>
                 </div>
             }
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-7">
                 <input
                     type="text"
                     className={`w-1/4 p-2 border border-gray-300 rounded mr-2`}

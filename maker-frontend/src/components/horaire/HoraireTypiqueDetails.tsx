@@ -21,11 +21,13 @@ const HoraireTypiqueDetails = ({horaireTypique, onBack, onDelete}: HoraireTypiqu
     return (
         <div className="w-full p-4 mt-4 relative text-left">
             <h2 className="text-2xl font-bold text-center">{horaireTypique.nom}</h2>
-            <button onClick={onBack}
-                    className="absolute border top-0 right-0 rounded-3xl w-10 h-10 bg-gray-200 text-black">
-                <FontAwesomeIcon icon={faTimes}/>
-            </button>
-            <table className="w-full mt-12 border-collapse border-2 border-gray-300">
+            <div className="text-right">
+                <button onClick={onBack}
+                        className="border-t rounded-t w-10 h-10 bg-gray-200 text-black">
+                    <FontAwesomeIcon icon={faTimes}/>
+                </button>
+            </div>
+            <table className="w-full border-collapse border-2 bg-white border-gray-300 shadow-xl">
                 <tbody>
                 {horaireTypique.timeSlots.map((slot, index) => (
                     <tr key={index}>
@@ -40,7 +42,7 @@ const HoraireTypiqueDetails = ({horaireTypique, onBack, onDelete}: HoraireTypiqu
                 </tbody>
             </table>
             <button onClick={() => handleSupprimer(horaireTypique)}
-                    className="border rounded pr-4 pl-4 p-2 mt-4 text-white bg-red-500">
+                    className="border-b rounded-b pr-4 pl-4 p-2 text-white bg-red-500">
                 Supprimer
             </button>
         </div>
