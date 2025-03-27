@@ -2,7 +2,9 @@ import {ChangeEvent, useState} from 'react';
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {addHoraireTypique} from "../../interface/gestion/GestionHoraireTypique.ts";
-import {HoraireTypique} from "../../interface/Interface.ts";
+import {HoraireTypique, VueResponsable} from "../../interface/Interface.ts";
+import {useNavigate} from "react-router-dom";
+import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 
 interface Periode {
     periode: string;
@@ -10,11 +12,13 @@ interface Periode {
     endTime: string;
 }
 
-const HoraireTypiqueComponent = () => {
+const AddHoraireTypique = () => {
     const [nom, setNom] = useState("");
     const [periods, setPeriods] = useState<Periode[]>([{periode: '', startTime: '', endTime: ''}]);
     const [tableData, setTableData] = useState<Periode[]>([{periode: '', startTime: '', endTime: ''}]);
     const [error, setError] = useState<string | null>(null);
+    const {setVue} = useViewResponsable();
+    const navigate = useNavigate();
 
     const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
         const values = [...periods];
@@ -75,6 +79,9 @@ const HoraireTypiqueComponent = () => {
                 setError("");
                 setPeriods([{periode: '', startTime: '', endTime: ''}]);
                 setTableData([{periode: '', startTime: '', endTime: ''}]);
+                setNom("")
+                setVue(VueResponsable.HORAIRE_TYPIQUE)
+                navigate("/accueil")
             }
         ).catch(
             error => setError(error.message)
@@ -173,12 +180,14 @@ const HoraireTypiqueComponent = () => {
                     </table>
                 </div>
             </div>
-            {error && <div className="flex bg-red-500 text-white p-2 font-bold rounded m-4 w-1/3 ml-auto mr-auto justify-between">
-                {error}
-                <button onClick={() => setError("")}>
-                    <FontAwesomeIcon icon={faTimes} className="mr-2 ml-2"/>
-                </button>
-            </div>}
+            {error &&
+                <div className="flex bg-red-500 text-white p-2 font-bold rounded m-4 w-1/3 ml-auto mr-auto justify-between">
+                    {error}
+                    <button onClick={() => setError("")}>
+                        <FontAwesomeIcon icon={faTimes} className="mr-2 ml-2"/>
+                    </button>
+                </div>
+            }
             <div className="flex justify-center">
                 <input
                     type="text"
@@ -195,4 +204,4 @@ const HoraireTypiqueComponent = () => {
     );
 };
 
-export default HoraireTypiqueComponent;
+export default AddHoraireTypique;

@@ -14,3 +14,14 @@ export const addHoraireTypique = async (horaireTypique: HoraireTypique): Promise
 
     return await response.json();
 }
+
+export const getHorairesTypiques = async (): Promise<HoraireTypique[]> => {
+    const response = await fetch(RoutesBE.HoraireTypique, {
+        headers: {
+            method: 'GET',
+            'Authorization': `Bearer ${getToken()}`
+        }
+    });
+
+    return await response.json();
+}

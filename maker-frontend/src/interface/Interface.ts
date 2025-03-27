@@ -82,6 +82,7 @@ export enum VueResponsable {
     CAMPEURS = 'CAMPEURS',
     PERSONNEL = 'PERSONNEL',
     TENTES = 'TENTES',
+    HORAIRE_TYPIQUE = 'HORAIRE_TYPIQUE'
 }
 
 export enum VueMoniteur {

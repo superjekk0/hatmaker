@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {VueResponsable} from "../../interface/Interface.ts";
 import Etats from "../etats/Etats.tsx";
 import Departements from "../departements/Departements.tsx";
@@ -7,11 +6,11 @@ import Groupes from "../groupes/Groupes.tsx";
 import Campeurs from "../campeurs/Campeurs.tsx";
 import Personnel from "../personnel/Personnel.tsx";
 import Tentes from "../tentes/Tentes.tsx";
-import {RoutesFE} from "../../interface/Routes.ts";
-import {Link} from "react-router-dom";
+import HoraireTypiques from "../horaire/HoraireTypiques.tsx";
+import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 
 const ResponsableAccueilContenu = () => {
-    const [vue, setVue] = useState(VueResponsable.PERSONNEL);
+    const {vue, setVue} = useViewResponsable();
 
     return (
         <div className="linkModalEvalMS container mx-auto p-4 border-2 border-gray-300 rounded-lg">
@@ -62,8 +61,9 @@ const ResponsableAccueilContenu = () => {
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Horaire</h1>
                             <button
-                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white">
-                                <Link to={RoutesFE.HoraireTypique}>Horaire Typique</Link>
+                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.HORAIRE_TYPIQUE)}>
+                                Horaire Typique
                             </button>
                             <button
                                 className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
@@ -108,6 +108,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.TENTES && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <Tentes/>
+                    </div>
+                )}
+                {vue === VueResponsable.HORAIRE_TYPIQUE && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <HoraireTypiques/>
                     </div>
                 )}
             </div>
