@@ -1,7 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Activite;
-import com.hat.maker.repository.ActiviteRespository;
+import com.hat.maker.repository.ActiviteRepository;
 import com.hat.maker.service.dto.ActiviteDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class ActiviteServiceTest {
     @Mock
-    private ActiviteRespository activiteRepository;
+    private ActiviteRepository activiteRepository;
 
     @InjectMocks
     private ActiviteService activiteService;

@@ -1,7 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Departement;
-import com.hat.maker.repository.DepartementRespository;
+import com.hat.maker.repository.DepartementRepository;
 import com.hat.maker.service.dto.DepartementDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DepartementService {
-    private final DepartementRespository departementRepository;
+    private final DepartementRepository departementRepository;
 
     public DepartementDTO createDepartement(DepartementDTO departementDTO) {
         if (departementRepository.existsByNomIgnoreCaseAndIsNotDeleted(departementDTO.getNom())) {

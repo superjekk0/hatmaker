@@ -2,7 +2,7 @@ package com.hat.maker.service;
 
 import com.hat.maker.model.Campeur;
 import com.hat.maker.model.Groupe;
-import com.hat.maker.repository.CampeurRespository;
+import com.hat.maker.repository.CampeurRepository;
 import com.hat.maker.repository.GroupeRepository;
 import com.hat.maker.service.dto.CampeurDTO;
 import com.hat.maker.service.dto.GroupeDTO;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class CampeurServiceTest {
 
     @Mock
-    private CampeurRespository campeurRespository;
+    private CampeurRepository campeurRepository;
     @Mock
     private GroupeRepository groupeRepository;
     @Mock
@@ -62,7 +62,7 @@ public class CampeurServiceTest {
                 .groupe(groupe)
                 .build();
 
-        when(campeurRespository.save(any(Campeur.class))).thenReturn(campeurRetour);
+        when(campeurRepository.save(any(Campeur.class))).thenReturn(campeurRetour);
         when(groupeRepository.findById(1L)).thenReturn(Optional.of(groupe));
 
         CampeurDTO c = campeurService.createCampeur(campeurDTO);
@@ -114,8 +114,8 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.of(campeurExistant));
-        when(campeurRespository.save(any(Campeur.class))).thenReturn(campeurModifie);
+        when(campeurRepository.findById(1L)).thenReturn(Optional.of(campeurExistant));
+        when(campeurRepository.save(any(Campeur.class))).thenReturn(campeurModifie);
 
         CampeurDTO c = campeurService.modifierCampeur(campeurDTO);
         assertThat(c.getNom()).isEqualTo("Johnson");
@@ -141,7 +141,7 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.empty());
+        when(campeurRepository.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 campeurService.modifierCampeur(campeurDTO));
@@ -169,7 +169,7 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.of(campeurExistant));
+        when(campeurRepository.findById(1L)).thenReturn(Optional.of(campeurExistant));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 campeurService.modifierCampeur(campeurDTO));
@@ -198,7 +198,7 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.of(campeurExistant));
+        when(campeurRepository.findById(1L)).thenReturn(Optional.of(campeurExistant));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 campeurService.modifierCampeur(campeurDTO));
@@ -228,7 +228,7 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.of(campeurExistant));
+        when(campeurRepository.findById(1L)).thenReturn(Optional.of(campeurExistant));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 campeurService.modifierCampeur(campeurDTO));
@@ -259,7 +259,7 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.of(campeurExistant));
+        when(campeurRepository.findById(1L)).thenReturn(Optional.of(campeurExistant));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 campeurService.modifierCampeur(campeurDTO));
@@ -308,8 +308,8 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.of(campeurExistant));
-        when(campeurRespository.save(any(Campeur.class))).thenReturn(campeurSupprime);
+        when(campeurRepository.findById(1L)).thenReturn(Optional.of(campeurExistant));
+        when(campeurRepository.save(any(Campeur.class))).thenReturn(campeurSupprime);
 
         CampeurDTO c = campeurService.supprimerCampeur(campeurDTO);
         assertThat(c.isDeleted()).isTrue();
@@ -330,7 +330,7 @@ public class CampeurServiceTest {
                         .build())
                 .build();
 
-        when(campeurRespository.findById(1L)).thenReturn(Optional.empty());
+        when(campeurRepository.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 campeurService.supprimerCampeur(campeurDTO));
@@ -367,14 +367,14 @@ public class CampeurServiceTest {
                 .build();
 
 
-        when(campeurRespository.findAll()).thenReturn(List.of(campeur1, campeur2));
+        when(campeurRepository.findAll()).thenReturn(List.of(campeur1, campeur2));
 
         assertThat(campeurService.getAllCampeur().size()).isEqualTo(2);
     }
 
     @Test
     public void getAllCampeurAvecAucunEtat_DevraisRetournerListeVide() {
-        when(campeurRespository.findAll()).thenReturn(List.of());
+        when(campeurRepository.findAll()).thenReturn(List.of());
 
         assertThat(campeurService.getAllCampeur().size()).isEqualTo(0);
     }

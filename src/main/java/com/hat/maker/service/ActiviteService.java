@@ -1,7 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Activite;
-import com.hat.maker.repository.ActiviteRespository;
+import com.hat.maker.repository.ActiviteRepository;
 import com.hat.maker.service.dto.ActiviteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ActiviteService {
-    private final ActiviteRespository activiteRepository;
+    private final ActiviteRepository activiteRepository;
 
     public ActiviteDTO createActivite(ActiviteDTO activiteDTO) {
         if (activiteRepository.existsByNomIgnoreCaseAndIsNotDeleted(activiteDTO.getNom())) {

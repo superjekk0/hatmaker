@@ -1,7 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Etat;
-import com.hat.maker.repository.EtatRespository;
+import com.hat.maker.repository.EtatRepository;
 import com.hat.maker.service.dto.EtatDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class EtatServiceTest {
 
     @Mock
-    private EtatRespository etatRepository;
+    private EtatRepository etatRepository;
 
     @InjectMocks
     private EtatService etatService;

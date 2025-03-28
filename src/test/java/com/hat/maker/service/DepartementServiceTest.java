@@ -1,7 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Departement;
-import com.hat.maker.repository.DepartementRespository;
+import com.hat.maker.repository.DepartementRepository;
 import com.hat.maker.service.dto.DepartementDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class DepartementServiceTest {
 
     @Mock
-    private DepartementRespository departementRepository;
+    private DepartementRepository departementRepository;
 
     @InjectMocks
     private DepartementService departementService;

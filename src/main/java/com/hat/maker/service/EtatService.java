@@ -1,7 +1,7 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.Etat;
-import com.hat.maker.repository.EtatRespository;
+import com.hat.maker.repository.EtatRepository;
 import com.hat.maker.service.dto.EtatDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EtatService {
-    private final EtatRespository etatRepository;
+    private final EtatRepository etatRepository;
 
     public EtatDTO createEtat(EtatDTO etatDTO) {
         if (etatRepository.existsByNomIgnoreCaseAndIsNotDeleted(etatDTO.getNom())) {
