@@ -9,6 +9,15 @@ public class ValidationService {
         NOM, COURRIEL, MOT_DE_PASSE
     }
 
+    public static void validerPeriodeFields(PeriodeDTO periodeDTO) {
+        if (periodeDTO.getPeriode() == null || periodeDTO.getPeriode().isBlank()) {
+            throw new IllegalArgumentException("Le nom de la période ne peut pas être vide");
+        }
+        if (periodeDTO.getStartTime() == null || periodeDTO.getStartTime().isBlank()) {
+            throw new IllegalArgumentException("L'heure de début de la période ne peut pas être vide");
+        }
+    }
+
     public static void validerHoraireTypiqueFields(HoraireTypiqueDTO horaireTypiqueDTO) {
         if (horaireTypiqueDTO.getNom() == null || horaireTypiqueDTO.getNom().isBlank()) {
             throw new IllegalArgumentException("Le nom de l'horaire typique ne peut pas être vide");

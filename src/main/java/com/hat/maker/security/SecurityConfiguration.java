@@ -53,6 +53,7 @@ public class SecurityConfiguration {
                         .requestMatchers(GET, "/tente/moniteur/{id}").hasAnyAuthority("MONITEUR", "RESPONSABLE")
                         .requestMatchers("/moniteurs").hasAuthority("RESPONSABLE")
                         .requestMatchers("/horaire-typique").hasAnyAuthority("RESPONSABLE")
+                        .requestMatchers("/periode").hasAuthority("RESPONSABLE")
                         .requestMatchers("/connexion").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
