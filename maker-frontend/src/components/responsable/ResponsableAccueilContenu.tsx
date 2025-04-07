@@ -8,6 +8,7 @@ import Personnel from "../personnel/Personnel.tsx";
 import Tentes from "../tentes/Tentes.tsx";
 import HoraireTypiques from "../horaire/HoraireTypiques.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
+import Periodes from "../periodes/Periodes.tsx";
 
 const ResponsableAccueilContenu = () => {
     const {vue, setVue} = useViewResponsable();
@@ -66,6 +67,11 @@ const ResponsableAccueilContenu = () => {
                                 Horaire Typique
                             </button>
                             <button
+                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.PERIODES)}>
+                                Périodes
+                            </button>
+                            <button
                                 className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ETATS)}>
                                 États
@@ -113,6 +119,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.HORAIRE_TYPIQUE && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <HoraireTypiques/>
+                    </div>
+                )}
+                {vue === VueResponsable.PERIODES && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <Periodes/>
                     </div>
                 )}
             </div>

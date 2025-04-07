@@ -71,7 +71,12 @@ interface HoraireTypique {
 interface TimeSlot {
     periode: string;
     startTime: string;
-    endTime: string;
+    endTime?: string;
+}
+
+interface Periode extends TimeSlot {
+    id?: number;
+    deleted?: boolean;
 }
 
 export enum VueResponsable {
@@ -82,7 +87,8 @@ export enum VueResponsable {
     CAMPEURS = 'CAMPEURS',
     PERSONNEL = 'PERSONNEL',
     TENTES = 'TENTES',
-    HORAIRE_TYPIQUE = 'HORAIRE_TYPIQUE'
+    HORAIRE_TYPIQUE = 'HORAIRE_TYPIQUE',
+    PERIODES = 'PERIODES',
 }
 
 export enum VueMoniteur {
@@ -106,5 +112,6 @@ export type {
     Campeur,
     Tente,
     Moniteur,
-    HoraireTypique
+    HoraireTypique,
+    Periode
 };
