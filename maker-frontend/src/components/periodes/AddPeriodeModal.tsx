@@ -100,13 +100,17 @@ const AddPeriodeModal = ({isOpen, onClose, onSave}: AddPeriodeModalProps) => {
                 </div>
                 {!mode && (
                     <div className="flex flex-col items-center">
-                        <button className="p-2 rounded mb-2 bg-gray-200 w-full h-full" onClick={() => setMode("custom")}>Personnalisé</button>
+                        <button className="p-2 rounded mb-2 bg-gray-200 w-full h-full"
+                                onClick={() => setMode("custom")}>Personnalisé
+                        </button>
                         <div className="flex items-center my-2 w-full">
                             <div className="flex-grow border-t border-gray-300"></div>
                             <span className="mx-2 text-gray-500">OU</span>
                             <div className="flex-grow border-t border-gray-300"></div>
                         </div>
-                        <button className="p-2 rounded bg-gray-200 w-full h-full" onClick={() => setMode("horaireTypique")}>Basé sur une Horaire Typique</button>
+                        <button className="p-2 rounded bg-gray-200 w-full h-full"
+                                onClick={() => setMode("horaireTypique")}>Basé sur une Horaire Typique
+                        </button>
                     </div>
                 )}
                 {mode === "custom" && (
@@ -124,12 +128,18 @@ const AddPeriodeModal = ({isOpen, onClose, onSave}: AddPeriodeModalProps) => {
                     <div>
                         {!selectedHoraireTypique ? (
                             <div>
-                                {horaireTypiques.map(horaireTypique => (
-                                    <div key={horaireTypique.id} className="border p-2 mb-2 cursor-pointer"
-                                         onClick={() => setSelectedHoraireTypique(horaireTypique)}>
-                                        {horaireTypique.nom}
-                                    </div>
-                                ))}
+                                {horaireTypiques.length === 0 ? (
+                                    <div className="text-center text-gray-500">Aucun horaire typique</div>
+                                ) : (
+                                    <>
+                                        {horaireTypiques.map(horaireTypique => (
+                                            <div key={horaireTypique.id} className="border p-2 mb-2 cursor-pointer"
+                                                 onClick={() => setSelectedHoraireTypique(horaireTypique)}>
+                                                {horaireTypique.nom}
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
                             </div>
                         ) : (
                             <div>
@@ -155,7 +165,8 @@ const AddPeriodeModal = ({isOpen, onClose, onSave}: AddPeriodeModalProps) => {
                         <button className="bg-gray-500 text-white p-2 rounded mr-2" onClick={handleBack}>Retour</button>
                     )}
                     {(mode == "custom" || selectedHoraireTypique) && (
-                        <button className="bg-green-500 text-white p-2 rounded" onClick={handleSave}>Sauvegarder</button>
+                        <button className="bg-green-500 text-white p-2 rounded"
+                                onClick={handleSave}>Sauvegarder</button>
                     )}
                 </div>
             </div>

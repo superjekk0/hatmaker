@@ -25,3 +25,34 @@ export const addPeriode = async (periode: Periode): Promise<Periode> => {
 
     return await response.json();
 }
+
+export const modifierPeriode = async (periode: Periode): Promise<Periode> => {
+    const response = await fetch(RoutesBE.Periodes, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(periode),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Période invalide');
+    }
+
+    return await response.json();
+}
+
+export const supprimerPeriode = async (periode: Periode): Promise<Periode> => {
+    const response = await fetch(RoutesBE.Periodes, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(periode),
+    });
+
+    return await response.json();
+}

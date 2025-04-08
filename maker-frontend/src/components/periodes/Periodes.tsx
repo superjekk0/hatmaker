@@ -3,11 +3,14 @@ import {Periode} from "../../interface/Interface.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import AddPeriodeModal from "./AddPeriodeModal";
+import ModifierPeriodeModal from "./ModifierPeriodeModal";
 import {getPeriodes} from "../../interface/gestion/GestionPeriodes.tsx";
 
 const Periodes = () => {
     const [periodes, setPeriodes] = useState<Periode[]>([]);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isModifierModalOpen, setIsModifierModalOpen] = useState(false);
+    const [selectedPeriode, setSelectedPeriode] = useState<Periode | null>(null);
 
     useEffect(() => {
         getPeriodes().then(
@@ -20,6 +23,19 @@ const Periodes = () => {
     const handleSave = (newPeriode: Periode) => {
         setPeriodes([...periodes, newPeriode]);
     };
+
+    const handleUpdate = (updatedPeriode: Periode) => {
+        setPeriodes(periodes.map(periode => periode.id === updatedPeriode.id ? updatedPeriode : periode));
+    };
+
+    const handleEdit = (periode: Periode) => {
+        setSelectedPeriode(periode);
+        setIsModifierModalOpen(true);
+    };
+
+    const handleDelete = (deletedPeriode: Periode) => {
+        setPeriodes(periodes.filter(periode => periode.id !== deletedPeriode.id));
+    }
 
     return (
         <div className="p-4">
@@ -49,7 +65,7 @@ const Periodes = () => {
                             <td className="px-6 py-4 text-right">
                                 <button
                                     className="w-10 h-10"
-                                    onClick={() => console.log()}>
+                                    onClick={() => handleEdit(periode)}>
                                     <FontAwesomeIcon icon={faChevronRight}/>
                                 </button>
                             </td>
@@ -59,6 +75,15 @@ const Periodes = () => {
                 </table>
             </div>
             <AddPeriodeModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleSave}/>
+            {selectedPeriode && (
+                <ModifierPeriodeModal
+                    isOpen={isModifierModalOpen}
+                    onClose={() => setIsModifierModalOpen(false)}
+                    onSave={handleUpdate}
+                    onDelete={handleDelete}
+                    existingPeriode={selectedPeriode}
+                />
+            )}
         </div>
     );
 };
