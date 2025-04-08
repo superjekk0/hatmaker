@@ -88,6 +88,7 @@ export enum VueResponsable {
     PERSONNEL = 'PERSONNEL',
     TENTES = 'TENTES',
     HORAIRE_TYPIQUE = 'HORAIRE_TYPIQUE',
+    HORAIRE = 'HORAIRE',
     PERIODES = 'PERIODES',
 }
 

@@ -6,7 +6,7 @@ import Groupes from "../groupes/Groupes.tsx";
 import Campeurs from "../campeurs/Campeurs.tsx";
 import Personnel from "../personnel/Personnel.tsx";
 import Tentes from "../tentes/Tentes.tsx";
-import HoraireTypiques from "../horaire/HoraireTypiques.tsx";
+import HoraireTypiques from "../horaire_typique/HoraireTypiques.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import Periodes from "../periodes/Periodes.tsx";
 
@@ -58,6 +58,11 @@ const ResponsableAccueilContenu = () => {
                                 onClick={() => setVue(VueResponsable.ACTIVITES)}>
                                 Activités
                             </button>
+                            <button
+                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.ETATS)}>
+                                États
+                            </button>
                         </div>
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Horaire</h1>
@@ -68,13 +73,13 @@ const ResponsableAccueilContenu = () => {
                             </button>
                             <button
                                 className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
-                                onClick={() => setVue(VueResponsable.PERIODES)}>
-                                Périodes
+                                onClick={() => setVue(VueResponsable.HORAIRE)}>
+                                Horaires
                             </button>
                             <button
-                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
-                                onClick={() => setVue(VueResponsable.ETATS)}>
-                                États
+                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.PERIODES)}>
+                                Périodes
                             </button>
                         </div>
                     </div>
