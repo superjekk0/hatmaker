@@ -9,6 +9,7 @@ import Tentes from "../tentes/Tentes.tsx";
 import HoraireTypiques from "../horaire_typique/HoraireTypiques.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import Periodes from "../periodes/Periodes.tsx";
+import Horaires from "../horaires/Horaires.tsx";
 
 const ResponsableAccueilContenu = () => {
     const {vue, setVue} = useViewResponsable();
@@ -68,6 +69,11 @@ const ResponsableAccueilContenu = () => {
                             </button>
                             <button
                                 className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.HORAIRE)}>
+                                Horaires
+                            </button>
+                            <button
+                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.PERIODES)}>
                                 Périodes
                             </button>
@@ -119,6 +125,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.HORAIRE_TYPIQUE && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <HoraireTypiques/>
+                    </div>
+                )}
+                {vue === VueResponsable.HORAIRE && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <Horaires/>
                     </div>
                 )}
                 {vue === VueResponsable.PERIODES && (
