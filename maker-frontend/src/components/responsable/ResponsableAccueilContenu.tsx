@@ -6,7 +6,7 @@ import Groupes from "../groupes/Groupes.tsx";
 import Campeurs from "../campeurs/Campeurs.tsx";
 import Personnel from "../personnel/Personnel.tsx";
 import Tentes from "../tentes/Tentes.tsx";
-import HoraireTypiques from "../horaire/HoraireTypiques.tsx";
+import HoraireTypiques from "../horaire_typique/HoraireTypiques.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import Periodes from "../periodes/Periodes.tsx";
 

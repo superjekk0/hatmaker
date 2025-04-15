@@ -1,10 +1,11 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useContext, useEffect, useState} from 'react';
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {addHoraireTypique} from "../../interface/gestion/GestionHoraireTypique.ts";
 import {HoraireTypique, VueResponsable} from "../../interface/Interface.ts";
 import {useNavigate} from "react-router-dom";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
+import {AuthentificatedContext} from "../../context/AuthentificationContext.tsx";
 
 interface Periode {
     periode: string;
@@ -19,6 +20,13 @@ const AddHoraireTypique = () => {
     const [error, setError] = useState<string | null>(null);
     const {setVue} = useViewResponsable();
     const navigate = useNavigate();
+    const {isAuthentificated} = useContext(AuthentificatedContext)
+
+    useEffect(() => {
+        if (!isAuthentificated) {
+            navigate("/");
+        }
+    }, []);
 
     const handleBack = () => {
         setVue(VueResponsable.HORAIRE_TYPIQUE);

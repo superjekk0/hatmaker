@@ -8,7 +8,7 @@ import PageAccueil from "./pages/PageAccueil.tsx";
 import FormulaireConnexion from "./components/FormulaireConnexion.tsx";
 import PageInscription from "./pages/PageInscription.tsx";
 import FormulaireInscriptionMoniteur from "./components/moniteur/FormulaireInscriptionMoniteur.tsx";
-import AddHoraireTypique from "./components/horaire/AddHoraireTypique.tsx";
+import AddHoraireTypique from "./components/horaire_typique/AddHoraireTypique.tsx";
 import {ViewResponsableProvider} from "./context/ResponsableViewContext.tsx";
 
 function App() {
