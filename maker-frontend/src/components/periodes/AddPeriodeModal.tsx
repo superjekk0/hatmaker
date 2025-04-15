@@ -145,7 +145,7 @@ const AddPeriodeModal = ({isOpen, onClose, onSave}: AddPeriodeModalProps) => {
                             <div>
                                 <h3 className="text-lg font-bold mb-2">{selectedHoraireTypique.nom}</h3>
                                 {selectedHoraireTypique.timeSlots.map((slot, index) => (
-                                    <div key={index} className="flex items-center mb-2">
+                                    <div key={index} className="flex items-center">
                                         <input type="checkbox" value={slot.periode} onChange={(e) => {
                                             if (e.target.checked) {
                                                 setSelectedTimeSlots([...selectedTimeSlots, slot.periode]);
