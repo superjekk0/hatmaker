@@ -1,10 +1,11 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useContext, useEffect, useState} from 'react';
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {addHoraireTypique} from "../../interface/gestion/GestionHoraireTypique.ts";
 import {HoraireTypique, VueResponsable} from "../../interface/Interface.ts";
 import {useNavigate} from "react-router-dom";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
+import {AuthentificatedContext} from "../../context/AuthentificationContext.tsx";
 
 interface Periode {
     periode: string;
@@ -19,6 +20,13 @@ const AddHoraireTypique = () => {
     const [error, setError] = useState<string | null>(null);
     const {setVue} = useViewResponsable();
     const navigate = useNavigate();
+    const {isAuthentificated} = useContext(AuthentificatedContext)
+
+    useEffect(() => {
+        if (!isAuthentificated) {
+            navigate("/");
+        }
+    }, []);
 
     const handleBack = () => {
         setVue(VueResponsable.HORAIRE_TYPIQUE);
@@ -55,7 +63,13 @@ const AddHoraireTypique = () => {
         const values = [...periods];
 
         for (let index = 0; index < values.length; index++) {
-            if (values[index].startTime && values[index].endTime && values[index].startTime >= values[index].endTime) {
+            const endTimeEnd = !(values[values.length - 1].endTime === values[index].endTime &&
+                                       values[index].endTime === '00:00');
+            const startTimeEnd = !(values[values.length - 1].startTime === values[index].startTime &&
+                                         values[index].startTime === '00:00');
+
+            if (values[index].startTime &&
+                values[index].endTime && values[index].startTime >= values[index].endTime && endTimeEnd && startTimeEnd) {
                 setError('Le temps de début doit être plus tôt que le temps de fin');
                 return;
             }
@@ -67,11 +81,6 @@ const AddHoraireTypique = () => {
                 setError('Veuillez entrer un temps de début');
                 return;
             }
-        }
-
-        if (checkForOverlap(tableData)) {
-            setError('Certains temps se chevauchent, veuillez les corriger');
-            return;
         }
 
         let horaireTypique: HoraireTypique = {
@@ -91,30 +100,6 @@ const AddHoraireTypique = () => {
         ).catch(
             error => setError(error.message)
         );
-    };
-
-    const checkForOverlap = (data: Periode[]) => {
-        for (let i = 0; i < data.length; i++) {
-            for (let j = i + 1; j < data.length; j++) {
-                if (data[i].startTime && data[j].startTime) {
-                    if (data[i].startTime === data[j].startTime) {
-                        return true;
-                    }
-                    if (data[i].endTime && data[j].startTime > data[i].startTime && data[j].startTime < data[i].endTime) {
-                        return true;
-                    }
-                    if (data[i].endTime && data[j].endTime) {
-                        if (
-                            (data[i].startTime < data[j].endTime && data[i].endTime > data[j].startTime) ||
-                            (data[j].startTime < data[i].endTime && data[j].endTime > data[i].startTime)
-                        ) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     };
 
     return (

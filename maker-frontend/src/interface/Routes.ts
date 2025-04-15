@@ -6,6 +6,7 @@ export enum RoutesFE {
     Inscription = "/inscription",
     InscriptionMoniteur = "/inscription/moniteur",
     HoraireTypique = "/horaire-typique",
+    Patrouille = "/patrouille",
 }
 
 export enum RoutesBE {

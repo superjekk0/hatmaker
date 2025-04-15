@@ -9,6 +9,7 @@ import Tentes from "../tentes/Tentes.tsx";
 import HoraireTypiques from "../horaire_typique/HoraireTypiques.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import Periodes from "../periodes/Periodes.tsx";
+import Horaires from "../horaires/Horaires.tsx";
 
 const ResponsableAccueilContenu = () => {
     const {vue, setVue} = useViewResponsable();
@@ -58,11 +59,6 @@ const ResponsableAccueilContenu = () => {
                                 onClick={() => setVue(VueResponsable.ACTIVITES)}>
                                 Activités
                             </button>
-                            <button
-                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
-                                onClick={() => setVue(VueResponsable.ETATS)}>
-                                États
-                            </button>
                         </div>
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Horaire</h1>
@@ -80,6 +76,11 @@ const ResponsableAccueilContenu = () => {
                                 className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.PERIODES)}>
                                 Périodes
+                            </button>
+                            <button
+                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.ETATS)}>
+                                États
                             </button>
                         </div>
                     </div>
@@ -124,6 +125,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.HORAIRE_TYPIQUE && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <HoraireTypiques/>
+                    </div>
+                )}
+                {vue === VueResponsable.HORAIRE && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <Horaires/>
                     </div>
                 )}
                 {vue === VueResponsable.PERIODES && (
