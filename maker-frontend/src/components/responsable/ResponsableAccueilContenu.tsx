@@ -56,6 +56,11 @@ const ResponsableAccueilContenu = () => {
                             </button>
                             <button
                                 className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.ETATS)}>
+                                États
+                            </button>
+                            <button
+                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ACTIVITES)}>
                                 Activités
                             </button>
@@ -76,11 +81,6 @@ const ResponsableAccueilContenu = () => {
                                 className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.PERIODES)}>
                                 Périodes
-                            </button>
-                            <button
-                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
-                                onClick={() => setVue(VueResponsable.ETATS)}>
-                                États
                             </button>
                         </div>
                     </div>

@@ -16,6 +16,7 @@ const Patrouille = () => {
     const [moniteurs, setMoniteurs] = useState<Moniteur[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCell, setSelectedCell] = useState<{ rowIndex: number; colIndex: number } | null>(null);
+    const [searchQuery, setSearchQuery] = useState("");
     const {isAuthentificated} = useContext(AuthentificatedContext)
     const {setVue} = useViewResponsable();
     const navigate = useNavigate();
@@ -41,7 +42,6 @@ const Patrouille = () => {
             start.setDate(start.getDate() + 1);
         }
 
-        // Map existing data for each date
         const dateToRowMap: Record<string, string[]> = {};
         dates.forEach((date, colIndex) => {
             rows.forEach((_, rowIndex) => {
@@ -50,7 +50,6 @@ const Patrouille = () => {
             });
         });
 
-        // Generate new rows based on the new dates
         const newRows = rows.map((_, rowIndex) =>
             generatedDates.map((date) => dateToRowMap[date]?.[rowIndex] || "")
         );
@@ -90,6 +89,13 @@ const Patrouille = () => {
         navigate("/accueil");
     }
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value.toLowerCase());
+    };
+
+    const filteredMoniteurs = moniteurs.filter((moniteur) =>
+        moniteur.nom.toLowerCase().includes(searchQuery)
+    );
 
     return (
         <div className="p-4">
@@ -184,12 +190,21 @@ const Patrouille = () => {
                                 <div className="flex justify-between items-center mb-4">
                                     <h2 className="text-xl font-bold">Sélectionner un Moniteur</h2>
                                     <button onClick={() => setIsModalOpen(false)} className="text-black">
-                                        <FontAwesomeIcon icon={faTimes}/>
+                                        <FontAwesomeIcon icon={faTimes} />
                                     </button>
+                                </div>
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        placeholder="Rechercher un moniteur..."
+                                        value={searchQuery}
+                                        onChange={handleSearchChange}
+                                        className="border p-2 w-full rounded"
+                                    />
                                 </div>
                                 <div className="overflow-y-auto max-h-96">
                                     <ul className="space-y-2">
-                                        {moniteurs
+                                        {filteredMoniteurs
                                             .sort((a, b) => a.nom.localeCompare(b.nom))
                                             .map((moniteur, index) => (
                                                 <li
