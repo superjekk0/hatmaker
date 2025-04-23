@@ -7,66 +7,177 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SpringBootApplication
 @RequiredArgsConstructor
 public class MakerApplication implements CommandLineRunner {
-	private final ResponsableService responsableService;
-	private final SpecialisteService specialisteService;
-	private final DepartementService departementService;
-	private final MoniteurService moniteurService;
-	private final CampeurService campeurService;
-	private final GroupeService groupeService;
+    private final ResponsableService responsableService;
+    private final DepartementService departementService;
+    private final MoniteurService moniteurService;
+    private final CampeurService campeurService;
+    private final GroupeService groupeService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(MakerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MakerApplication.class, args);
+    }
 
-	public void run(String... args) {
-		DepartementDTO departementDTO = DepartementDTO.builder()
-				.nom("Programmation")
-				.build();
-		DepartementDTO departementDTO2 = DepartementDTO.builder()
-				.nom("Vie de camp")
-				.build();
-		DepartementDTO departementRetour = departementService.createDepartement(departementDTO);
-		DepartementDTO departementRetour2 = departementService.createDepartement(departementDTO2);
+    public void run(String... args) {
+        List<DepartementDTO> departementDTOs = Arrays.asList(
+                DepartementDTO.builder().id(1L).nom("Animateur").build(),
+                DepartementDTO.builder().id(2L).nom("Gestion").build(),
+                DepartementDTO.builder().id(3L).nom("Direction").build(),
+                DepartementDTO.builder().id(4L).nom("Moniteur").build(),
+                DepartementDTO.builder().id(5L).nom("Cuisine").build()
+        );
+        departementDTOs.forEach(departementService::createDepartement);
 
-		GroupeDTO groupeDTO = GroupeDTO.builder()
-				.nom("Junior")
-				.build();
-		GroupeDTO groupeRetour = groupeService.createGroupe(groupeDTO);
+        List<GroupeDTO> groupeDTOs = Arrays.asList(
+                GroupeDTO.builder().id(1L).nom("Benjamin").build(),
+                GroupeDTO.builder().id(2L).nom("Junior").build(),
+                GroupeDTO.builder().id(3L).nom("Inter").build(),
+                GroupeDTO.builder().id(4L).nom("Senior").build()
+        );
+        groupeDTOs.forEach(groupeService::createGroupe);
 
-		CampeurDTO campeurDTO = CampeurDTO.builder()
-				.nom("Guimond")
-				.prenom("Antoine")
-				.genre("Lune")
-				.groupe(groupeRetour)
-				.information("Trouble d'opposition")
-				.build();
-		campeurService.createCampeur(campeurDTO);
+        CampeurDTO campeurDTO = CampeurDTO.builder()
+                .nom("Paige")
+                .prenom("Emanuel")
+                .genre("Lune")
+                .groupe(groupeDTOs.getFirst())
+                .information("Pipi au lit")
+                .build();
+        campeurService.createCampeur(campeurDTO);
+        CampeurDTO campeurDTO2 = CampeurDTO.builder()
+                .nom("Perles")
+                .prenom("Lili")
+                .genre("Soleil")
+                .groupe(groupeDTOs.getFirst())
+                .information("")
+                .build();
+        campeurService.createCampeur(campeurDTO2);
+        CampeurDTO campeurDTO3 = CampeurDTO.builder()
+                .nom("Guimond")
+                .prenom("Antoine")
+                .genre("Lune")
+                .groupe(groupeDTOs.get(1))
+                .information("Trouble d'opposition")
+                .build();
+        campeurService.createCampeur(campeurDTO3);
+        CampeurDTO campeurDTO4 = CampeurDTO.builder()
+                .nom("Adriane-Cassidy")
+                .prenom("Lou")
+                .genre("Soleil")
+                .groupe(groupeDTOs.get(1))
+                .information("Aime chanter")
+                .build();
+        campeurService.createCampeur(campeurDTO4);
+        CampeurDTO campeurDTO5 = CampeurDTO.builder()
+                .nom("Bouchard")
+                .prenom("Gabriel")
+                .genre("Lune")
+                .groupe(groupeDTOs.get(2))
+                .information("Apporte toujours sa guitare")
+                .build();
+        campeurService.createCampeur(campeurDTO5);
+        CampeurDTO campeurDTO6 = CampeurDTO.builder()
+                .nom("Roy")
+                .prenom("Ariane")
+                .genre("Soleil")
+                .groupe(groupeDTOs.get(2))
+                .information("Enfant reine")
+                .build();
+        campeurService.createCampeur(campeurDTO6);
+        CampeurDTO campeurDTO7 = CampeurDTO.builder()
+                .nom("Bridges")
+                .prenom("Cassidy")
+                .genre("Soleil")
+                .groupe(groupeDTOs.getLast())
+                .information("Campeur exemplaire")
+                .build();
+        campeurService.createCampeur(campeurDTO7);
+        CampeurDTO campeurDTO8 = CampeurDTO.builder()
+                .nom("Guy")
+                .prenom("Guy")
+                .genre("Lune")
+                .groupe(groupeDTOs.getLast())
+                .information("Petit coquin")
+                .build();
+        campeurService.createCampeur(campeurDTO8);
 
-		MoniteurCreeDTO moniteurDTO = MoniteurCreeDTO.builder()
-				.nom("Indigo")
-				.courriel("indigo@cc.com")
-				.motDePasse("1")
-				.departement(departementRetour2)
-				.build();
-		moniteurService.createMoniteur(moniteurDTO);
 
-		ResponsableCreeDTO responsableDTO = ResponsableCreeDTO.builder()
-				.nom("Le Impact")
-				.courriel("leimpact@cc.com")
-				.motDePasse("1")
-				.departement(departementRetour)
-				.build();
-		responsableService.createResponsable(responsableDTO);
+        MoniteurCreeDTO moniteurDTO = MoniteurCreeDTO.builder()
+                .nom("Indigo")
+                .courriel("indigo@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.getFirst())
+                .build();
+        moniteurService.createMoniteur(moniteurDTO);
+        MoniteurCreeDTO moniteurDTO2 = MoniteurCreeDTO.builder()
+                .nom("Smash")
+                .courriel("smash@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.getFirst())
+                .build();
+        moniteurService.createMoniteur(moniteurDTO2);
+        MoniteurCreeDTO moniteurDTO4 = MoniteurCreeDTO.builder()
+                .nom("Rocket")
+                .courriel("rocket@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.get(3))
+                .build();
+        moniteurService.createMoniteur(moniteurDTO4);
+        MoniteurCreeDTO moniteurDTO5 = MoniteurCreeDTO.builder()
+                .nom("Libellule")
+                .courriel("libellule@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.get(3))
+                .build();
+        moniteurService.createMoniteur(moniteurDTO5);
+        MoniteurCreeDTO moniteurDTO6 = MoniteurCreeDTO.builder()
+                .nom("Caféine")
+                .courriel("cafeine@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.getLast())
+                .build();
+        moniteurService.createMoniteur(moniteurDTO6);
+        MoniteurCreeDTO moniteurDTO7 = MoniteurCreeDTO.builder()
+                .nom("Thé des bois")
+                .courriel("thedesbois@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.getLast())
+                .build();
+        moniteurService.createMoniteur(moniteurDTO7);
 
-		SpecialisteCreeDTO specialisteDTO = SpecialisteCreeDTO.builder()
-				.nom("Azkaban")
-				.courriel("azkaban@cc.com")
-				.motDePasse("1")
-				.departement(departementRetour2)
-				.build();
-		specialisteService.createSpecialiste(specialisteDTO);
-	}
+
+        ResponsableCreeDTO responsableDTO = ResponsableCreeDTO.builder()
+                .nom("Le Impact")
+                .courriel("leimpact@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.get(1))
+                .build();
+        responsableService.createResponsable(responsableDTO);
+        ResponsableCreeDTO responsableDTO2 = ResponsableCreeDTO.builder()
+                .nom("Nemo")
+                .courriel("nemo@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.get(1))
+                .build();
+        responsableService.createResponsable(responsableDTO2);
+        ResponsableCreeDTO responsableDTO3 = ResponsableCreeDTO.builder()
+                .nom("Sooby-Doo")
+                .courriel("scoobydoo@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.get(2))
+                .build();
+        responsableService.createResponsable(responsableDTO3);
+        ResponsableCreeDTO responsableDTO4 = ResponsableCreeDTO.builder()
+                .nom("Mango")
+                .courriel("mango@cc.com")
+                .motDePasse("1")
+                .departement(departementDTOs.get(2))
+                .build();
+        responsableService.createResponsable(responsableDTO4);
+    }
 }
