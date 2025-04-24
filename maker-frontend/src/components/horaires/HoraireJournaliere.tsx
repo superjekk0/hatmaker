@@ -8,6 +8,9 @@ import {Departement, Periode, Utilisateur, VueResponsable} from "../../interface
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import {getDepartements} from "../../interface/gestion/GestionDepartements.ts";
 import {getPeriodes} from "../../interface/gestion/GestionPeriodes.tsx";
+import UserSelectionModal from "./UserSelectionModal.tsx";
+import HoraireTable from "./HoraireTable.tsx";
+import OptionsSection from "./OptionsSection.tsx";
 
 const HoraireJournaliere = () => {
     const [name, setName] = useState("");
@@ -90,16 +93,12 @@ const HoraireJournaliere = () => {
             setRows((prevRows) => {
                 const updatedRows = [...prevRows];
                 const cellData = updatedRows[rowIndex][colIndex].split(", ");
-                console.log(cellData);
 
                 if (cellData[0] == '' && cellData.length == 1) {
-                    console.log("yo1");
                     cellData[0] = utilisateur.nom;
                 } else if (cellData.includes(utilisateur.nom)) {
-                    console.log("yo2");
                     cellData.splice(cellData.indexOf(utilisateur.nom), 1);
                 } else {
-                    console.log("yo3");
                     cellData.push(utilisateur.nom);
                 }
                 updatedRows[rowIndex][colIndex] = cellData.join(", ");
@@ -118,10 +117,6 @@ const HoraireJournaliere = () => {
         setVue(VueResponsable.HORAIRE);
         navigate("/accueil");
     }
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value.toLowerCase());
-    };
 
     const handleTypeSelect = (type: string) => {
         setSelectedType(type);
@@ -144,7 +139,7 @@ const HoraireJournaliere = () => {
     };
 
     const toggleCollapsible = () => {
-        setIsCollapsibleOpen((prev) => !prev); // Toggle the collapsible section
+        setIsCollapsibleOpen((prev) => !prev);
     };
 
     const filteredUtilisateurs = utilisateurs.filter(
@@ -155,8 +150,7 @@ const HoraireJournaliere = () => {
 
     return (
         <div className="p-4">
-            <button onClick={handleBack}
-                    className="absolute border top-24 right-2 rounded pl-4 pr-4 p-2 bg-gray-200 hover:bg-gray-300 text-black">
+            <button onClick={handleBack} className="absolute border top-24 right-2 rounded pl-4 pr-4 p-2 bg-gray-200 hover:bg-gray-300 text-black">
                 Retour
             </button>
             <h1 className="text-2xl font-bold mb-4">Horaire Journalière</h1>
@@ -167,182 +161,44 @@ const HoraireJournaliere = () => {
                 >
                     <FontAwesomeIcon icon={isCollapsibleOpen ? faTimes : faPlus} />
                 </button>
-                {!isCollapsibleOpen && (<h2 className="font-bold">Options</h2>)}
+                {!isCollapsibleOpen && <h2 className="font-bold">Options</h2>}
                 {isCollapsibleOpen && (
-                    <div>
-                        <div className="mb-4">
-                            <label className="block mb-2">Nom:</label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="border p-2 w-full rounded"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block mb-2">Date de début:</label>
-                            <input
-                                type="date"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                                className="border p-2 w-full rounded"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block mb-2">Date de fin:</label>
-                            <input
-                                type="date"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                                className="border p-2 w-full rounded"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block mb-2">Type d'horaire:</label>
-                            <div className="">
-                                {["Patrouille", "24h Off"].map((type) => (
-                                    <div
-                                        key={type}
-                                        onClick={() => handleTypeSelect(type)}
-                                        className={`p-2 border rounded mt-2 ${
-                                            selectedType === type ? "bg-blue-500 text-white" : "cursor-pointer bg-white hover:bg-gray-300"
-                                        }`}
-                                    >
-                                        {type}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <label className="block mb-2">Départements:</label>
-                            <div className="max-h-56 overflow-y-auto">
-                                {departements.map((dep) => (
-                                    <div
-                                        key={dep.nom}
-                                        onClick={() => handleDepartementSelect(dep.nom)}
-                                        className={`cursor-pointer p-2 border rounded mt-2 ${
-                                            selectedDepartements.includes(dep.nom)
-                                                ? "bg-blue-500 text-white"
-                                                : "bg-white hover:bg-gray-300"
-                                        }`}
-                                    >
-                                        {dep.nom}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <label className="block mb-2">Périodes:</label>
-                            <div className="max-h-56 overflow-y-auto">
-                                {periodes.map((periode) => (
-                                    <div
-                                        key={periode.periode}
-                                        onClick={() => handlePeriodeSelect(periode.periode)}
-                                        className={`cursor-pointer p-2 border rounded mt-2 ${
-                                            selectedPeriodes.includes(periode.periode)
-                                                ? "bg-blue-500 text-white"
-                                                : "bg-white hover:bg-gray-300"
-                                        }`}
-                                    >
-                                        {periode.periode}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <button
-                            onClick={handleGenerate}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4">
-                            Générer le Tableau
-                        </button>
-                    </div>
+                    <OptionsSection
+                        {...{
+                            name,
+                            setName,
+                            startDate,
+                            setStartDate,
+                            endDate,
+                            setEndDate,
+                            selectedType,
+                            handleTypeSelect,
+                            departements,
+                            selectedDepartements,
+                            handleDepartementSelect,
+                            periodes,
+                            selectedPeriodes,
+                            handlePeriodeSelect,
+                            handleGenerate,
+                        }}
+                    />
                 )}
             </div>
             {dates.length > 0 && (
-                <div>
-                    <table className="text-sm text-left text-gray-500 ml-auto mr-auto m-4">
-                        <thead className="text-xs text-gray-700 bg-gray-300">
-                        <tr>
-                            <th className="px-6 py-3 text-center">Info</th>
-                            {dates.map((date, index) => (
-                                <th key={index} className="px-6 py-3">
-                                    {date}
-                                </th>
-                            ))}
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {rows.map((row, rowIndex) => (
-                            <tr key={rowIndex} className="bg-white">
-                                <td className="border p-2 text-right">
-                                    <input className="text-center"/>
-                                </td>
-                                {row.map((moniteur, colIndex) => (
-                                    <td
-                                        key={colIndex}
-                                        className="border p-2"
-                                        onClick={() => handleCellClick(rowIndex, colIndex)}
-                                    >
-                                        {moniteur || "Aucun staff"}
-                                    </td>
-                                ))}
-                                <td className="p-0">
-                                    <button onClick={() => handleRemoveRow(rowIndex)}
-                                            className="bg-gray-200 hover:bg-gray-300 rounded-r-full w-7 h-8 flex items-center justify-center">
-                                        <FontAwesomeIcon icon={faTimes} className="text-black"/>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <div className="flex justify-center mt-4">
-                        <button
-                            type="button"
-                            onClick={handleAddRow}
-                            className="bg-gray-200 hover:bg-gray-300 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-4"
-                        >
-                            <FontAwesomeIcon icon={faPlus} size="sm"/>
-                        </button>
-                    </div>
-                    {isModalOpen && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
-                            <div className="bg-white p-4 rounded shadow-md lg:w-1/2 relative">
-                                <div className="flex justify-between items-center mb-4">
-                                    <h2 className="text-xl font-bold">Sélectionner un Moniteur</h2>
-                                    <button onClick={() => setIsModalOpen(false)} className="text-black">
-                                        <FontAwesomeIcon icon={faTimes}/>
-                                    </button>
-                                </div>
-                                <div className="mb-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Rechercher un moniteur..."
-                                        value={searchQuery}
-                                        onChange={handleSearchChange}
-                                        className="border p-2 w-full rounded"
-                                    />
-                                </div>
-                                <div className="overflow-y-auto max-h-96">
-                                    <ul className="space-y-2">
-                                        {filteredUtilisateurs
-                                            .sort((a, b) => a.nom.localeCompare(b.nom))
-                                            .map((utilisateur, index) => (
-                                                <li
-                                                    key={index}
-                                                    className="cursor-pointer p-2 hover:bg-gray-200 border rounded"
-                                                    onClick={() => handleSelectUtilisateur(utilisateur)}
-                                                >
-                                                    {utilisateur.nom}
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                <HoraireTable
+                    {...{ dates, rows, handleCellClick, handleRemoveRow, handleAddRow }}
+                />
             )}
+            <UserSelectionModal
+                {...{
+                    isModalOpen,
+                    setIsModalOpen,
+                    searchQuery,
+                    setSearchQuery,
+                    filteredUtilisateurs,
+                    handleSelectUtilisateur,
+                }}
+            />
         </div>
     );
 };
