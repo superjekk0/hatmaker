@@ -18,6 +18,7 @@ public class MakerApplication implements CommandLineRunner {
     private final MoniteurService moniteurService;
     private final CampeurService campeurService;
     private final GroupeService groupeService;
+    private final PeriodeService periodeService;
 
     public static void main(String[] args) {
         SpringApplication.run(MakerApplication.class, args);
@@ -40,6 +41,14 @@ public class MakerApplication implements CommandLineRunner {
                 GroupeDTO.builder().id(4L).nom("Senior").build()
         );
         groupeDTOs.forEach(groupeService::createGroupe);
+
+        List<PeriodeDTO> periodeDTOs = Arrays.asList(
+                PeriodeDTO.builder().id(1L).periode("Réveil").startTime("7:15").build(),
+                PeriodeDTO.builder().id(2L).periode("Déjeuner").startTime("7:45").endTime("8:45").build(),
+                PeriodeDTO.builder().id(3L).periode("Rassemblement").startTime("8:45").build(),
+                PeriodeDTO.builder().id(4L).periode("Activité 1").startTime("9:00").endTime("10:00").build()
+        );
+        periodeDTOs.forEach(periodeService::createPeriode);
 
         CampeurDTO campeurDTO = CampeurDTO.builder()
                 .nom("Paige")

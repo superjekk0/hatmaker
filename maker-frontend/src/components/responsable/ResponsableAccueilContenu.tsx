@@ -23,12 +23,12 @@ const ResponsableAccueilContenu = () => {
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Gestion du personnel</h1>
                             <button
-                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-t border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.DEPARTEMENTS)}>
                                 Départements
                             </button>
                             <button
-                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.PERSONNEL)}>
                                 Personnel
                             </button>
@@ -36,12 +36,12 @@ const ResponsableAccueilContenu = () => {
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Gestion des campeurs</h1>
                             <button
-                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-t border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.GROUPES)}>
                                 Groupe d'âges
                             </button>
                             <button
-                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.CAMPEURS)}>
                                 Campeurs
                             </button>
@@ -50,17 +50,17 @@ const ResponsableAccueilContenu = () => {
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Organistation</h1>
                             <button
-                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-t border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.TENTES)}>
                                 Tentes
                             </button>
                             <button
-                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ETATS)}>
                                 États
                             </button>
                             <button
-                                className="border rounded-b w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ACTIVITES)}>
                                 Activités
                             </button>
@@ -68,17 +68,17 @@ const ResponsableAccueilContenu = () => {
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Horaire</h1>
                             <button
-                                className="border rounded-t w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-t border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.HORAIRE_TYPIQUE)}>
                                 Horaire Typique
                             </button>
                             <button
-                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.HORAIRE)}>
                                 Horaires
                             </button>
                             <button
-                                className="border w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.PERIODES)}>
                                 Périodes
                             </button>
