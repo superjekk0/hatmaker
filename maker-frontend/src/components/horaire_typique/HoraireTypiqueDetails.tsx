@@ -32,7 +32,7 @@ const HoraireTypiqueDetails = ({horaireTypique, onBack, onDelete}: HoraireTypiqu
                 {horaireTypique.timeSlots.map((slot, index) => (
                     <tr key={index}>
                         <td className="border-2 p-4 w-1/5">
-                            {slot.startTime ? slot.startTime : slot.endTime && slot.startTime ? " - " + slot.endTime : ""}
+                            {slot.endTime && slot.startTime ? slot.startTime + " - " + slot.endTime : slot.startTime}
                         </td>
                         <td className="border-2 p-4 text-center">
                             {slot.periode}

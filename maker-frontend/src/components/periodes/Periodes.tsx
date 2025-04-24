@@ -14,7 +14,15 @@ const Periodes = () => {
 
     useEffect(() => {
         getPeriodes().then(
-            data => setPeriodes(data.filter(periode => periode.deleted !== true))
+            data => setPeriodes(
+                data
+                    .filter(periode => !periode.deleted)
+                    .sort((a, b) => {
+                        const timeA = a.startTime.split(':').map(Number);
+                        const timeB = b.startTime.split(':').map(Number);
+                        return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+                    })
+            )
         ).catch(
             error => console.error('Error fetching periodes:', error)
         );
