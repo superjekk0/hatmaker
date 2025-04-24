@@ -18,7 +18,7 @@ public class MakerApplication implements CommandLineRunner {
     private final MoniteurService moniteurService;
     private final CampeurService campeurService;
     private final GroupeService groupeService;
-    private final PeriodeService periodeService;
+    private final HoraireTypiqueService horaireTypiqueService;
 
     public static void main(String[] args) {
         SpringApplication.run(MakerApplication.class, args);
@@ -42,6 +42,7 @@ public class MakerApplication implements CommandLineRunner {
         );
         groupeDTOs.forEach(groupeService::createGroupe);
 
+        /*
         List<PeriodeDTO> periodeDTOs = Arrays.asList(
                 PeriodeDTO.builder().id(1L).periode("Réveil").startTime("7:15").build(),
                 PeriodeDTO.builder().id(2L).periode("Déjeuner").startTime("7:45").endTime("8:45").build(),
@@ -49,6 +50,7 @@ public class MakerApplication implements CommandLineRunner {
                 PeriodeDTO.builder().id(4L).periode("Activité 1").startTime("9:00").endTime("10:00").build()
         );
         periodeDTOs.forEach(periodeService::createPeriode);
+*/
 
         CampeurDTO campeurDTO = CampeurDTO.builder()
                 .nom("Paige")
@@ -188,5 +190,30 @@ public class MakerApplication implements CommandLineRunner {
                 .departement(departementDTOs.get(2))
                 .build();
         responsableService.createResponsable(responsableDTO4);
+
+        List<TimeSlotDTO> timeSlotDTOs = Arrays.asList(
+            TimeSlotDTO.builder().startTime("7:15").periode("Réveil").build(),
+            TimeSlotDTO.builder().startTime("7:45").endTime("8:45").periode("Déjeuner").build(),
+            TimeSlotDTO.builder().startTime("8:45").periode("Rassemblement").build(),
+            TimeSlotDTO.builder().startTime("9:30").endTime("10:30").periode("Activité 1").build(),
+            TimeSlotDTO.builder().startTime("10:45").endTime("11:45").periode("Découverte").build(),
+            TimeSlotDTO.builder().startTime("12:00").endTime("13:00").periode("Dîner").build(),
+            TimeSlotDTO.builder().startTime("13:30").endTime("14:30").periode("Jeux d'équipes").build(),
+            TimeSlotDTO.builder().startTime("14:30").endTime("16:00").periode("Collation").build(),
+            TimeSlotDTO.builder().startTime("16:00").endTime("17:00").periode("Activité 2").build(),
+            TimeSlotDTO.builder().startTime("17:30").endTime("18:30").periode("Souper").build(),
+            TimeSlotDTO.builder().startTime("18:30").endTime("19:00").periode("Temps libre").build(),
+            TimeSlotDTO.builder().startTime("19:00").endTime("20:00").periode("Grand Jeu").build(),
+            TimeSlotDTO.builder().startTime("20:00").periode("Collation BJ / Jeu IS").build(),
+            TimeSlotDTO.builder().startTime("20:50").periode("Collation IS").build(),
+            TimeSlotDTO.builder().startTime("21:30").periode("Curfew Campeur").build(),
+            TimeSlotDTO.builder().startTime("24:00").periode("Curfew Staff").build()
+        );
+
+        HoraireTypiqueDTO horaireTypiqueDTO = HoraireTypiqueDTO.builder()
+                .nom("Horaire Typique")
+                .timeSlots(timeSlotDTOs)
+                .build();
+        horaireTypiqueService.createHoraireTypique(horaireTypiqueDTO);
     }
 }
