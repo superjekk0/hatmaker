@@ -54,6 +54,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/moniteurs").hasAuthority("RESPONSABLE")
                         .requestMatchers("/horaire-typique").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers("/periode").hasAuthority("RESPONSABLE")
+                        .requestMatchers("/horaire-journaliere").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers("/connexion").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()

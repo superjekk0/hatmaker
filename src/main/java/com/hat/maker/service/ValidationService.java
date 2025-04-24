@@ -9,6 +9,24 @@ public class ValidationService {
         NOM, COURRIEL, MOT_DE_PASSE
     }
 
+    public static void validerHoraireJournaliereFields(HoraireJournaliereDTO horaireJournaliereDTO) {
+        if (horaireJournaliereDTO.getName() == null || horaireJournaliereDTO.getName().isEmpty()) {
+            throw new IllegalArgumentException("Le nom est obligatoire.");
+        }
+        if (horaireJournaliereDTO.getStartDate() == null || horaireJournaliereDTO.getStartDate().isEmpty()) {
+            throw new IllegalArgumentException("La date de début est obligatoire.");
+        }
+        if (horaireJournaliereDTO.getEndDate() == null || horaireJournaliereDTO.getEndDate().isEmpty()) {
+            throw new IllegalArgumentException("La date de fin est obligatoire.");
+        }
+        if (horaireJournaliereDTO.getSelectedType() == null || horaireJournaliereDTO.getSelectedType().isEmpty()) {
+            throw new IllegalArgumentException("Le type d'horaire est obligatoire.");
+        }
+        if (horaireJournaliereDTO.getSelectedPeriodes() == null || horaireJournaliereDTO.getSelectedPeriodes().isEmpty()) {
+            throw new IllegalArgumentException("Les périodes sont obligatoires.");
+        }
+    }
+
     public static void validerPeriodeFields(PeriodeDTO periodeDTO) {
         if (periodeDTO.getPeriode() == null || periodeDTO.getPeriode().isBlank()) {
             throw new IllegalArgumentException("Le nom de la période ne peut pas être vide");
