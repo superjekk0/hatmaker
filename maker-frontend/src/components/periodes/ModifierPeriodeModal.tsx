@@ -19,9 +19,17 @@ const ModifierPeriodeModal = ({isOpen, onClose, onSave, onDelete, existingPeriod
     const [endTime, setEndTime] = useState(existingPeriode.endTime || "");
 
     useEffect(() => {
+        const formatTime = (time: string) => {
+            if (!time) return "";
+            const [hours, minutes] = time.split(":");
+            const formattedHours = hours.length === 1 ? `0${hours}` : hours;
+            const formattedMinutes = minutes.length === 1 ? `0${minutes}` : minutes;
+            return `${formattedHours}:${formattedMinutes}`;
+        };
+
         setNom(existingPeriode.periode);
-        setStartTime(existingPeriode.startTime);
-        setEndTime(existingPeriode.endTime || "");
+        setStartTime(formatTime(existingPeriode.startTime));
+        setEndTime(formatTime(existingPeriode.endTime || ""));
     }, [existingPeriode]);
 
     const handleSave = () => {

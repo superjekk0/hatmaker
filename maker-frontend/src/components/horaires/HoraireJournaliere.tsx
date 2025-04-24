@@ -48,19 +48,33 @@ const HoraireJournaliere = () => {
     }, []);
 
     const handleGenerate = () => {
-        const start = new Date(startDate);
-        start.setHours(0, 0, 0, 0)
-        start.setDate(start.getDate() + 1);
-        const end = new Date(endDate);
-        end.setHours(0, 0, 0, 0)
-        end.setDate(end.getDate() + 1);
-        const generatedDates: string[] = [];
+        const generatedDates = generateDates(startDate, endDate);
+        const dateToRowMap = mapExistingDataToDates(dates, rows);
+        const newRows = generateNewRows(generatedDates, dateToRowMap);
 
+        setDates(generatedDates);
+        setRows(newRows.length > 0 ? newRows : [Array(generatedDates.length).fill("")]);
+        setIsCollapsibleOpen(false);
+    };
+
+    const generateDates = (startDate: string, endDate: string): string[] => {
+        const start = new Date(startDate);
+        start.setHours(0, 0, 0, 0);
+        start.setDate(start.getDate() + 1);
+
+        const end = new Date(endDate);
+        end.setHours(0, 0, 0, 0);
+        end.setDate(end.getDate() + 1);
+
+        const generatedDates: string[] = [];
         while (start <= end) {
-            generatedDates.push(start.toLocaleDateString("fr-FR", {day: "numeric", month: "long"}));
+            generatedDates.push(start.toLocaleDateString("fr-FR", { day: "numeric", month: "long" }));
             start.setDate(start.getDate() + 1);
         }
+        return generatedDates;
+    };
 
+    const mapExistingDataToDates = (dates: string[], rows: string[][]): Record<string, string[]> => {
         const dateToRowMap: Record<string, string[]> = {};
         dates.forEach((date, colIndex) => {
             rows.forEach((_, rowIndex) => {
@@ -68,14 +82,13 @@ const HoraireJournaliere = () => {
                 dateToRowMap[date][rowIndex] = rows[rowIndex][colIndex] || "";
             });
         });
+        return dateToRowMap;
+    };
 
-        const newRows = rows.map((_, rowIndex) =>
+    const generateNewRows = (generatedDates: string[], dateToRowMap: Record<string, string[]>): string[][] => {
+        return rows.map((_, rowIndex) =>
             generatedDates.map((date) => dateToRowMap[date]?.[rowIndex] || "")
         );
-
-        setDates(generatedDates);
-        setRows(newRows.length > 0 ? newRows : [Array(generatedDates.length).fill("")]);
-        setIsCollapsibleOpen(false);
     };
 
     const handleAddRow = () => {

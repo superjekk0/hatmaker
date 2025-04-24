@@ -74,7 +74,10 @@ const Periodes = () => {
                     </tbody>
                 </table>
             </div>
-            <AddPeriodeModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleSave}/>
+            <AddPeriodeModal
+                isOpen={isAddModalOpen}
+                onClose={() => setIsAddModalOpen(false)}
+                onSave={handleSave}/>
             {selectedPeriode && (
                 <ModifierPeriodeModal
                     isOpen={isModifierModalOpen}
