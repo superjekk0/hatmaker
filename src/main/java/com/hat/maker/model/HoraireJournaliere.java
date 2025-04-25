@@ -33,12 +33,6 @@ public class HoraireJournaliere {
     @ElementCollection
     private List<String> selectedPeriodes;
 
-    // Table
-    @ElementCollection
-    @CollectionTable(name = "horaire_dates", joinColumns = @JoinColumn(name = "horaire_id"))
-    @Column(name = "date")
-    private List<String> dates;
-
     @ElementCollection
     @CollectionTable(name = "horaire_rows", joinColumns = @JoinColumn(name = "horaire_id"))
     private List<RowData> rows;

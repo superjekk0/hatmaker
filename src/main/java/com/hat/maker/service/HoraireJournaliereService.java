@@ -23,7 +23,6 @@ public class HoraireJournaliereService {
                 .selectedType(horaireJournaliereDTO.getSelectedType())
                 .selectedDepartements(horaireJournaliereDTO.getSelectedDepartements())
                 .selectedPeriodes(horaireJournaliereDTO.getSelectedPeriodes())
-                .dates(horaireJournaliereDTO.getDates())
                 .rows(horaireJournaliereDTO.getRows())
                 .build();
         HoraireJournaliere savedHoraire = horaireJournaliereRepository.save(horaireJournaliere);
@@ -40,7 +39,6 @@ public class HoraireJournaliereService {
         horaireJournaliere.setSelectedType(horaireJournaliereDTO.getSelectedType());
         horaireJournaliere.setSelectedDepartements(horaireJournaliereDTO.getSelectedDepartements());
         horaireJournaliere.setSelectedPeriodes(horaireJournaliereDTO.getSelectedPeriodes());
-        horaireJournaliere.setDates(horaireJournaliereDTO.getDates());
         horaireJournaliere.setRows(horaireJournaliereDTO.getRows());
 
         return HoraireJournaliereDTO.toHoraireJournaliereDTO(horaireJournaliereRepository.save(horaireJournaliere));
