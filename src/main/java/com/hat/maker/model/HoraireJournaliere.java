@@ -20,12 +20,10 @@ public class HoraireJournaliere {
 
     // Options
     private String name;
-
     private String startDate;
-
     private String endDate;
-
     private String selectedType;
+    private boolean deleted;
 
     @ElementCollection
     private List<String> selectedDepartements;
@@ -34,14 +32,16 @@ public class HoraireJournaliere {
     private List<String> selectedPeriodes;
 
     @ElementCollection
-    @CollectionTable(name = "horaire_rows", joinColumns = @JoinColumn(name = "horaire_id"))
-    private List<RowData> rows;
+    @CollectionTable(name = "horaire_cells", joinColumns = @JoinColumn(name = "horaire_id"))
+    private List<CellData> cells;
 
     @Embeddable
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class RowData {
+    public static class CellData {
+        private int colIndex;
+        private int rowIndex;
         private String cellData;
         private String info;
     }

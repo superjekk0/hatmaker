@@ -23,7 +23,7 @@ public class HoraireJournaliereService {
                 .selectedType(horaireJournaliereDTO.getSelectedType())
                 .selectedDepartements(horaireJournaliereDTO.getSelectedDepartements())
                 .selectedPeriodes(horaireJournaliereDTO.getSelectedPeriodes())
-                .rows(horaireJournaliereDTO.getRows())
+                .cells(horaireJournaliereDTO.getCells())
                 .build();
         HoraireJournaliere savedHoraire = horaireJournaliereRepository.save(horaireJournaliere);
         return HoraireJournaliereDTO.toHoraireJournaliereDTO(savedHoraire);
@@ -39,15 +39,15 @@ public class HoraireJournaliereService {
         horaireJournaliere.setSelectedType(horaireJournaliereDTO.getSelectedType());
         horaireJournaliere.setSelectedDepartements(horaireJournaliereDTO.getSelectedDepartements());
         horaireJournaliere.setSelectedPeriodes(horaireJournaliereDTO.getSelectedPeriodes());
-        horaireJournaliere.setRows(horaireJournaliereDTO.getRows());
+        horaireJournaliere.setCells(horaireJournaliereDTO.getCells());
 
         return HoraireJournaliereDTO.toHoraireJournaliereDTO(horaireJournaliereRepository.save(horaireJournaliere));
     }
 
     public HoraireJournaliereDTO supprimerHoraireJournaliere(HoraireJournaliereDTO horaireJournaliereDTO) {
         HoraireJournaliere horaireJournaliere = getHoraireJournaliereById(horaireJournaliereDTO.getId());
-        horaireJournaliereRepository.delete(horaireJournaliere);
-        return HoraireJournaliereDTO.toHoraireJournaliereDTO(horaireJournaliere);
+        horaireJournaliere.setDeleted(true);
+        return HoraireJournaliereDTO.toHoraireJournaliereDTO(horaireJournaliereRepository.save(horaireJournaliere));
     }
 
     public List<HoraireJournaliereDTO> getAllHoraireJournaliere() {

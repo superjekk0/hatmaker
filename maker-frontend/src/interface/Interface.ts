@@ -79,6 +79,25 @@ interface Periode extends TimeSlot {
     deleted?: boolean;
 }
 
+interface CellData {
+    indexCol: number;
+    indexRow: number;
+    info?: string;
+    cellData?: string;
+}
+
+interface Horaire {
+    id?: number;
+    name: string;
+    startDate: string;
+    endDate: string;
+    selectedType: string;
+    selectedDepartements?: string[];
+    selectedPeriodes: string[];
+    cells: CellData[];
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',

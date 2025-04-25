@@ -20,7 +20,7 @@ public class HoraireJournaliereDTO {
     private String selectedType;
     private List<String> selectedDepartements;
     private List<String> selectedPeriodes;
-    private List<HoraireJournaliere.RowData> rows;
+    private List<HoraireJournaliere.CellData> cells;
 
     public static HoraireJournaliereDTO toHoraireJournaliereDTO(HoraireJournaliere entity) {
         return HoraireJournaliereDTO.builder()
@@ -31,7 +31,7 @@ public class HoraireJournaliereDTO {
                 .selectedType(entity.getSelectedType())
                 .selectedDepartements(entity.getSelectedDepartements())
                 .selectedPeriodes(entity.getSelectedPeriodes())
-                .rows(entity.getRows())
+                .cells(entity.getCells())
                 .build();
     }
 }
