@@ -11,6 +11,7 @@ import FormulaireInscriptionMoniteur from "./components/moniteur/FormulaireInscr
 import AddHoraireTypique from "./components/horaire_typique/AddHoraireTypique.tsx";
 import {ViewResponsableProvider} from "./context/ResponsableViewContext.tsx";
 import HoraireJournaliere from "./components/horaires/HoraireJournaliere.tsx";
+import ModifierHoraireJournaliere from "./components/horaires/ModifierHoraireJournaliere.tsx";
 
 function App() {
     const {isAuthentificated} = useContext(AuthentificatedContext)
@@ -29,6 +30,7 @@ function App() {
                            element={<FormulaireInscriptionMoniteur/>}/>
                     <Route path={RoutesFE.HoraireTypique} element={<AddHoraireTypique/>}/>
                     <Route path={RoutesFE.Horaire} element={<HoraireJournaliere/>}/>
+                    <Route path={RoutesFE.HoraireId} element={<ModifierHoraireJournaliere />} />
                 </Routes>
             </ViewResponsableProvider>
         </>

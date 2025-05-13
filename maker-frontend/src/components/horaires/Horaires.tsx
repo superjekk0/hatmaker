@@ -1,9 +1,21 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {getHoraires} from "../../interface/gestion/GesrtionHoraire.ts";
+import {Horaire} from "../../interface/Interface.ts";
 
 const Horaires = () => {
     const navigate = useNavigate();
+    const [horaires, setHoraires] = useState<Horaire[]>([]);
+
+    useEffect(() => {
+        getHoraires().then(
+            data => setHoraires(data.filter(horaire => horaire.deleted !== true))
+        ).catch(
+            error => console.error('Error fetching horaires:', error)
+        )
+    }, []);
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
@@ -25,7 +37,20 @@ const Horaires = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    </tbody>
+                    {horaires.map((horaire) => (
+                        <tr key={horaire.id} className="bg-white hover:bg-gray-50 border-b">
+                            <td className="px-6 py-4">{horaire.name}</td>
+                            <td className="px-6 py-4">{horaire.selectedType}</td>
+                            <td className="px-6 py-4 text-right">
+                                <button
+                                    className="w-10 h-10"
+                                    onClick={() => navigate(`/horaire-journaliere/${horaire.id}`)}>
+                                    <FontAwesomeIcon icon={faChevronRight}/>
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </  tbody>
                 </table>
             </div>
         </div>

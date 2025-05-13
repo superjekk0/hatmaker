@@ -58,7 +58,7 @@ public class HoraireJournaliereService {
                 .collect(Collectors.toList());
     }
 
-    private HoraireJournaliere getHoraireJournaliereById(Long id) {
+    public HoraireJournaliere getHoraireJournaliereById(Long id) {
         return horaireJournaliereRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("L'horaire journalière n'existe pas"));
     }

@@ -13,6 +13,22 @@ export const getHoraires = async (): Promise<Horaire[]> => {
     return await response.json();
 }
 
+export const getHoraireById = async (id: number): Promise<Horaire> => {
+    const response = await fetch(`${RoutesBE.HoraireJournaliere}/${id}`, {
+        headers: {
+            method: 'GET',
+            'Authorization': `Bearer ${getToken()}`
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Horaire introuvable');
+    }
+
+    return await response.json();
+}
+
 export const addHoraire = async (horaire: Horaire): Promise<Horaire> => {
     const response = await fetch(RoutesBE.HoraireJournaliere, {
         method: "POST",

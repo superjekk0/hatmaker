@@ -7,6 +7,7 @@ export enum RoutesFE {
     InscriptionMoniteur = "/inscription/moniteur",
     HoraireTypique = "/horaire-typique",
     Horaire = "/horaire-journaliere",
+    HoraireId = "/horaire-journaliere/:id",
 }
 
 export enum RoutesBE {

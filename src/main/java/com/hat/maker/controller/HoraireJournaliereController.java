@@ -34,6 +34,17 @@ public class HoraireJournaliereController {
         return ResponseEntity.ok(horaireJournaliereService.getAllHoraireJournaliere());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<HoraireJournaliereDTO> getHoraireJournaliereById(@PathVariable Long id) {
+        HoraireJournaliereDTO horaireJournaliereDTO;
+        try {
+            horaireJournaliereDTO = HoraireJournaliereDTO.toHoraireJournaliereDTO(horaireJournaliereService.getHoraireJournaliereById(id));
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return ResponseEntity.ok(horaireJournaliereDTO);
+    }
+
     @PutMapping
     public ResponseEntity<HoraireJournaliereDTO> modifierHoraireJournaliere(@RequestBody HoraireJournaliereDTO horaireJournaliereDTO) {
         HoraireJournaliereDTO horaireJournaliereModifie;

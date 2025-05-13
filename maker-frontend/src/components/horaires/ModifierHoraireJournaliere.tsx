@@ -1,19 +1,19 @@
 import {useContext, useEffect, useState} from "react";
-import {AuthentificatedContext} from "../../context/AuthentificationContext.tsx";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
-import {useNavigate} from "react-router-dom";
-import {getUtilisateurs} from "../../interface/gestion/GestionUtilisateur.ts";
 import {CellData, Departement, Horaire, Periode, Utilisateur, VueResponsable} from "../../interface/Interface.ts";
+import {AuthentificatedContext} from "../../context/AuthentificationContext.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
+import {useNavigate, useParams} from "react-router-dom";
+import {getUtilisateurs} from "../../interface/gestion/GestionUtilisateur.ts";
 import {getDepartements} from "../../interface/gestion/GestionDepartements.ts";
 import {getPeriodes} from "../../interface/gestion/GestionPeriodes.tsx";
-import UserSelectionModal from "./UserSelectionModal.tsx";
-import HoraireTable from "./HoraireTable.tsx";
+import {addHoraire, getHoraireById} from "../../interface/gestion/GesrtionHoraire.ts";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import OptionsSection from "./OptionsSection.tsx";
-import {addHoraire} from "../../interface/gestion/GesrtionHoraire.ts";
+import HoraireTable from "./HoraireTable.tsx";
+import UserSelectionModal from "./UserSelectionModal.tsx";
 
-const HoraireJournaliere = () => {
+const ModifierHoraireJournaliere = () => {
     const [name, setName] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -32,6 +32,7 @@ const HoraireJournaliere = () => {
     const [infos, setInfos] = useState<string[]>([]);
     const {isAuthentificated} = useContext(AuthentificatedContext)
     const {setVue} = useViewResponsable();
+    const {id} = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -59,15 +60,40 @@ const HoraireJournaliere = () => {
                     })
             )
         );
+
+        if (id) {
+            getHoraireById(Number(id)).then(
+                horaire => {
+                    setName(horaire.name);
+                    setStartDate(horaire.startDate);
+                    setEndDate(horaire.endDate);
+                    setSelectedType(horaire.selectedType);
+                    setSelectedDepartements(horaire.selectedDepartements || []);
+                    setSelectedPeriodes(horaire.selectedPeriodes || []);
+                    setInfos(horaire.infos || []);
+                    // Map cellData to rows
+                    const groupedRows = horaire.cells.reduce((acc, cell) => {
+                        if (!acc[cell.indexRow]) {
+                            acc[cell.indexRow] = [];
+                        }
+                        if (cell.cellData != null) {
+                            acc[cell.indexRow][cell.indexCol] = cell.cellData;
+                        }
+                        return acc;
+                    }, [] as string[][]);
+                    setRows(groupedRows);
+                    console.log(horaire);
+                }
+            ).catch(error => {
+                console.log(error)
+                navigate("/accueil")
+            });
+        }
     }, []);
 
     const handleGenerate = () => {
         const generatedDates = generateDates(startDate, endDate);
-        const dateToRowMap = mapExistingDataToDates(dates, rows);
-        const newRows = generateNewRows(generatedDates, dateToRowMap);
-
         setDates(generatedDates);
-        setRows(newRows.length > 0 ? newRows : [Array(generatedDates.length).fill("")]);
         setIsCollapsibleOpen(false);
     };
 
@@ -86,23 +112,6 @@ const HoraireJournaliere = () => {
             start.setDate(start.getDate() + 1);
         }
         return generatedDates;
-    };
-
-    const mapExistingDataToDates = (dates: string[], rows: string[][]): Record<string, string[]> => {
-        const dateToRowMap: Record<string, string[]> = {};
-        dates.forEach((date, colIndex) => {
-            rows.forEach((_, rowIndex) => {
-                if (!dateToRowMap[date]) dateToRowMap[date] = [];
-                dateToRowMap[date][rowIndex] = rows[rowIndex][colIndex] || "";
-            });
-        });
-        return dateToRowMap;
-    };
-
-    const generateNewRows = (generatedDates: string[], dateToRowMap: Record<string, string[]>): string[][] => {
-        return rows.map((_, rowIndex) =>
-            generatedDates.map((date) => dateToRowMap[date]?.[rowIndex] || "")
-        );
     };
 
     const handleAddRow = () => {
@@ -263,11 +272,12 @@ const HoraireJournaliere = () => {
                 <button
                     onClick={handleCreeHoraire}
                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mb-4">
-                    Créer Horaire
+                    Modifier Horaire
                 </button>
             )}
         </div>
     );
-};
 
-export default HoraireJournaliere;
+}
+
+export default ModifierHoraireJournaliere;
