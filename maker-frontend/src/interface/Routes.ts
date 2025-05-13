@@ -23,5 +23,6 @@ export enum RoutesBE {
     Tentes = `${baseBE}/tente`,
     Moniteurs = `${baseBE}/moniteurs`,
     HoraireTypique = `${baseBE}/horaire-typique`,
+    HoraireJournaliere = `${baseBE}/horaire-journaliere`,
     Periodes = `${baseBE}/periode`,
 }

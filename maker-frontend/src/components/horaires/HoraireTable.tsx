@@ -1,8 +1,9 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
-import {useState} from "react";
 
 interface HoraireTableProps {
+    infos: string[];
+    setInfos: (infos: string[]) => void;
     dates: string[];
     rows: string[][];
     handleCellClick: (rowIndex: number, colIndex: number) => void;
@@ -11,13 +12,14 @@ interface HoraireTableProps {
 }
 
 const HoraireTable = ({
+    infos,
+    setInfos,
     dates,
     rows,
     handleCellClick,
     handleRemoveRow,
     handleAddRow,
 }: HoraireTableProps) => {
-    const [infos, setInfos] = useState<string[]>([]);
 
     const handleRemove = (rowIndex: number) => {
         const newInfos = [...infos];

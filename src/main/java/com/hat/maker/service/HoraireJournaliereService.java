@@ -20,6 +20,7 @@ public class HoraireJournaliereService {
                 .name(horaireJournaliereDTO.getName())
                 .startDate(horaireJournaliereDTO.getStartDate())
                 .endDate(horaireJournaliereDTO.getEndDate())
+                .infos(horaireJournaliereDTO.getInfos())
                 .selectedType(horaireJournaliereDTO.getSelectedType())
                 .selectedDepartements(horaireJournaliereDTO.getSelectedDepartements())
                 .selectedPeriodes(horaireJournaliereDTO.getSelectedPeriodes())
@@ -36,6 +37,7 @@ public class HoraireJournaliereService {
         horaireJournaliere.setName(horaireJournaliereDTO.getName());
         horaireJournaliere.setStartDate(horaireJournaliereDTO.getStartDate());
         horaireJournaliere.setEndDate(horaireJournaliereDTO.getEndDate());
+        horaireJournaliere.setInfos(horaireJournaliereDTO.getInfos());
         horaireJournaliere.setSelectedType(horaireJournaliereDTO.getSelectedType());
         horaireJournaliere.setSelectedDepartements(horaireJournaliereDTO.getSelectedDepartements());
         horaireJournaliere.setSelectedPeriodes(horaireJournaliereDTO.getSelectedPeriodes());

@@ -4,13 +4,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 import {getUtilisateurs} from "../../interface/gestion/GestionUtilisateur.ts";
-import {Departement, Periode, Utilisateur, VueResponsable} from "../../interface/Interface.ts";
+import {CellData, Departement, Horaire, Periode, Utilisateur, VueResponsable} from "../../interface/Interface.ts";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import {getDepartements} from "../../interface/gestion/GestionDepartements.ts";
 import {getPeriodes} from "../../interface/gestion/GestionPeriodes.tsx";
 import UserSelectionModal from "./UserSelectionModal.tsx";
 import HoraireTable from "./HoraireTable.tsx";
 import OptionsSection from "./OptionsSection.tsx";
+import {addHoraire} from "../../interface/gestion/GesrtionHoraire.ts";
 
 const HoraireJournaliere = () => {
     const [name, setName] = useState("");
@@ -28,6 +29,7 @@ const HoraireJournaliere = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(true);
+    const [infos, setInfos] = useState<string[]>([]);
     const {isAuthentificated} = useContext(AuthentificatedContext)
     const {setVue} = useViewResponsable();
     const navigate = useNavigate();
@@ -80,7 +82,7 @@ const HoraireJournaliere = () => {
 
         const generatedDates: string[] = [];
         while (start <= end) {
-            generatedDates.push(start.toLocaleDateString("fr-FR", { day: "numeric", month: "long" }));
+            generatedDates.push(start.toLocaleDateString("fr-FR", {day: "numeric", month: "long"}));
             start.setDate(start.getDate() + 1);
         }
         return generatedDates;
@@ -163,6 +165,37 @@ const HoraireJournaliere = () => {
         );
     };
 
+    const handleCreeHoraire = () => {
+        const cellData: CellData[] = rows.flatMap((row, rowIndex) =>
+            row.map((cell, colIndex) => ({
+                indexCol: colIndex,
+                indexRow: rowIndex,
+                cellData: cell,
+            }))
+        );
+
+        console.log(cellData)
+
+        const horaireJournaliere: Horaire = {
+            name: name,
+            startDate: startDate,
+            endDate: endDate,
+            selectedType: selectedType || "",
+            selectedDepartements: selectedDepartements.length > 0 ? selectedDepartements : undefined,
+            selectedPeriodes: selectedPeriodes.length > 0 ? selectedPeriodes : undefined,
+            infos: infos && infos.length > 0 ? infos : undefined,
+            cells: cellData,
+        };
+
+        console.log(horaireJournaliere);
+
+        addHoraire(horaireJournaliere).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.error(error);
+        })
+    };
+
     const toggleCollapsible = () => {
         setIsCollapsibleOpen((prev) => !prev);
     };
@@ -175,7 +208,8 @@ const HoraireJournaliere = () => {
 
     return (
         <div className="p-4">
-            <button onClick={handleBack} className="absolute border top-24 right-2 rounded pl-4 pr-4 p-2 bg-gray-200 hover:bg-gray-300 text-black">
+            <button onClick={handleBack}
+                    className="absolute border top-24 right-2 rounded pl-4 pr-4 p-2 bg-gray-200 hover:bg-gray-300 text-black">
                 Retour
             </button>
             <h1 className="text-2xl font-bold mb-4">Horaire Journalière</h1>
@@ -184,7 +218,7 @@ const HoraireJournaliere = () => {
                     onClick={toggleCollapsible}
                     className="absolute top-3 right-2 h-8 w-8 bg-gray-200 hover:bg-gray-300 text-black rounded-full flex items-center justify-center"
                 >
-                    <FontAwesomeIcon icon={isCollapsibleOpen ? faTimes : faPlus} />
+                    <FontAwesomeIcon icon={isCollapsibleOpen ? faTimes : faPlus}/>
                 </button>
                 {!isCollapsibleOpen && <h2 className="font-bold">Options</h2>}
                 {isCollapsibleOpen && (
@@ -211,7 +245,7 @@ const HoraireJournaliere = () => {
             </div>
             {dates.length > 0 && (
                 <HoraireTable
-                    {...{ dates, rows, handleCellClick, handleRemoveRow, handleAddRow }}
+                    {...{infos, setInfos, dates, rows, handleCellClick, handleRemoveRow, handleAddRow}}
                 />
             )}
             <UserSelectionModal
@@ -224,6 +258,13 @@ const HoraireJournaliere = () => {
                     handleSelectUtilisateur,
                 }}
             />
+            {selectedPeriodes.length > 0 && startDate && endDate && name && selectedType != null && rows.length > 0 && infos.length > 0 && (
+                <button
+                    onClick={handleCreeHoraire}
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mb-4">
+                    Créer Horaire
+                </button>
+            )}
         </div>
     );
 };

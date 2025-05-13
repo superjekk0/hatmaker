@@ -25,7 +25,7 @@ const UserSelectionModal = ({
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
             <div className="bg-white p-4 rounded shadow-md lg:w-1/2 relative">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">Sélectionner un Moniteur</h2>
+                    <h2 className="text-xl font-bold">Sélectionner un membre du personnel</h2>
                     <button onClick={() => setIsModalOpen(false)} className="text-black">
                         <FontAwesomeIcon icon={faTimes} />
                     </button>

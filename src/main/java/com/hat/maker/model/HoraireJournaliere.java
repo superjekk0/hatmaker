@@ -32,6 +32,9 @@ public class HoraireJournaliere {
     private List<String> selectedPeriodes;
 
     @ElementCollection
+    private List<String> infos;
+
+    @ElementCollection
     @CollectionTable(name = "horaire_cells", joinColumns = @JoinColumn(name = "horaire_id"))
     private List<CellData> cells;
 
@@ -40,9 +43,8 @@ public class HoraireJournaliere {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CellData {
-        private int colIndex;
-        private int rowIndex;
+        private int indexCol;
+        private int indexRow;
         private String cellData;
-        private String info;
     }
 }

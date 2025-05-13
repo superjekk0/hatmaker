@@ -82,7 +82,6 @@ interface Periode extends TimeSlot {
 interface CellData {
     indexCol: number;
     indexRow: number;
-    info?: string;
     cellData?: string;
 }
 
@@ -92,8 +91,9 @@ interface Horaire {
     startDate: string;
     endDate: string;
     selectedType: string;
+    infos?: string[];
     selectedDepartements?: string[];
-    selectedPeriodes: string[];
+    selectedPeriodes?: string[];
     cells: CellData[];
     deleted?: boolean;
 }
@@ -133,5 +133,7 @@ export type {
     Tente,
     Moniteur,
     HoraireTypique,
-    Periode
+    Periode,
+    Horaire,
+    CellData
 };
