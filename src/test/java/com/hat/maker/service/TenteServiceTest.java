@@ -2,6 +2,7 @@ package com.hat.maker.service;
 
 import com.hat.maker.model.*;
 import com.hat.maker.repository.TenteRepository;
+import com.hat.maker.repository.UtilisateurRepository;
 import com.hat.maker.service.dto.CampeurDTO;
 import com.hat.maker.service.dto.MoniteurDTO;
 import com.hat.maker.service.dto.TenteDTO;
@@ -26,6 +27,8 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class TenteServiceTest {
 
+    @Mock
+    private UtilisateurRepository utilisateurRepository;
     @Mock
     private TenteRepository tenteRepository;
     @Mock
@@ -290,7 +293,7 @@ public class TenteServiceTest {
                         .nom("Departement1")
                         .build())
                 .build();
-        when(utilisateurService.getUtilisateurById(1L)).thenReturn(moniteur);
+        when(utilisateurRepository.findById(1L)).thenReturn(Optional.of(moniteur));
         when(tenteRepository.findAll()).thenReturn(List.of(tente));
 
         TenteDTO t = tenteService.getTenteByMoniteurId(1L);
@@ -309,7 +312,7 @@ public class TenteServiceTest {
                         .build())
                 .build();
         tente.setMoniteurs(List.of());
-        when(utilisateurService.getUtilisateurById(1L)).thenReturn(moniteur);
+        when(utilisateurRepository.findById(1L)).thenReturn(Optional.of(moniteur));
         when(tenteRepository.findAll()).thenReturn(List.of(tente));
 
         TenteDTO t = tenteService.getTenteByMoniteurId(1L);
