@@ -6,7 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {getUtilisateurs} from "../../interface/gestion/GestionUtilisateur.ts";
 import {getDepartements} from "../../interface/gestion/GestionDepartements.ts";
 import {getPeriodes} from "../../interface/gestion/GestionPeriodes.tsx";
-import {addHoraire, getHoraireById} from "../../interface/gestion/GesrtionHoraire.ts";
+import {getHoraireById, modifierHoraire, supprimerHoraire} from "../../interface/gestion/GesrtionHoraire.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import OptionsSection from "./OptionsSection.tsx";
@@ -82,7 +82,6 @@ const ModifierHoraireJournaliere = () => {
                         return acc;
                     }, [] as string[][]);
                     setRows(groupedRows);
-                    console.log(horaire);
                 }
             ).catch(error => {
                 console.log(error)
@@ -174,7 +173,7 @@ const ModifierHoraireJournaliere = () => {
         );
     };
 
-    const handleCreeHoraire = () => {
+    const handleModifierHoraire = () => {
         const cellData: CellData[] = rows.flatMap((row, rowIndex) =>
             row.map((cell, colIndex) => ({
                 indexCol: colIndex,
@@ -183,9 +182,8 @@ const ModifierHoraireJournaliere = () => {
             }))
         );
 
-        console.log(cellData)
-
         const horaireJournaliere: Horaire = {
+            id: Number(id),
             name: name,
             startDate: startDate,
             endDate: endDate,
@@ -196,15 +194,26 @@ const ModifierHoraireJournaliere = () => {
             cells: cellData,
         };
 
-        console.log(horaireJournaliere);
-
-        addHoraire(horaireJournaliere).then(() => {
+        modifierHoraire(horaireJournaliere).then(() => {
             navigate("/accueil")
             setVue(VueResponsable.HORAIRE);
         }).catch((error) => {
             console.error(error);
         })
     };
+
+    const handleSupprimerHoraire = () => {
+        getHoraireById(Number(id)).then((horaire) => {
+            supprimerHoraire(horaire).then(() => {
+                navigate("/accueil")
+                setVue(VueResponsable.HORAIRE);
+            }).catch(
+                error => console.error(error)
+            );
+        }).catch(
+            error => console.log(error)
+        );
+    }
 
     const toggleCollapsible = () => {
         setIsCollapsibleOpen((prev) => !prev);
@@ -270,11 +279,16 @@ const ModifierHoraireJournaliere = () => {
             />
             {selectedPeriodes.length > 0 && startDate && endDate && name && selectedType != null && rows.length > 0 && infos.length > 0 && (
                 <button
-                    onClick={handleCreeHoraire}
+                    onClick={handleModifierHoraire}
                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mb-4">
                     Modifier Horaire
                 </button>
             )}
+            <button
+                onClick={handleSupprimerHoraire}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4 ml-2">
+                Supprimer Horaire
+            </button>
         </div>
     );
 
