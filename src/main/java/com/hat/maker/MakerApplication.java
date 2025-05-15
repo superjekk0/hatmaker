@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class MakerApplication implements CommandLineRunner {
     private final GroupeService groupeService;
     private final HoraireTypiqueService horaireTypiqueService;
     private final EtatService etatService;
+    private final ActiviteService activiteService;
+    private final PeriodeService periodeService;
 
     public static void main(String[] args) {
         SpringApplication.run(MakerApplication.class, args);
@@ -215,5 +218,20 @@ public class MakerApplication implements CommandLineRunner {
                 .timeSlots(timeSlotDTOs)
                 .build();
         horaireTypiqueService.createHoraireTypique(horaireTypiqueDTO);
+
+        List<ActiviteDTO> activiteDTOs = Arrays.asList(
+                ActiviteDTO.builder().nom("Campcraft").build(),
+                ActiviteDTO.builder().nom("Artisanat").build(),
+                ActiviteDTO.builder().nom("Soccer").build(),
+                ActiviteDTO.builder().nom("Kayak").build(),
+                ActiviteDTO.builder().nom("Tir à l'arc").build()
+        );
+        activiteDTOs.forEach(activiteService::createActivite);
+
+        List<PeriodeDTO> periodeDTOs = new ArrayList<>(List.of());
+        timeSlotDTOs.forEach(timelslot -> {
+            periodeDTOs.add(PeriodeDTO.builder().startTime(timelslot.getStartTime()).endTime(timelslot.getEndTime()).periode(timelslot.getPeriode()).build());
+        });
+        periodeDTOs.forEach(periodeService::createPeriode);
     }
 }

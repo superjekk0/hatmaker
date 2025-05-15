@@ -33,7 +33,7 @@ const UserSelectionModal = ({
                 <div className="mb-4">
                     <input
                         type="text"
-                        placeholder="Rechercher un moniteur..."
+                        placeholder="Rechercher un membre du personnel..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
                         className="border p-2 w-full rounded"

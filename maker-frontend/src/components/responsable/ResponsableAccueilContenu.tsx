@@ -10,6 +10,7 @@ import HoraireTypiques from "../horaire_typique/HoraireTypiques.tsx";
 import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
 import Periodes from "../periodes/Periodes.tsx";
 import Horaires from "../horaires/Horaires.tsx";
+import GestionActivites from "../gestion_activites/GestionActivites.tsx";
 
 const ResponsableAccueilContenu = () => {
     const {vue, setVue} = useViewResponsable();
@@ -41,30 +42,36 @@ const ResponsableAccueilContenu = () => {
                                 Groupe d'âges
                             </button>
                             <button
-                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.CAMPEURS)}>
                                 Campeurs
+                            </button>
+                            <button
+                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.TENTES)}>
+                                Tentes
                             </button>
                         </div>
 
                         <div className="p-2">
-                            <h1 className="text-center text-xl font-bold mb-3">Organistation</h1>
+                            <h1 className="text-center text-xl font-bold mb-3">Activités</h1>
                             <button
                                 className="border rounded-t border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
-                                onClick={() => setVue(VueResponsable.TENTES)}>
-                                Tentes
-                            </button>
-                            <button
-                                className="border border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ETATS)}>
                                 États
                             </button>
                             <button
-                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                className="border border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.ACTIVITES)}>
                                 Activités
                             </button>
+                            <button
+                                className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => setVue(VueResponsable.GESTION_ACTIVITES)}>
+                                Horaire des Activités
+                            </button>
                         </div>
+
                         <div className="p-2">
                             <h1 className="text-center text-xl font-bold mb-3">Horaire</h1>
                             <button
@@ -135,6 +142,11 @@ const ResponsableAccueilContenu = () => {
                 {vue === VueResponsable.PERIODES && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
                         <Periodes/>
+                    </div>
+                )}
+                {vue === VueResponsable.GESTION_ACTIVITES && (
+                    <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
+                        <GestionActivites/>
                     </div>
                 )}
             </div>

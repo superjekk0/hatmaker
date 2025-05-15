@@ -109,6 +109,7 @@ export enum VueResponsable {
     HORAIRE_TYPIQUE = 'HORAIRE_TYPIQUE',
     HORAIRE = 'HORAIRE',
     PERIODES = 'PERIODES',
+    GESTION_ACTIVITES = 'GESTION_ACTIVITES',
 }
 
 export enum VueMoniteur {
