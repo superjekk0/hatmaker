@@ -1,22 +1,22 @@
 import {useContext, useEffect, useState} from "react";
-import {AuthentificatedContext} from "../../context/AuthentificationContext.tsx";
+import {AuthentificatedContext} from "../../../context/AuthentificationContext.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
-import {getMoniteurs} from "../../interface/gestion/GestionUtilisateur.ts";
+import {getMoniteurs} from "../../../interface/gestion/GestionUtilisateur.ts";
 import {
     Activite, Etat,
     Moniteur,
     Periode,
     VueResponsable
-} from "../../interface/Interface.ts";
-import {useViewResponsable} from "../../context/ResponsableViewContext.tsx";
-import {getPeriodes} from "../../interface/gestion/GestionPeriodes.tsx";
-import ActiviteSelectionModal from "./ActiviteSelectionModal.tsx";
-import {getActivites} from "../../interface/gestion/GestionActivite.ts";
-import HoraireActiviteTable from "./HoraireActiviteTable.tsx";
-import OptionsActivite from "./OptionsActivite.tsx";
-import {getEtats} from "../../interface/gestion/GestionEtats.ts";
+} from "../../../interface/Interface.ts";
+import {useViewResponsable} from "../../../context/ResponsableViewContext.tsx";
+import {getPeriodes} from "../../../interface/gestion/GestionPeriodes.tsx";
+import ActiviteMoniteurSelectionModal from "./ActiviteMoniteurSelectionModal.tsx";
+import {getActivites} from "../../../interface/gestion/GestionActivite.ts";
+import HoraireActiviteMoniteurTable from "./HoraireActiviteMoniteurTable.tsx";
+import OptionsActiviteMoniteur from "./OptionsActiviteMoniteur.tsx";
+import {getEtats} from "../../../interface/gestion/GestionEtats.ts";
 
 const HoraireActiviteMoniteurs = () => {
     const [name, setName] = useState("");
@@ -179,7 +179,7 @@ const HoraireActiviteMoniteurs = () => {
                 </button>
                 {!isCollapsibleOpen && <h2 className="font-bold">Options</h2>}
                 {isCollapsibleOpen && (
-                    <OptionsActivite
+                    <OptionsActiviteMoniteur
                         {...{
                             name,
                             setName,
@@ -197,11 +197,11 @@ const HoraireActiviteMoniteurs = () => {
                 )}
             </div>
             {isTableGenerated && selectedPeriodes.length > 0 && (
-                <HoraireActiviteTable
+                <HoraireActiviteMoniteurTable
                     {...{rows, handleCellClick, selectedPeriodes, moniteurs}}
                 />
             )}
-            <ActiviteSelectionModal
+            <ActiviteMoniteurSelectionModal
                 {...{
                     isModalOpen,
                     setIsModalOpen,

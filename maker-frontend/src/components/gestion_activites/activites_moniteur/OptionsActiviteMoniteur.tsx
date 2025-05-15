@@ -1,4 +1,4 @@
-import {Activite, Periode} from "../../interface/Interface.ts";
+import {Activite, Periode} from "../../../interface/Interface.ts";
 
 interface OptionsSectionProps {
     name: string;
@@ -14,7 +14,7 @@ interface OptionsSectionProps {
     setDate: (date: string) => void;
 }
 
-const OptionsActivite = ({
+const OptionsActiviteMoniteur = ({
                              name,
                              setName,
                              periodes,
@@ -97,4 +97,4 @@ const OptionsActivite = ({
     );
 };
 
-export default OptionsActivite;
+export default OptionsActiviteMoniteur;

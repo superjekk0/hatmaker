@@ -1,6 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {Activite, Etat} from "../../interface/Interface.ts";
+import {Activite, Etat} from "../../../interface/Interface.ts";
 
 interface ModalProps {
     isModalOpen: boolean;
@@ -13,7 +13,7 @@ interface ModalProps {
     handleSelectEtat: (etat: Etat) => void;
 }
 
-const ActiviteSelectionModal = ({
+const ActiviteMoniteurSelectionModal = ({
                                     isModalOpen,
                                     setIsModalOpen,
                                     searchQuery,
@@ -74,4 +74,4 @@ const ActiviteSelectionModal = ({
     );
 };
 
-export default ActiviteSelectionModal;
+export default ActiviteMoniteurSelectionModal;
