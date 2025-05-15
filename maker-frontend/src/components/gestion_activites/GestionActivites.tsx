@@ -30,6 +30,7 @@ const GestionActivites = () => {
                     <tr>
                         <th scope="col" className="px-6 py-3">Nom</th>
                         <th scope="col" className="px-6 py-3">Date</th>
+                        <th scope="col" className="px-6 py-3">Horaire des activités avec campeurs</th>
                         <th scope="col" className="px-6 py-3 text-right">
                             <button
                                 className="w-10 h-10 bg-gray-100 rounded shadow-md"
@@ -44,6 +45,13 @@ const GestionActivites = () => {
                         <tr key={horaire.id} className="bg-white hover:bg-gray-50 border-b">
                             <td className="px-6 py-4">{horaire.name}</td>
                             <td className="px-6 py-4">{horaire.date}</td>
+                            <td className="px-6 py-4">
+                                <button
+                                    className="p-2 bg-gray-100 rounded shadow-md"
+                                    onClick={() => navigate(`/horaire-activites-campeurs/${horaire.id}`)}>
+                                    Aucun horaire
+                                </button>
+                            </td>
                             <td className="px-6 py-4 text-right">
                                 <button
                                     className="w-10 h-10"
