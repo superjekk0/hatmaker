@@ -1,4 +1,4 @@
-import {Activite, Periode} from "../../../interface/Interface.ts";
+import {Periode} from "../../../interface/Interface.ts";
 
 interface OptionsSectionProps {
     name: string;
@@ -6,9 +6,6 @@ interface OptionsSectionProps {
     periodes: Periode[];
     selectedPeriodes: string[];
     handlePeriodeSelect: (periode: string) => void;
-    activites: Activite[];
-    selectedActivites: string[];
-    handleActiviteSelect: (activite: string) => void;
     handleGenerate: () => void;
     date: string;
     setDate: (date: string) => void;
@@ -20,9 +17,6 @@ const OptionsActiviteMoniteur = ({
                              periodes,
                              selectedPeriodes,
                              handlePeriodeSelect,
-                             activites,
-                             selectedActivites,
-                             handleActiviteSelect,
                              handleGenerate,
                              date,
                              setDate
@@ -48,26 +42,6 @@ const OptionsActiviteMoniteur = ({
                     className="border p-2 w-full rounded"
                 />
             </div>
-            {activites.length > 0 && (
-                <div className="mb-4">
-                    <label className="block mb-2">Activités:</label>
-                    <div className="max-h-56 overflow-y-auto">
-                        {activites.map((act) => (
-                            <div
-                                key={act.nom}
-                                onClick={() => handleActiviteSelect(act.nom)}
-                                className={`cursor-pointer p-2 border rounded mt-2 ${
-                                    selectedActivites.includes(act.nom)
-                                        ? "bg-blue-500 text-white"
-                                        : "bg-white hover:bg-gray-300"
-                                }`}
-                            >
-                                {act.nom}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
             {periodes.length > 0 && (
                 <div className="mb-4">
                     <label className="block mb-2">Périodes de l'horaire:</label>

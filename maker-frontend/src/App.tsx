@@ -13,6 +13,7 @@ import {ViewResponsableProvider} from "./context/ResponsableViewContext.tsx";
 import HoraireJournaliere from "./components/horaires/HoraireJournaliere.tsx";
 import ModifierHoraireJournaliere from "./components/horaires/ModifierHoraireJournaliere.tsx";
 import HoraireActivitesMoniteurs from "./components/gestion_activites/activites_moniteur/HoraireActiviteMoniteurs.tsx";
+import ModifierHoraireActivitesMoniteurs from "./components/gestion_activites/activites_moniteur/ModifierHoraireActiviteMoniteurs.tsx";
 
 function App() {
     const {isAuthentificated} = useContext(AuthentificatedContext)
@@ -33,6 +34,7 @@ function App() {
                     <Route path={RoutesFE.Horaire} element={<HoraireJournaliere/>}/>
                     <Route path={RoutesFE.HoraireId} element={<ModifierHoraireJournaliere />} />
                     <Route path={RoutesFE.HoraireActivitesMoniteurs} element={<HoraireActivitesMoniteurs/>}/>
+                    <Route path={RoutesFE.HoraireActivitesMoniteursId} element={<ModifierHoraireActivitesMoniteurs/>}/>
                 </Routes>
             </ViewResponsableProvider>
         </>

@@ -16,6 +16,7 @@ const Horaires = () => {
             error => console.error('Error fetching horaires:', error)
         )
     }, []);
+
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">

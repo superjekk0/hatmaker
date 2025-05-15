@@ -174,8 +174,6 @@ const HoraireJournaliere = () => {
             }))
         );
 
-        console.log(cellData)
-
         const horaireJournaliere: Horaire = {
             name: name,
             startDate: startDate,
@@ -186,8 +184,6 @@ const HoraireJournaliere = () => {
             infos: infos && infos.length > 0 ? infos : undefined,
             cells: cellData,
         };
-
-        console.log(horaireJournaliere);
 
         addHoraire(horaireJournaliere).then(() => {
             navigate("/accueil")

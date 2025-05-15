@@ -27,9 +27,6 @@ public class ActiviteMoniteur {
     private List<String> selectedPeriodes;
 
     @ElementCollection
-    private List<String> selectedActivites;
-
-    @ElementCollection
     @CollectionTable(name = "activite_moniteur_cells", joinColumns = @JoinColumn(name = "activite_moniteur_id"))
     private List<CellData> cells;
 

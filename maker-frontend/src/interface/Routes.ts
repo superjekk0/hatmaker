@@ -9,6 +9,7 @@ export enum RoutesFE {
     Horaire = "/horaire-journaliere",
     HoraireId = "/horaire-journaliere/:id",
     HoraireActivitesMoniteurs = "/horaire-activites-moniteurs",
+    HoraireActivitesMoniteursId = "/horaire-activites-moniteurs/:id",
 }
 
 export enum RoutesBE {
@@ -27,4 +28,5 @@ export enum RoutesBE {
     HoraireTypique = `${baseBE}/horaire-typique`,
     HoraireJournaliere = `${baseBE}/horaire-journaliere`,
     Periodes = `${baseBE}/periode`,
+    ActiviteMoniteur = `${baseBE}/activite-moniteur`,
 }

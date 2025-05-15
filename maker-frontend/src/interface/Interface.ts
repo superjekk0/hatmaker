@@ -98,6 +98,15 @@ interface Horaire {
     deleted?: boolean;
 }
 
+interface ActiviteMoniteur {
+    id?: number;
+    name: string;
+    date: string;
+    selectedPeriodes?: string[];
+    cells: CellData[];
+    deleted?: boolean;
+}
+
 export enum VueResponsable {
     ETATS = 'ETATS',
     DEPARTEMENTS = 'DEPARTEMENTS',
@@ -136,5 +145,6 @@ export type {
     HoraireTypique,
     Periode,
     Horaire,
-    CellData
+    CellData,
+    ActiviteMoniteur
 };

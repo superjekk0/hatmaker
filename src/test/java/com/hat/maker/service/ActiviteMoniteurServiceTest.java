@@ -33,15 +33,15 @@ class ActiviteMoniteurServiceTest {
         activiteMoniteur = ActiviteMoniteur.builder()
                 .id(1L)
                 .name("Test Activite")
+                .date("2023-10-01")
                 .selectedPeriodes(List.of("Morning", "Evening"))
-                .selectedActivites(List.of("Activity1", "Activity2"))
                 .build();
 
         activiteMoniteurDTO = ActiviteMoniteurDTO.builder()
                 .id(1L)
                 .name("Test Activite")
+                .date("2023-10-01")
                 .selectedPeriodes(List.of("Morning", "Evening"))
-                .selectedActivites(List.of("Activity1", "Activity2"))
                 .build();
     }
 
@@ -53,6 +53,7 @@ class ActiviteMoniteurServiceTest {
 
         assertNotNull(result);
         assertEquals(activiteMoniteurDTO.getName(), result.getName());
+        assertEquals(activiteMoniteurDTO.getDate(), result.getDate());
         verify(activiteMoniteurRepository, times(1)).save(any(ActiviteMoniteur.class));
     }
 
@@ -64,6 +65,7 @@ class ActiviteMoniteurServiceTest {
 
         assertNotNull(result);
         assertEquals(activiteMoniteur.getName(), result.getName());
+        assertEquals(activiteMoniteur.getDate(), result.getDate());
         verify(activiteMoniteurRepository, times(1)).findById(1L);
     }
 
@@ -76,6 +78,7 @@ class ActiviteMoniteurServiceTest {
 
         assertNotNull(result);
         assertEquals(activiteMoniteurDTO.getName(), result.getName());
+        assertEquals(activiteMoniteurDTO.getDate(), result.getDate());
         verify(activiteMoniteurRepository, times(1)).save(any(ActiviteMoniteur.class));
     }
 
@@ -95,8 +98,8 @@ class ActiviteMoniteurServiceTest {
     void testInvalidActiviteMoniteurFields() {
         ActiviteMoniteurDTO invalidActivite = ActiviteMoniteurDTO.builder()
                 .name("")
+                .date("")
                 .selectedPeriodes(List.of())
-                .selectedActivites(List.of())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> ValidationService.validerActiviteMoniteurFields(invalidActivite));

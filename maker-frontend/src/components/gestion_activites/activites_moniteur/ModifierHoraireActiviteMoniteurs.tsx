@@ -2,11 +2,10 @@ import {useContext, useEffect, useState} from "react";
 import {AuthentificatedContext} from "../../../context/AuthentificationContext.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {getMoniteurs} from "../../../interface/gestion/GestionUtilisateur.ts";
 import {
-    Activite, ActiviteMoniteur, CellData, Etat,
-    Moniteur,
+    Activite, ActiviteMoniteur, CellData, Etat, Moniteur,
     Periode,
     VueResponsable
 } from "../../../interface/Interface.ts";
@@ -17,9 +16,11 @@ import {getActivites} from "../../../interface/gestion/GestionActivite.ts";
 import HoraireActiviteMoniteurTable from "./HoraireActiviteMoniteurTable.tsx";
 import OptionsActiviteMoniteur from "./OptionsActiviteMoniteur.tsx";
 import {getEtats} from "../../../interface/gestion/GestionEtats.ts";
-import {addActiviteMoniteur} from "../../../interface/gestion/GestionActiviteMoniteur.ts";
+import {
+    getActiviteMoniteurById, modifierActiviteMoniteur, supprimerActiviteMoniteur
+} from "../../../interface/gestion/GestionActiviteMoniteur.ts";
 
-const HoraireActiviteMoniteurs = () => {
+const ModifierHoraireActiviteMoniteurs = () => {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [rows, setRows] = useState<string[][]>([]);
@@ -35,6 +36,7 @@ const HoraireActiviteMoniteurs = () => {
     const [isTableGenerated, setIsTableGenerated] = useState(false);
     const {isAuthentificated} = useContext(AuthentificatedContext)
     const {setVue} = useViewResponsable();
+    const {id} = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -61,18 +63,35 @@ const HoraireActiviteMoniteurs = () => {
                     })
             )
         );
+
+        if (id) {
+            getActiviteMoniteurById(Number(id)).then(
+                data => {
+                    setName(data.name);
+                    setDate(data.date);
+                    setSelectedPeriodes(data.selectedPeriodes || []);
+                    const groupedRows = data.cells.reduce((acc, cell) => {
+                        if (!acc[cell.indexRow]) {
+                            acc[cell.indexRow] = [];
+                        }
+                        if (cell.cellData != null) {
+                            acc[cell.indexRow][cell.indexCol] = cell.cellData;
+                        }
+                        return acc;
+                    }, [] as string[][]);
+                    setRows(groupedRows);
+                }
+            ).catch(
+                error => console.error('Error fetching horaires:', error)
+            )
+        }
     }, []);
 
     const handleGenerate = () => {
         if (moniteurs.length > 0 && selectedPeriodes.length > 0) {
-            const generatedRows = moniteurs.map(() =>
-                selectedPeriodes.map(() => "")
-            );
-            setRows(generatedRows);
             setIsTableGenerated(true);
             setIsCollapsibleOpen(false);
         } else {
-            setRows([]);
             setIsTableGenerated(false);
         }
     };
@@ -155,8 +174,7 @@ const HoraireActiviteMoniteurs = () => {
         });
     };
 
-
-    const handleCreeActiviteMoniteur = () => {
+    const handleModifierActiviteMoniteur = () => {
         const cellData: CellData[] = rows.flatMap((row, rowIndex) =>
             row.map((cell, colIndex) => ({
                 indexCol: colIndex,
@@ -166,20 +184,34 @@ const HoraireActiviteMoniteurs = () => {
         );
 
         const activiteMoniteur: ActiviteMoniteur = {
+            id: Number(id),
             name: name,
             date: date,
             selectedPeriodes: selectedPeriodes.length > 0 ? selectedPeriodes : undefined,
             cells: cellData,
         };
 
-        addActiviteMoniteur(activiteMoniteur).then(() => {
+        modifierActiviteMoniteur(activiteMoniteur).then((act) => {
             navigate("/accueil")
             setVue(VueResponsable.GESTION_ACTIVITES);
+            console.log(act);
         }).catch((error) => {
             console.error(error);
         })
     };
 
+    const handleSupprimerActiviteMoniteur = () => {
+        getActiviteMoniteurById(Number(id)).then((act) => {
+            supprimerActiviteMoniteur(act).then(() => {
+                navigate("/accueil")
+                setVue(VueResponsable.GESTION_ACTIVITES);
+            }).catch(
+                error => console.error(error)
+            );
+        }).catch(
+            error => console.log(error)
+        );
+    }
 
     const toggleCollapsible = () => {
         setIsCollapsibleOpen((prev) => !prev);
@@ -218,6 +250,7 @@ const HoraireActiviteMoniteurs = () => {
                             periodes,
                             selectedPeriodes,
                             handlePeriodeSelect,
+                            activites,
                             handleGenerate,
                             date,
                             setDate
@@ -244,13 +277,18 @@ const HoraireActiviteMoniteurs = () => {
             />
             {isTableGenerated && name && date && selectedPeriodes.length > 0 && (
                 <button
-                    onClick={handleCreeActiviteMoniteur}
+                    onClick={handleModifierActiviteMoniteur}
                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mb-4">
-                    Créer Horaire
+                    Modifier Horaire
                 </button>
             )}
+            <button
+                onClick={handleSupprimerActiviteMoniteur}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mt-4 rounded mb-4 ml-2">
+                Supprimer Horaire
+            </button>
         </div>
     );
 };
 
-export default HoraireActiviteMoniteurs;
+export default ModifierHoraireActiviteMoniteurs;

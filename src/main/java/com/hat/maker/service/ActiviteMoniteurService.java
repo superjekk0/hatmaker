@@ -18,8 +18,8 @@ public class ActiviteMoniteurService {
         ValidationService.validerActiviteMoniteurFields(activiteMoniteurDTO);
         ActiviteMoniteur activiteMoniteur = ActiviteMoniteur.builder()
                 .name(activiteMoniteurDTO.getName())
+                .date(activiteMoniteurDTO.getDate())
                 .selectedPeriodes(activiteMoniteurDTO.getSelectedPeriodes())
-                .selectedActivites(activiteMoniteurDTO.getSelectedActivites())
                 .cells(activiteMoniteurDTO.getCells())
                 .deleted(activiteMoniteurDTO.isDeleted())
                 .build();
@@ -32,8 +32,8 @@ public class ActiviteMoniteurService {
 
         ActiviteMoniteur activiteMoniteur = getActiviteMoniteurById(activiteMoniteurDTO.getId());
         activiteMoniteur.setName(activiteMoniteurDTO.getName());
+        activiteMoniteur.setDate(activiteMoniteurDTO.getDate());
         activiteMoniteur.setSelectedPeriodes(activiteMoniteurDTO.getSelectedPeriodes());
-        activiteMoniteur.setSelectedActivites(activiteMoniteurDTO.getSelectedActivites());
         activiteMoniteur.setCells(activiteMoniteurDTO.getCells());
         activiteMoniteur.setDeleted(activiteMoniteurDTO.isDeleted());
 

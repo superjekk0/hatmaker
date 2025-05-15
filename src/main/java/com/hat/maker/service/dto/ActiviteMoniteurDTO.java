@@ -15,17 +15,17 @@ import java.util.List;
 public class ActiviteMoniteurDTO {
     private Long id;
     private String name;
+    private String date;
     private List<String> selectedPeriodes;
-    private List<String> selectedActivites;
     private List<ActiviteMoniteur.CellData> cells;
     private boolean deleted;
 
     public static ActiviteMoniteurDTO toActiviteMoniteurDTO(ActiviteMoniteur entity) {
         return ActiviteMoniteurDTO.builder()
                 .id(entity.getId())
+                .date(entity.getDate())
                 .name(entity.getName())
                 .selectedPeriodes(entity.getSelectedPeriodes())
-                .selectedActivites(entity.getSelectedActivites())
                 .cells(entity.getCells())
                 .deleted(entity.isDeleted())
                 .build();

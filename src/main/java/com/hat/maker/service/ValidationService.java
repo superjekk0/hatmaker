@@ -16,6 +16,9 @@ public class ValidationService {
         if (activiteMoniteurDTO.getSelectedPeriodes() == null || activiteMoniteurDTO.getSelectedPeriodes().isEmpty()) {
             throw new IllegalArgumentException("Les périodes sont obligatoires.");
         }
+        if (activiteMoniteurDTO.getDate() == null || activiteMoniteurDTO.getDate().isEmpty()) {
+            throw new IllegalArgumentException("La date est obligatoire.");
+        }
     }
 
     public static void validerHoraireJournaliereFields(HoraireJournaliereDTO horaireJournaliereDTO) {
