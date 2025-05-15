@@ -56,6 +56,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/periode").hasAuthority("RESPONSABLE")
                         .requestMatchers("/horaire-journaliere").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers(GET,"/horaire-journaliere/{id}").hasAnyAuthority("RESPONSABLE")
+                        .requestMatchers("/activite-moniteur").hasAnyAuthority("RESPONSABLE")
+                        .requestMatchers(GET,"/activite-moniteur/{id}").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers("/connexion").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()

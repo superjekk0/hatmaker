@@ -9,6 +9,15 @@ public class ValidationService {
         NOM, COURRIEL, MOT_DE_PASSE
     }
 
+    public static void validerActiviteMoniteurFields(ActiviteMoniteurDTO activiteMoniteurDTO) {
+        if (activiteMoniteurDTO.getName() == null || activiteMoniteurDTO.getName().isEmpty()) {
+            throw new IllegalArgumentException("Le nom est obligatoire.");
+        }
+        if (activiteMoniteurDTO.getSelectedPeriodes() == null || activiteMoniteurDTO.getSelectedPeriodes().isEmpty()) {
+            throw new IllegalArgumentException("Les périodes sont obligatoires.");
+        }
+    }
+
     public static void validerHoraireJournaliereFields(HoraireJournaliereDTO horaireJournaliereDTO) {
         if (horaireJournaliereDTO.getName() == null || horaireJournaliereDTO.getName().isEmpty()) {
             throw new IllegalArgumentException("Le nom est obligatoire.");
