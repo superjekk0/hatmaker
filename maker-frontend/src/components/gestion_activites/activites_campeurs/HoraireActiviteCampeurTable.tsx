@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {Campeur, CellData, Moniteur} from "../../../interface/Interface.ts";
 import Collapsible from "./Collapsible.tsx";
 
@@ -7,6 +6,11 @@ interface HoraireActiviteCampeurTableProps {
     selectedPeriodes: string[] | undefined;
     moniteurs: Moniteur[];
     campeurs: Campeur[];
+    assignments: Record<string, string[]>;
+    limits: Record<string, number>;
+    onAssignActivity: (campeur: string, periode: string, activity: string) => void;
+    onLimitChange: (periode: string, activite: string, limit: number) => void;
+    selectedActivites: Record<string, string>;
 }
 
 const HoraireActiviteCampeurTable = ({
@@ -14,34 +18,12 @@ const HoraireActiviteCampeurTable = ({
                                          selectedPeriodes,
                                          moniteurs,
                                          campeurs,
+                                         assignments,
+                                         limits,
+                                         onAssignActivity,
+                                         onLimitChange,
+                                         selectedActivites
                                      }: HoraireActiviteCampeurTableProps) => {
-    const [assignments, setAssignments] = useState<Record<string, string[]>>({});
-    const [limits, setLimits] = useState<Record<string, number>>({});
-
-    const handleAssignActivity = (campeur: string, activity: string) => {
-        setAssignments((prev) => {
-            const updated = {...prev};
-
-            Object.keys(updated).forEach((key) => {
-                updated[key] = updated[key].filter((c) => c !== campeur);
-            });
-
-            if (activity) {
-                if (!updated[activity]) {
-                    updated[activity] = [];
-                }
-                updated[activity].push(campeur);
-            }
-
-            return updated;
-        });
-    };
-
-    const handleLimitChange = (periode: string, activite: string, limit: number) => {
-        const key = `${periode}-${activite}`;
-        setLimits((prev) => ({...prev, [key]: limit}));
-    };
-
     return (
         <div className="p-4 mt-16">
             {selectedPeriodes
@@ -66,7 +48,7 @@ const HoraireActiviteCampeurTable = ({
                                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sticky top-24 bg-gray-100 p-4 rounded-lg shadow">
                                         {activities.map((activite) => {
                                             const key = `${periode}-${activite}`;
-                                            const assignedCampeurs = assignments[activite]?.length || 0;
+                                            const assignedCampeurs = assignments[key]?.length || 0; // Use the correct key with periode
                                             const limit = limits[key] || 0;
                                             const titleBgColor =
                                                 limit === 0
@@ -90,7 +72,7 @@ const HoraireActiviteCampeurTable = ({
                                                                 type="text"
                                                                 value={limits[key] || ""}
                                                                 onChange={(e) =>
-                                                                    handleLimitChange(periode, activite, parseInt(e.target.value) || 0)
+                                                                    onLimitChange(periode, activite, parseInt(e.target.value) || 0)
                                                                 }
                                                                 className="w-7 h-7 p-1 text-center border border-gray-300 rounded"
                                                             />
@@ -105,10 +87,10 @@ const HoraireActiviteCampeurTable = ({
                                                                     <li key={moniteur.nom}>{moniteur.nom}</li> : null;
                                                             })}
                                                     </ul>
-                                                    {assignments[activite]?.length > 0 &&
+                                                    {assignments[key]?.length > 0 &&
                                                         <hr className="my-2 border-gray-300"/>}
                                                     <ul className="list-disc ml-4 text-gray-600">
-                                                        {assignments[activite]?.map((campeur, index) => {
+                                                        {assignments[key]?.map((campeur, index) => {
                                                             const campeurData = campeurs.find(c => c.prenom + " " + c.nom === campeur);
                                                             return (
                                                                 <li key={index} className="flex justify-between">
@@ -128,7 +110,9 @@ const HoraireActiviteCampeurTable = ({
                                     <Collapsible
                                         campeurs={campeurs || []}
                                         activities={activities}
-                                        onAssignActivity={handleAssignActivity}
+                                        selectedActivites={selectedActivites}
+                                        onAssignActivity={onAssignActivity}
+                                        periode={periode}
                                     />
                                 </div>
                             </div>

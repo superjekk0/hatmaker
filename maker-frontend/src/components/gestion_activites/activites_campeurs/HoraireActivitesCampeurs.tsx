@@ -15,6 +15,9 @@ const HoraireActivitesCampeurs = () => {
     const [moniteurs, setMoniteurs] = useState<Moniteur[]>([]);
     const [activites, setActivites] = useState<Activite[]>([]);
     const [campeurs, setCampeurs] = useState<Campeur[]>([]);
+    const [assignments, setAssignments] = useState<Record<string, string[]>>({});
+    const [limits, setLimits] = useState<Record<string, number>>({});
+    const [selectedActivites, setSelectedActivites] = useState<Record<string, string>>({});
     const {isAuthentificated} = useContext(AuthentificatedContext)
     const {setVue} = useViewResponsable();
     const navigate = useNavigate();
@@ -45,10 +48,42 @@ const HoraireActivitesCampeurs = () => {
         )
     }, []);
 
+    const handleAssignActivity = (campeur: string, periode: string, activity: string) => {
+        const key = `${periode}-${activity}`;
+        setAssignments((prev) => {
+            const updated = { ...prev };
+
+            Object.keys(updated).forEach((existingKey) => {
+                if (existingKey.startsWith(`${periode}-`)) {
+                    updated[existingKey] = updated[existingKey].filter((c) => c !== campeur);
+                }
+            });
+
+            if (activity) {
+                if (!updated[key]) {
+                    updated[key] = [];
+                }
+                updated[key].push(campeur);
+            }
+
+            return updated;
+        });
+
+        setSelectedActivites((prev) => ({
+            ...prev,
+            [`${campeur}-${periode}`]: activity,
+        }));
+    };
+
     const handleBack = () => {
         setVue(VueResponsable.GESTION_ACTIVITES);
         navigate("/accueil");
     }
+
+    const handleLimitChange = (periode: string, activite: string, limit: number) => {
+        const key = `${periode}-${activite}`;
+        setLimits((prev) => ({...prev, [key]: limit}));
+    };
 
     const filteredCells = activiteMoniteur?.cells?.filter(cell => {
         const cellActivities = cell.cellData?.split(", ") || [];
@@ -66,6 +101,11 @@ const HoraireActivitesCampeurs = () => {
                 selectedPeriodes={activiteMoniteur?.selectedPeriodes}
                 moniteurs={moniteurs}
                 campeurs={campeurs}
+                assignments={assignments}
+                limits={limits}
+                onAssignActivity={handleAssignActivity}
+                onLimitChange={handleLimitChange}
+                selectedActivites={selectedActivites}
             />
         </>
     );

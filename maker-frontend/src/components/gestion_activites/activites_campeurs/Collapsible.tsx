@@ -1,13 +1,15 @@
-import { useState } from "react";
 import {Campeur} from "../../../interface/Interface.ts";
+import {useState} from "react";
 
 interface CollapsibleProps {
     campeurs: Campeur[];
     activities: string[];
-    onAssignActivity: (campeur: string, activity: string) => void;
+    selectedActivites: Record<string, string>;
+    onAssignActivity: (campeur: string, periode: string, activity: string) => void;
+    periode: string;
 }
 
-const Collapsible = ({ campeurs = [], activities, onAssignActivity }: CollapsibleProps) => {
+const Collapsible = ({campeurs = [], activities, selectedActivites, onAssignActivity, periode}: CollapsibleProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const groupedCampeurs = campeurs.reduce((acc, campeur) => {
@@ -39,8 +41,9 @@ const Collapsible = ({ campeurs = [], activities, onAssignActivity }: Collapsibl
                                         <select
                                             className="border border-gray-300 rounded p-1 w-3/4"
                                             onChange={(e) =>
-                                                onAssignActivity(campeur.prenom + " " + campeur.nom, e.target.value)
+                                                onAssignActivity(campeur.prenom + " " + campeur.nom, periode, e.target.value)
                                             }
+                                            value={selectedActivites[`${campeur.prenom} ${campeur.nom}-${periode}`] || ""}
                                         >
                                             <option value="">Sélectionner Activité</option>
                                             {activities.map((activity) => (
