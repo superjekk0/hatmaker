@@ -9,18 +9,6 @@ public class ValidationService {
         NOM, COURRIEL, MOT_DE_PASSE
     }
 
-    public static void validerAssignementFields(AssignementDTO assignementDTO) {
-        if (assignementDTO.getPeriode() == null || assignementDTO.getPeriode().isBlank()) {
-            throw new IllegalArgumentException("La période ne peut pas être vide");
-        }
-        if (assignementDTO.getActivite() == null || assignementDTO.getActivite().isBlank()) {
-            throw new IllegalArgumentException("L'activité ne peut pas être vide");
-        }
-        if (assignementDTO.getCampeurs() == null || assignementDTO.getCampeurs().isEmpty()) {
-            throw new IllegalArgumentException("Les campeurs ne peuvent pas être vides");
-        }
-    }
-
     public static void validerActiviteMoniteurFields(ActiviteMoniteurDTO activiteMoniteurDTO) {
         if (activiteMoniteurDTO.getName() == null || activiteMoniteurDTO.getName().isEmpty()) {
             throw new IllegalArgumentException("Le nom est obligatoire.");

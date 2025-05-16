@@ -113,34 +113,52 @@ class ActiviteMoniteurServiceTest {
     }
 
     @Test
-    void testSauvegarderAssignement_CreatesNewAssignement() {
+    void testSauvegarderAssignement_CreatesNewAssignements() {
         ActiviteMoniteurDTO activiteMoniteurDTO = ActiviteMoniteurDTO.builder()
                 .id(1L)
-                .assignement(AssignementDTO.builder()
-                        .activite("Activity1")
-                        .periode("Morning")
-                        .campeurs(List.of("Campeur1", "Campeur2"))
-                        .build())
+                .assignements(List.of(
+                        AssignementDTO.builder()
+                                .activite("Activity1")
+                                .periode("Morning")
+                                .campeurs(List.of("Campeur1", "Campeur2"))
+                                .limite(2)
+                                .build(),
+                        AssignementDTO.builder()
+                                .activite("Activity2")
+                                .periode("Afternoon")
+                                .campeurs(List.of("Campeur3", "Campeur4"))
+                                .limite(2)
+                                .build()
+                ))
                 .build();
 
         ActiviteMoniteur activiteMoniteur = ActiviteMoniteur.builder()
                 .id(1L)
                 .build();
 
-        Assignement assignement = Assignement.builder()
-                .id(1L)
-                .build();
+        List<Assignement> assignements = List.of(
+                Assignement.builder()
+                        .id(1L)
+                        .activite("Activity1")
+                        .periode("Morning")
+                        .campeurs(List.of("Campeur1", "Campeur2"))
+                        .build(),
+                Assignement.builder()
+                        .id(2L)
+                        .activite("Activity2")
+                        .periode("Afternoon")
+                        .campeurs(List.of("Campeur3", "Campeur4"))
+                        .build()
+        );
 
         when(activiteMoniteurRepository.findById(1L)).thenReturn(Optional.of(activiteMoniteur));
-        when(assignementService.sauvegarderAssignement(activiteMoniteurDTO.getAssignement())).thenReturn(assignement);
+        when(assignementService.sauvegarderAssignements(activiteMoniteurDTO.getAssignements())).thenReturn(assignements);
         when(activiteMoniteurRepository.save(any(ActiviteMoniteur.class))).thenReturn(activiteMoniteur);
 
-        // Act
         ActiviteMoniteurDTO result = activiteMoniteurService.sauvegarderAssignement(activiteMoniteurDTO);
 
-        // Assert
         assertNotNull(result);
-        verify(assignementService).sauvegarderAssignement(activiteMoniteurDTO.getAssignement());
+        verify(assignementService).sauvegarderAssignements(activiteMoniteurDTO.getAssignements());
         verify(activiteMoniteurRepository).save(activiteMoniteur);
     }
 }

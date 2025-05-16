@@ -98,11 +98,20 @@ interface Horaire {
     deleted?: boolean;
 }
 
+interface Assignement {
+    id?: number;
+    campeurs: string[];
+    periode: string;
+    activite: string;
+    limite: number;
+}
+
 interface ActiviteMoniteur {
     id?: number;
     name: string;
     date: string;
     selectedPeriodes?: string[];
+    assignements?: Assignement[];
     cells: CellData[];
     deleted?: boolean;
 }
@@ -146,5 +155,6 @@ export type {
     Periode,
     Horaire,
     CellData,
-    ActiviteMoniteur
+    ActiviteMoniteur,
+    Assignement
 };

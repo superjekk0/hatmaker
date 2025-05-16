@@ -6,32 +6,39 @@ import com.hat.maker.service.dto.AssignementDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AssignementService {
     private final AssignementRepository assignementRepository;
 
-    public Assignement sauvegarderAssignement(AssignementDTO assignementDTO) {
-        ValidationService.validerAssignementFields(assignementDTO);
+    public List<Assignement> sauvegarderAssignements(List<AssignementDTO> assignementsDTO) {
+        List<Assignement> assignements = new ArrayList<>();
 
-        Assignement assignement;
-        if (assignementDTO.getId() != null) {
-            assignement = assignementRepository.findById(assignementDTO.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Assignement not found with id: " + assignementDTO.getId()));
+        for (AssignementDTO assignementDTO : assignementsDTO) {
+            Assignement assignement;
 
-            assignement.setActivite(assignementDTO.getActivite());
-            assignement.setPeriode(assignementDTO.getPeriode());
-            assignement.setCampeurs(assignementDTO.getCampeurs());
-            assignement.setDeleted(assignementDTO.isDeleted());
-        } else {
-            assignement = Assignement.builder()
-                    .activite(assignementDTO.getActivite())
-                    .periode(assignementDTO.getPeriode())
-                    .campeurs(assignementDTO.getCampeurs())
-                    .deleted(assignementDTO.isDeleted())
-                    .build();
+            if (assignementDTO.getId() != null) {
+                assignement = assignementRepository.findById(assignementDTO.getId())
+                        .orElseThrow(() -> new IllegalArgumentException("Assignement not found with id: " + assignementDTO.getId()));
+
+                assignement.setActivite(assignementDTO.getActivite());
+                assignement.setPeriode(assignementDTO.getPeriode());
+                assignement.setCampeurs(assignementDTO.getCampeurs());
+                assignement.setLimite(assignementDTO.getLimite());
+            } else {
+                assignement = Assignement.builder()
+                        .activite(assignementDTO.getActivite())
+                        .periode(assignementDTO.getPeriode())
+                        .campeurs(assignementDTO.getCampeurs())
+                        .limite(assignementDTO.getLimite())
+                        .build();
+            }
+            assignements.add(assignementRepository.save(assignement));
         }
 
-        return assignementRepository.save(assignement);
+        return assignements;
     }
 }

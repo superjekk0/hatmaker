@@ -29,9 +29,9 @@ public class ActiviteMoniteur {
     @CollectionTable(name = "activite_moniteur_cells", joinColumns = @JoinColumn(name = "activite_moniteur_id"))
     private List<CellData> cells;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "assignement_id")
-    private Assignement assignement;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "activite_moniteur_id")
+    private List<Assignement> assignements;
 
     @Embeddable
     @Data

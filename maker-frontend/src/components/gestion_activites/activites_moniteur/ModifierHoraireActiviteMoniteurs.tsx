@@ -191,10 +191,9 @@ const ModifierHoraireActiviteMoniteurs = () => {
             cells: cellData,
         };
 
-        modifierActiviteMoniteur(activiteMoniteur).then((act) => {
+        modifierActiviteMoniteur(activiteMoniteur).then(() => {
             navigate("/accueil")
             setVue(VueResponsable.GESTION_ACTIVITES);
-            console.log(act);
         }).catch((error) => {
             console.error(error);
         })

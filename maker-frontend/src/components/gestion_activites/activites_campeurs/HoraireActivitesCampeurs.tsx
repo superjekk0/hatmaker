@@ -1,7 +1,14 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
-import {getActiviteMoniteurById} from "../../../interface/gestion/GestionActiviteMoniteur.ts";
-import {Activite, ActiviteMoniteur, Campeur, Moniteur, VueResponsable} from "../../../interface/Interface.ts";
+import {getActiviteMoniteurById, sauvegarderAssignement} from "../../../interface/gestion/GestionActiviteMoniteur.ts";
+import {
+    Activite,
+    ActiviteMoniteur,
+    Campeur,
+    Moniteur,
+    VueResponsable,
+    Assignement
+} from "../../../interface/Interface.ts";
 import HoraireActiviteCampeurTable from "./HoraireActiviteCampeurTable.tsx";
 import {getMoniteurs} from "../../../interface/gestion/GestionUtilisateur.ts";
 import {getActivites} from "../../../interface/gestion/GestionActivite.ts";
@@ -29,7 +36,9 @@ const HoraireActivitesCampeurs = () => {
 
         if (id) {
             getActiviteMoniteurById(Number(id)).then(
-                data => setActiviteMoniteur(data)
+                data => {
+                    setActiviteMoniteur(data)
+                }
             ).catch(
                 error => console.error('Error fetching horaires:', error)
             );
@@ -85,6 +94,36 @@ const HoraireActivitesCampeurs = () => {
         setLimits((prev) => ({...prev, [key]: limit}));
     };
 
+    const handleSauvegarderAssignement = () => {
+        const updatedAssignments : Assignement[] = Object.entries(assignments).map(([key, campeurs]) : Assignement => {
+            const [periode, activite] = key.split("-");
+            return {
+                activite: activite,
+                periode: periode,
+                campeurs: campeurs,
+                limite: limits[key] || 0,
+            };
+        });
+
+        if (!activiteMoniteur) {
+            return;
+        } else {
+            const updatedActiviteMoniteur : ActiviteMoniteur = {
+                ...activiteMoniteur,
+                assignements: updatedAssignments,
+            };
+            sauvegarderAssignement(updatedActiviteMoniteur).then(
+                (data) => {
+                    setVue(VueResponsable.GESTION_ACTIVITES);
+                    navigate("/accueil");
+                    console.log(data);
+                }
+            ).catch(
+                error => console.error('Error saving assignments:', error)
+            )
+        }
+    }
+
     const filteredCells = activiteMoniteur?.cells?.filter(cell => {
         const cellActivities = cell.cellData?.split(", ") || [];
         return cellActivities.some(activite => activites.some(a => a.nom === activite));
@@ -107,6 +146,11 @@ const HoraireActivitesCampeurs = () => {
                 onLimitChange={handleLimitChange}
                 selectedActivites={selectedActivites}
             />
+            <button
+                onClick={handleSauvegarderAssignement}
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded m-4">
+                Sauvegarder Horaire
+            </button>
         </>
     );
 }

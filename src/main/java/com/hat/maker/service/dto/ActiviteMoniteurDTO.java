@@ -18,7 +18,7 @@ public class ActiviteMoniteurDTO {
     private String date;
     private List<String> selectedPeriodes;
     private List<ActiviteMoniteur.CellData> cells;
-    private AssignementDTO assignement;
+    private List<AssignementDTO> assignements;
     private boolean deleted;
 
     public static ActiviteMoniteurDTO toActiviteMoniteurDTO(ActiviteMoniteur entity) {
@@ -28,7 +28,7 @@ public class ActiviteMoniteurDTO {
                 .name(entity.getName())
                 .selectedPeriodes(entity.getSelectedPeriodes())
                 .cells(entity.getCells())
-                .assignement(AssignementDTO.toAssignementDTO(entity.getAssignement()))
+                .assignements(entity.getAssignements() != null ? AssignementDTO.toAssignementsDTO(entity.getAssignements()) : null)
                 .deleted(entity.isDeleted())
                 .build();
     }

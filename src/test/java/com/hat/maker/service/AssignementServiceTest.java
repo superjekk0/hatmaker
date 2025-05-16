@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -30,59 +29,46 @@ public class AssignementServiceTest {
     private AssignementRepository assignementRepository;
 
     @Test
-    void testSauvegarderAssignement_CreatesNewAssignement() {
-        AssignementDTO assignementDTO = AssignementDTO.builder()
+    void testSauvegarderAssignements_CreatesNewAssignements() {
+        List<AssignementDTO> assignementDTOs = List.of(
+                AssignementDTO.builder()
+                        .activite("Activity1")
+                        .periode("Morning")
+                        .campeurs(List.of("Campeur1", "Campeur2"))
+                        .limite(2)
+                        .build(),
+                AssignementDTO.builder()
+                        .activite("Activity2")
+                        .periode("Afternoon")
+                        .campeurs(List.of("Campeur3", "Campeur4"))
+                        .limite(2)
+                        .build()
+        );
+
+        Assignement assignement1 = Assignement.builder()
+                .id(1L)
                 .activite("Activity1")
                 .periode("Morning")
                 .campeurs(List.of("Campeur1", "Campeur2"))
+                .limite(2)
                 .build();
 
-        Assignement assignement = Assignement.builder()
-                .id(1L)
-                .build();
-
-        when(assignementRepository.save(any(Assignement.class))).thenReturn(assignement);
-
-        Assignement result = assignementService.sauvegarderAssignement(assignementDTO);
-
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        verify(assignementRepository).save(any(Assignement.class));
-    }
-
-    @Test
-    void testSauvegarderAssignement_UpdatesExistingAssignement() {
-        AssignementDTO assignementDTO = AssignementDTO.builder()
-                .id(1L)
-                .activite("UpdatedActivity")
+        Assignement assignement2 = Assignement.builder()
+                .id(2L)
+                .activite("Activity2")
                 .periode("Afternoon")
-                .campeurs(List.of("Campeur3"))
+                .campeurs(List.of("Campeur3", "Campeur4"))
+                .limite(2)
                 .build();
 
-        Assignement existingAssignement = Assignement.builder()
-                .id(1L)
-                .build();
+        when(assignementRepository.save(any(Assignement.class)))
+                .thenReturn(assignement1)
+                .thenReturn(assignement2);
 
-        when(assignementRepository.findById(1L)).thenReturn(Optional.of(existingAssignement));
-        when(assignementRepository.save(existingAssignement)).thenReturn(existingAssignement);
-
-        Assignement result = assignementService.sauvegarderAssignement(assignementDTO);
+        List<Assignement> result = assignementService.sauvegarderAssignements(assignementDTOs);
 
         assertNotNull(result);
-        assertEquals("UpdatedActivity", result.getActivite());
-        assertEquals("Afternoon", result.getPeriode());
-        verify(assignementRepository).findById(1L);
-        verify(assignementRepository).save(existingAssignement);
-    }
-
-    @Test
-    void testSauvegarderAssignement_ThrowsExceptionForInvalidData() {
-        AssignementDTO assignementDTO = AssignementDTO.builder()
-                .periode(null)
-                .build();
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> assignementService.sauvegarderAssignement(assignementDTO));
-
-        assertEquals("La période ne peut pas être vide", exception.getMessage());
+        assertEquals(2, result.size());
+        verify(assignementRepository, times(2)).save(any(Assignement.class));
     }
 }

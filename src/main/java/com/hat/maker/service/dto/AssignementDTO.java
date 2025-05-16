@@ -16,16 +16,18 @@ public class AssignementDTO {
     private Long id;
     private String periode;
     private String activite;
+    private int limite;
     private List<String> campeurs;
-    private boolean deleted;
 
-    public static AssignementDTO toAssignementDTO(Assignement entity) {
-        return AssignementDTO.builder()
-                .id(entity.getId())
-                .periode(entity.getPeriode())
-                .activite(entity.getActivite())
-                .campeurs(entity.getCampeurs())
-                .deleted(entity.isDeleted())
-                .build();
+    public static List<AssignementDTO> toAssignementsDTO(List<Assignement> entity) {
+        return entity.stream()
+                .map(assignement -> AssignementDTO.builder()
+                        .id(assignement.getId())
+                        .periode(assignement.getPeriode())
+                        .activite(assignement.getActivite())
+                        .campeurs(assignement.getCampeurs())
+                        .limite(assignement.getLimite())
+                        .build())
+                .toList();
     }
 }

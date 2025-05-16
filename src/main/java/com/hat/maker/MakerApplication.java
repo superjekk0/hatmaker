@@ -229,9 +229,9 @@ public class MakerApplication implements CommandLineRunner {
         activiteDTOs.forEach(activiteService::createActivite);
 
         List<PeriodeDTO> periodeDTOs = new ArrayList<>(List.of());
-        timeSlotDTOs.forEach(timelslot -> {
-            periodeDTOs.add(PeriodeDTO.builder().startTime(timelslot.getStartTime()).endTime(timelslot.getEndTime()).periode(timelslot.getPeriode()).build());
-        });
+        timeSlotDTOs.forEach(timelslot -> periodeDTOs.add(PeriodeDTO.builder().startTime(timelslot.getStartTime()).endTime(timelslot.getEndTime()).periode(timelslot.getPeriode()).build()));
         periodeDTOs.forEach(periodeService::createPeriode);
+
+
     }
 }

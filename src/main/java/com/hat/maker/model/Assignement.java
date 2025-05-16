@@ -19,7 +19,7 @@ public class Assignement {
     private Long id;
     private String periode;
     private String activite;
-    private boolean deleted;
+    private int limite;
 
     @ElementCollection
     private List<String> campeurs;

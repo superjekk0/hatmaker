@@ -77,3 +77,20 @@ export const supprimerActiviteMoniteur = async (horaire: ActiviteMoniteur): Prom
 
     return await response.json();
 }
+
+export const sauvegarderAssignement = async (horaire: ActiviteMoniteur): Promise<ActiviteMoniteur> => {
+    const response = await fetch(RoutesBE.ActiviteMoniteur + "/assignement", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(horaire),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la sauvegarde de l\'assignement');
+    }
+    return await response.json();
+}
