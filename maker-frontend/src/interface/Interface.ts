@@ -131,7 +131,10 @@ export enum VueResponsable {
 }
 
 export enum VueMoniteur {
-    TENTE = 'TENTE'
+    TENTE = 'TENTE',
+    HORAIRE_TYPIQUE = 'HORAIRE_TYPIQUE',
+    HORAIRE_JOURNALIERE = 'HORAIRE_JOURNALIERE',
+    HORAIRE_ACTIVITES = 'HORAIRE_ACTIVITES',
 }
 
 export enum Role {
