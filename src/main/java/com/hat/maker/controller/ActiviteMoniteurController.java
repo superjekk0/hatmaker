@@ -66,4 +66,15 @@ public class ActiviteMoniteurController {
         }
         return ResponseEntity.ok(activiteMoniteurSupprime);
     }
+
+    @PutMapping("/assignement")
+    public ResponseEntity<ActiviteMoniteurDTO> sauvegarderAssignement(@RequestBody ActiviteMoniteurDTO activiteMoniteurDTO) {
+        ActiviteMoniteurDTO activiteMoniteurModifie;
+        try {
+            activiteMoniteurModifie = activiteMoniteurService.sauvegarderAssignement(activiteMoniteurDTO);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return ResponseEntity.ok(activiteMoniteurModifie);
+    }
 }

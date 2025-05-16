@@ -1,8 +1,11 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.ActiviteMoniteur;
+import com.hat.maker.model.Assignement;
 import com.hat.maker.repository.ActiviteMoniteurRepository;
+import com.hat.maker.repository.AssignementRepository;
 import com.hat.maker.service.dto.ActiviteMoniteurDTO;
+import com.hat.maker.service.dto.AssignementDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,7 +24,11 @@ class ActiviteMoniteurServiceTest {
     private ActiviteMoniteurService activiteMoniteurService;
 
     @Mock
+    private AssignementService assignementService;
+    @Mock
     private ActiviteMoniteurRepository activiteMoniteurRepository;
+    @Mock
+    private AssignementRepository assignementRepository;
 
     private ActiviteMoniteur activiteMoniteur;
     private ActiviteMoniteurDTO activiteMoniteurDTO;
@@ -103,5 +110,37 @@ class ActiviteMoniteurServiceTest {
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> ValidationService.validerActiviteMoniteurFields(invalidActivite));
+    }
+
+    @Test
+    void testSauvegarderAssignement_CreatesNewAssignement() {
+        ActiviteMoniteurDTO activiteMoniteurDTO = ActiviteMoniteurDTO.builder()
+                .id(1L)
+                .assignement(AssignementDTO.builder()
+                        .activite("Activity1")
+                        .periode("Morning")
+                        .campeurs(List.of("Campeur1", "Campeur2"))
+                        .build())
+                .build();
+
+        ActiviteMoniteur activiteMoniteur = ActiviteMoniteur.builder()
+                .id(1L)
+                .build();
+
+        Assignement assignement = Assignement.builder()
+                .id(1L)
+                .build();
+
+        when(activiteMoniteurRepository.findById(1L)).thenReturn(Optional.of(activiteMoniteur));
+        when(assignementService.sauvegarderAssignement(activiteMoniteurDTO.getAssignement())).thenReturn(assignement);
+        when(activiteMoniteurRepository.save(any(ActiviteMoniteur.class))).thenReturn(activiteMoniteur);
+
+        // Act
+        ActiviteMoniteurDTO result = activiteMoniteurService.sauvegarderAssignement(activiteMoniteurDTO);
+
+        // Assert
+        assertNotNull(result);
+        verify(assignementService).sauvegarderAssignement(activiteMoniteurDTO.getAssignement());
+        verify(activiteMoniteurRepository).save(activiteMoniteur);
     }
 }

@@ -58,13 +58,12 @@ public class SecurityConfiguration {
                         .requestMatchers(GET,"/horaire-journaliere/{id}").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers("/activite-moniteur").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers(GET,"/activite-moniteur/{id}").hasAnyAuthority("RESPONSABLE")
+                        .requestMatchers(PUT, "/activite-moniteur/assignement").hasAnyAuthority("RESPONSABLE")
                         .requestMatchers("/connexion").permitAll()
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
-                .sessionManagement((secuManagement) -> {
-                    secuManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })
+                .sessionManagement((secuManagement) -> secuManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authenticationEntryPoint))
         ;

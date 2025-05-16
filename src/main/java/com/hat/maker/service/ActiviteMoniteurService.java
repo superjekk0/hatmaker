@@ -1,8 +1,10 @@
 package com.hat.maker.service;
 
 import com.hat.maker.model.ActiviteMoniteur;
+import com.hat.maker.model.Assignement;
 import com.hat.maker.repository.ActiviteMoniteurRepository;
 import com.hat.maker.service.dto.ActiviteMoniteurDTO;
+import com.hat.maker.service.dto.AssignementDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ActiviteMoniteurService {
     private final ActiviteMoniteurRepository activiteMoniteurRepository;
+    private final AssignementService assignementService;
 
     public ActiviteMoniteurDTO createActiviteMoniteur(ActiviteMoniteurDTO activiteMoniteurDTO) {
         ValidationService.validerActiviteMoniteurFields(activiteMoniteurDTO);
@@ -25,6 +28,16 @@ public class ActiviteMoniteurService {
                 .build();
         ActiviteMoniteur savedActiviteMoniteur = activiteMoniteurRepository.save(activiteMoniteur);
         return ActiviteMoniteurDTO.toActiviteMoniteurDTO(savedActiviteMoniteur);
+    }
+
+    public ActiviteMoniteurDTO sauvegarderAssignement(ActiviteMoniteurDTO activiteMoniteurDTO) {
+        ActiviteMoniteur activiteMoniteur = getActiviteMoniteurById(activiteMoniteurDTO.getId());
+
+        AssignementDTO assignementDTO = activiteMoniteurDTO.getAssignement();
+        Assignement assignement = assignementService.sauvegarderAssignement(assignementDTO);
+        activiteMoniteur.setAssignement(assignement);
+
+        return ActiviteMoniteurDTO.toActiviteMoniteurDTO(activiteMoniteurRepository.save(activiteMoniteur));
     }
 
     public ActiviteMoniteurDTO modifierActiviteMoniteur(ActiviteMoniteurDTO activiteMoniteurDTO) {

@@ -18,7 +18,6 @@ public class ActiviteMoniteur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Options
     private String name;
     private String date;
     private boolean deleted;
@@ -29,6 +28,10 @@ public class ActiviteMoniteur {
     @ElementCollection
     @CollectionTable(name = "activite_moniteur_cells", joinColumns = @JoinColumn(name = "activite_moniteur_id"))
     private List<CellData> cells;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "assignement_id")
+    private Assignement assignement;
 
     @Embeddable
     @Data

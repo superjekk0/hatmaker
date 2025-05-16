@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,6 @@ class ActiviteMoniteurControllerTest {
                 .id(1L)
                 .name("Test Activite")
                 .selectedPeriodes(List.of("Morning", "Afternoon"))
-                .selectedActivites(List.of("Activity1", "Activity2"))
                 .build();
     }
 
@@ -82,5 +83,30 @@ class ActiviteMoniteurControllerTest {
         assertNotNull(response);
         assertEquals(activiteMoniteurDTO.getName(), Objects.requireNonNull(response.getBody()).getName());
         verify(activiteMoniteurService, times(1)).supprimerActiviteMoniteur(any(ActiviteMoniteurDTO.class));
+    }
+
+    @Test
+    void testSauvegarderAssignement_ReturnsOkResponse() {
+        ActiviteMoniteurDTO activiteMoniteurDTO = ActiviteMoniteurDTO.builder().build();
+        ActiviteMoniteurDTO savedDTO = ActiviteMoniteurDTO.builder().build();
+
+        when(activiteMoniteurService.sauvegarderAssignement(activiteMoniteurDTO)).thenReturn(savedDTO);
+
+        ResponseEntity<ActiviteMoniteurDTO> response = activiteMoniteurController.sauvegarderAssignement(activiteMoniteurDTO);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(savedDTO, response.getBody());
+        verify(activiteMoniteurService).sauvegarderAssignement(activiteMoniteurDTO);
+    }
+
+    @Test
+    void testSauvegarderAssignement_ThrowsBadRequest() {
+        ActiviteMoniteurDTO activiteMoniteurDTO = ActiviteMoniteurDTO.builder().build();
+        when(activiteMoniteurService.sauvegarderAssignement(activiteMoniteurDTO))
+                .thenThrow(new IllegalArgumentException("Invalid data"));
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> activiteMoniteurController.sauvegarderAssignement(activiteMoniteurDTO));
+
+        assertEquals("Invalid data", exception.getReason());
     }
 }
