@@ -11,6 +11,7 @@ export enum RoutesFE {
     HoraireActivitesMoniteurs = "/horaire-activites-moniteurs",
     HoraireActivitesMoniteursId = "/horaire-activites-moniteurs/:id",
     HoraireActivitesCampeurs = "/horaire-activites-campeurs/:id",
+    HoraireActivites = "/horaire-activites/:id",
 }
 
 export enum RoutesBE {

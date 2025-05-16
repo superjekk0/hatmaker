@@ -15,6 +15,8 @@ import ModifierHoraireJournaliere from "./components/horaires/ModifierHoraireJou
 import HoraireActivitesMoniteurs from "./components/gestion_activites/activites_moniteur/HoraireActiviteMoniteurs.tsx";
 import ModifierHoraireActivitesMoniteurs from "./components/gestion_activites/activites_moniteur/ModifierHoraireActiviteMoniteurs.tsx";
 import HoraireActivitesCampeurs from "./components/gestion_activites/activites_campeurs/HoraireActivitesCampeurs.tsx";
+import HoraireActivitesCampeursMoniteurs
+    from "./components/gestion_activites/activites_campeurs/HoraireActivitesCampeursMoniteurs.tsx";
 
 function App() {
     const {isAuthentificated} = useContext(AuthentificatedContext)
@@ -37,6 +39,7 @@ function App() {
                     <Route path={RoutesFE.HoraireActivitesMoniteurs} element={<HoraireActivitesMoniteurs/>}/>
                     <Route path={RoutesFE.HoraireActivitesMoniteursId} element={<ModifierHoraireActivitesMoniteurs/>}/>
                     <Route path={RoutesFE.HoraireActivitesCampeurs} element={<HoraireActivitesCampeurs/>}/>
+                    <Route path={RoutesFE.HoraireActivites} element={<HoraireActivitesCampeursMoniteurs/>}/>
                 </Routes>
             </ViewResponsableProvider>
         </>

@@ -3,6 +3,7 @@ import {VueMoniteur} from "../../interface/Interface.ts";
 import TenteComponent from "../tentes/TenteComponent.tsx";
 import HoraireTypiquesMoniteur from "../horaire_typique/HoraireTypiquesMoniteur.tsx";
 import HorairesMoniteur from "../horaires/HorairesMoniteur.tsx";
+import GestionActivitesMoniteur from "../gestion_activites/GestionActivitesMoniteur.tsx";
 
 const MoniteurAccueilContenu = () => {
     const [vue, setVue] = useState(VueMoniteur.TENTE);
@@ -61,7 +62,7 @@ const MoniteurAccueilContenu = () => {
                 )}
                 {vue === VueMoniteur.HORAIRE_ACTIVITES && (
                     <div className="w-full md:w-2/3 pl-4 mt-4 md:mt-0">
-                        {/* Composant HoraireActivites ici */}
+                        <GestionActivitesMoniteur/>
                     </div>
                 )}
             </div>
