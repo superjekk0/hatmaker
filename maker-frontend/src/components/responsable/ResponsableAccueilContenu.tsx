@@ -82,7 +82,7 @@ const ResponsableAccueilContenu = () => {
                             <button
                                 className="border border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"
                                 onClick={() => setVue(VueResponsable.HORAIRE)}>
-                                Horaires
+                                Horaires Journalières
                             </button>
                             <button
                                 className="border rounded-b border-white w-full text-center p-2 bg-blue-500 hover:bg-blue-600 text-white"

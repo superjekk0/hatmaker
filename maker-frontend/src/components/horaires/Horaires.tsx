@@ -20,7 +20,7 @@ const Horaires = () => {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Horaires</h1>
+                <h1 className="text-2xl font-bold">Horaires Journalières</h1>
             </div>
             <div className="relative overflow-x-auto shadow-md border rounded">
                 <table className="w-full text-sm text-left text-gray-500">
