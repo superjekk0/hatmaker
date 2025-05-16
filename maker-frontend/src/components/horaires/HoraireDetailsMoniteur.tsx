@@ -27,8 +27,13 @@ const HoraireDetailsMoniteur = ({horaire, onBack}: HoraireDetailsMoniteurProps) 
             return acc;
         }, [] as string[][]);
         setRows(groupedRows);
-        setDates(generateDates(startDate, endDate));
-    }, []);
+    }, [horaire]);
+
+    useEffect(() => {
+        if (startDate && endDate) {
+            setDates(generateDates(startDate, endDate));
+        }
+    }, [startDate, endDate]);
 
     const generateDates = (startDate: string, endDate: string): string[] => {
         const start = new Date(startDate);
@@ -61,7 +66,7 @@ const HoraireDetailsMoniteur = ({horaire, onBack}: HoraireDetailsMoniteurProps) 
                 <tr>
                     <th className="px-6 py-3 text-center">Info</th>
                     {dates.map((date, index) => (
-                        <th key={index} className="px-6 py-3">
+                        <th key={index} className="px-6 py-3 text-center">
                             {date}
                         </th>
                     ))}

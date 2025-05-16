@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class MakerApplication implements CommandLineRunner {
     private final HoraireTypiqueService horaireTypiqueService;
     private final EtatService etatService;
     private final ActiviteService activiteService;
-    private final PeriodeService periodeService;
 
     public static void main(String[] args) {
         SpringApplication.run(MakerApplication.class, args);
@@ -227,11 +225,5 @@ public class MakerApplication implements CommandLineRunner {
                 ActiviteDTO.builder().nom("Tir à l'arc").build()
         );
         activiteDTOs.forEach(activiteService::createActivite);
-
-        List<PeriodeDTO> periodeDTOs = new ArrayList<>(List.of());
-        timeSlotDTOs.forEach(timelslot -> periodeDTOs.add(PeriodeDTO.builder().startTime(timelslot.getStartTime()).endTime(timelslot.getEndTime()).periode(timelslot.getPeriode()).build()));
-        periodeDTOs.forEach(periodeService::createPeriode);
-
-
     }
 }

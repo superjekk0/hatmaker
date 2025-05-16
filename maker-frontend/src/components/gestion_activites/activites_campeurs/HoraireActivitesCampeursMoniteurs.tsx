@@ -117,10 +117,9 @@ const HoraireActivitesCampeursMoniteurs = () => {
                                                     <div
                                                         className={`flex justify-between items-center p-2 rounded ${titleBgColor}`}>
                                                         <h3 className="font-semibold text-lg">{activite}</h3>
-                                                        {limits[key] && (
+                                                        {limits[key] != 0 && (
                                                             <div className="flex items-center justify-end gap-1">
-                                                <span
-                                                    className="text-sm text-gray-600">{assignedCampeurs}/{limits[key]}</span>
+                                                                <span className="text-sm text-gray-600">{assignedCampeurs}/{limits[key]}</span>
                                                             </div>
                                                         )}
                                                     </div>
