@@ -38,6 +38,23 @@ const HoraireActivitesCampeurs = () => {
             getActiviteMoniteurById(Number(id)).then(
                 data => {
                     setActiviteMoniteur(data)
+                    if (data.assignements) {
+                        const newAssignments: Record<string, string[]> = {};
+                        const newSelectedActivites: Record<string, string> = {};
+
+                        data.assignements.forEach((assignement) => {
+                            const key = `${assignement.periode}-${assignement.activite}`;
+                            newAssignments[key] = assignement.campeurs;
+                            setLimits((prev) => ({...prev, [key]: assignement.limite || 0}));
+
+                            assignement.campeurs.forEach(campeur => {
+                                newSelectedActivites[`${campeur}-${assignement.periode}`] = assignement.activite;
+                            });
+                        });
+
+                        setAssignments(newAssignments);
+                        setSelectedActivites(newSelectedActivites);
+                    }
                 }
             ).catch(
                 error => console.error('Error fetching horaires:', error)
@@ -98,12 +115,15 @@ const HoraireActivitesCampeurs = () => {
         const updatedAssignments : Assignement[] = Object.entries(assignments).map(([key, campeurs]) : Assignement => {
             const [periode, activite] = key.split("-");
             return {
+                id: activiteMoniteur?.assignements?.find(a => a.periode === periode && a.activite === activite)?.id,
                 activite: activite,
                 periode: periode,
                 campeurs: campeurs,
                 limite: limits[key] || 0,
             };
         });
+
+        console.log(updatedAssignments);
 
         if (!activiteMoniteur) {
             return;

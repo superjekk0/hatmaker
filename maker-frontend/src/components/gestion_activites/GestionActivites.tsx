@@ -49,7 +49,7 @@ const GestionActivites = () => {
                                 <button
                                     className="p-2 bg-gray-100 rounded shadow-md"
                                     onClick={() => navigate(`/horaire-activites-campeurs/${horaire.id}`)}>
-                                    Aucun horaire
+                                    Horaire des campeurs
                                 </button>
                             </td>
                             <td className="px-6 py-4 text-right">
