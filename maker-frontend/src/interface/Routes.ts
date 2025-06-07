@@ -1,4 +1,4 @@
-const baseBE = "http://localhost:8080";
+const baseBE = import.meta.env.VITE_BACKEND_URL;
 
 export enum RoutesFE {
     Accueil = "/accueil",
