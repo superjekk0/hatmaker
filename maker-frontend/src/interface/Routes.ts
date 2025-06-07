@@ -1,4 +1,4 @@
-const baseBE = import.meta.env.VITE_API_URL;
+const baseBE = import.meta.env.VITE_BACKEND_URL;
 
 export enum RoutesFE {
     Accueil = "/accueil",
