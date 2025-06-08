@@ -50,6 +50,7 @@ public class MakerApplication implements CommandLineRunner {
     }
 
     public void run(String... args) {
+        System.out.println("Allowed origin: " + crossOrigin);
 //        List<DepartementDTO> departementDTOs = Arrays.asList(
 //                DepartementDTO.builder().id(1L).nom("Animateur").build(),
 //                DepartementDTO.builder().id(2L).nom("Gestion").build(),
