@@ -27,7 +27,7 @@ public class MakerApplication implements CommandLineRunner {
     private final EtatService etatService;
     private final ActiviteService activiteService;
 
-    @Value("cors.origin")
+    @Value("${cors.origin}")
     public String crossOrigin;
 
      @Bean
