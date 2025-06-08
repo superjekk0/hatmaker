@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,10 +27,11 @@ public class MakerApplication implements CommandLineRunner {
     private final EtatService etatService;
     private final ActiviteService activiteService;
 
-    @Value("$cors.origin")
+    @Value("cors.origin")
     public String crossOrigin;
 
      @Bean
+     @Profile("!test")
      public WebMvcConfigurer corsConfiguration(){
          return new WebMvcConfigurer() {
              @Override
