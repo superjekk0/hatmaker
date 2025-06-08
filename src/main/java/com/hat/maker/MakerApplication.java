@@ -3,9 +3,13 @@ package com.hat.maker;
 import com.hat.maker.service.*;
 import com.hat.maker.service.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +26,23 @@ public class MakerApplication implements CommandLineRunner {
     private final EtatService etatService;
     private final ActiviteService activiteService;
 
+    @Value("$cors.origin")
+    public String crossOrigin;
+
+     @Bean
+     public WebMvcConfigurer corsConfiguration(){
+         return new WebMvcConfigurer() {
+             @Override
+             public void addCorsMappings(CorsRegistry registry) {
+                 registry.addMapping("*")
+                         .allowedOrigins(crossOrigin)
+                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                         .allowedHeaders("*")
+                         .allowCredentials(true)
+                         .maxAge(3600);
+             }
+         };
+     }
     public static void main(String[] args) {
         SpringApplication.run(MakerApplication.class, args);
     }
