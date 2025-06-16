@@ -40,24 +40,24 @@ public class MakerApplication implements CommandLineRunner {
          return new WebMvcConfigurer() {
              @Override
              public void addCorsMappings(CorsRegistry registry) {
-                 registry.addMapping("/**")
-                         .allowedOrigins(crossOrigin)
-                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                         .allowedHeaders("*")
-                         .allowCredentials(true)
-                         .maxAge(3600);
+//                 registry.addMapping("/**")
+//                         .allowedOrigins(crossOrigin)
+//                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                         .allowedHeaders("*")
+//                         .allowCredentials(true)
+//                         .maxAge(3600);
              }
          };
      }
 
-     @jakarta.servlet.annotation.WebFilter("*")
-     public class WebFilter implements Filter {
-         @Override
-         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-             HttpServletResponse response = (HttpServletResponse) servletResponse;
-             response.setHeader("Access-Control-Allow-Origin", crossOrigin);
-         }
-     }
+//     @jakarta.servlet.annotation.WebFilter("*")
+//     public class WebFilter implements Filter {
+//         @Override
+//         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+//             HttpServletResponse response = (HttpServletResponse) servletResponse;
+//             response.setHeader("Access-Control-Allow-Origin", crossOrigin);
+//         }
+//     }
     public static void main(String[] args) {
         SpringApplication.run(MakerApplication.class, args);
     }
