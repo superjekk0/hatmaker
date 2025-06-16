@@ -55,7 +55,7 @@ public class MakerApplication implements CommandLineRunner {
          @Override
          public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
              HttpServletResponse response = (HttpServletResponse) servletResponse;
-                response.setHeader("Access-Control-Allow-Origin", crossOrigin);
+             response.setHeader("Access-Control-Allow-Origin", crossOrigin);
          }
      }
     public static void main(String[] args) {
