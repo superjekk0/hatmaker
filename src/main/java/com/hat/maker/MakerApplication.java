@@ -34,21 +34,21 @@ public class MakerApplication implements CommandLineRunner {
     @Value("${cors.origin}")
     public String crossOrigin;
 
-     @Bean
-     @Profile("!test")
-     public WebMvcConfigurer corsConfiguration(){
-         return new WebMvcConfigurer() {
-             @Override
-             public void addCorsMappings(CorsRegistry registry) {
+//     @Bean
+//     @Profile("!test")
+//     public WebMvcConfigurer corsConfiguration(){
+//         return new WebMvcConfigurer() {
+//             @Override
+//             public void addCorsMappings(CorsRegistry registry) {
 //                 registry.addMapping("/**")
 //                         .allowedOrigins(crossOrigin)
 //                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 //                         .allowedHeaders("*")
 //                         .allowCredentials(true)
 //                         .maxAge(3600);
-             }
-         };
-     }
+//             }
+//         };
+//     }
 
 //     @jakarta.servlet.annotation.WebFilter("*")
 //     public class WebFilter implements Filter {
