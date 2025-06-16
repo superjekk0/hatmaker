@@ -37,7 +37,6 @@ public class MakerApplication implements CommandLineRunner {
              @Override
              public void addCorsMappings(CorsRegistry registry) {
                  registry.addMapping("/**")
-                         .allowedOrigins(crossOrigin)
                          .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                          .allowedHeaders("*")
                          .allowCredentials(true)
