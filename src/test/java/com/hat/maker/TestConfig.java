@@ -11,9 +11,9 @@ public class TestConfig {
     @TestConfiguration
     public class TestCorsConfig {
 
-        @Bean
-        public CorsConfigurationSource testCorsConfigurationSource() {
-            return new UrlBasedCorsConfigurationSource();
-        }
+//        @Bean
+//        public CorsConfigurationSource testCorsConfigurationSource() {
+//            return new UrlBasedCorsConfigurationSource();
+//        }
     }
 }
