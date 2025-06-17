@@ -12,6 +12,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -34,22 +37,17 @@ public class MakerApplication implements CommandLineRunner {
     @Value("${cors.origin}")
     public String crossOrigin;
 
-//     @Bean
-//     @Profile("!test")
-//     public WebMvcConfigurer corsConfiguration(){
-//         return new WebMvcConfigurer() {
-//             @Override
-//             public void addCorsMappings(CorsRegistry registry) {
-//                 registry.addMapping("/**")
-//                         .allowedOrigins(crossOrigin)
-//                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                         .allowedHeaders("*")
-//                         .allowCredentials(true)
-//                         .maxAge(3600);
-//             }
-//         };
-//     }
-
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(Arrays.asList(crossOrigin));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 //     @jakarta.servlet.annotation.WebFilter("*")
 //     public class WebFilter implements Filter {
 //         @Override
